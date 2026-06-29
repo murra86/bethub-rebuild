@@ -1,0 +1,1007 @@
+======================================================================
+DR-029 §2.1 probe — analysis output
+======================================================================
+probe_run_id: 2026-05-02_saturday_metros
+started_at_utc: 2026-05-02T00:35:30.522613Z
+completed_at_utc: 2026-05-02T10:47:21.124008Z
+projection_set_initial: ['EX_BEST_OFFERS', 'EX_ALL_OFFERS', 'EX_LADDER', 'SP_AVAILABLE', 'SP_TRADED']
+races: 4
+api_events: 22
+
+=== §1 — Probe execution summary ===
+  race=1 thoroughbred/Hawkesbury/R1 sched=2026-05-02T01:20:00Z bf_snaps=5535 ra_snaps=185
+  race=2 thoroughbred/Newcastle/R4 sched=2026-05-02T04:00:00Z bf_snaps=6473 ra_snaps=216
+  race=3 harness/Albion Park/R1 sched=2026-05-02T07:04:00Z bf_snaps=6514 ra_snaps=0
+  race=4 greyhound/Wentworth Park/R3 sched=2026-05-02T09:45:00Z bf_snaps=7345 ra_snaps=0
+
+api_events log:
+  [2026-05-02T00:35:30.947376Z] race=1 race_capture_start: market_id=1.257534925
+  [2026-05-02T00:35:31.037003Z] race=1 ex_ladder_fallback: dropping EX_LADDER from combined call: SportsAPING/v1.0/listMarketBook 
+Params: {'marketIds': ['1.257534925'], 'priceProjection': {'priceData': ['EX_BEST_OFFERS', 'EX_ALL_OFFERS', 'EX_LADDER', 'SP_AVA
+  [2026-05-02T00:36:14.058698Z] race=1 ex_ladder_unsupported: ladder-only call rejected 5x consecutively — disabling for remainder of race
+  [2026-05-02T01:22:41.289455Z] race=1 market_closed: first CLOSED at 2026-05-02T01:22:41.243118+00:00
+  [2026-05-02T02:08:01.101494Z] race=1 race_capture_done: bf_snaps=5535 ra_snaps=185
+  [2026-05-02T03:00:00.000202Z] race=2 race_capture_start: market_id=1.257566160
+  [2026-05-02T03:00:00.172953Z] race=2 ex_ladder_fallback: dropping EX_LADDER from combined call: SportsAPING/v1.0/listMarketBook 
+Params: {'marketIds': ['1.257566160'], 'priceProjection': {'priceData': ['EX_BEST_OFFERS', 'EX_ALL_OFFERS', 'EX_LADDER', 'SP_AVA
+  [2026-05-02T03:00:43.135269Z] race=2 ex_ladder_unsupported: ladder-only call rejected 5x consecutively — disabling for remainder of race
+  [2026-05-02T04:02:47.900370Z] race=2 market_closed: first CLOSED at 2026-05-02T04:02:47.859541+00:00
+  [2026-05-02T04:48:00.236939Z] race=2 race_capture_done: bf_snaps=6473 ra_snaps=216
+  [2026-05-02T06:04:00.000199Z] race=3 race_capture_start: market_id=1.257604701
+  [2026-05-02T06:04:00.087944Z] race=3 ex_ladder_fallback: dropping EX_LADDER from combined call: SportsAPING/v1.0/listMarketBook 
+Params: {'marketIds': ['1.257604701'], 'priceProjection': {'priceData': ['EX_BEST_OFFERS', 'EX_ALL_OFFERS', 'EX_LADDER', 'SP_AVA
+  [2026-05-02T06:04:00.104947Z] race=3 racing_api_meet_missing: no Racing API meet for venue='Albion Park' date=2026-05-02 code=harness
+  [2026-05-02T06:04:42.110908Z] race=3 ex_ladder_unsupported: ladder-only call rejected 5x consecutively — disabling for remainder of race
+  [2026-05-02T07:07:28.868381Z] race=3 market_closed: first CLOSED at 2026-05-02T07:07:28.815109+00:00
+  [2026-05-02T07:52:29.423725Z] race=3 race_capture_done: bf_snaps=6514 ra_snaps=0
+  [2026-05-02T08:45:00.452044Z] race=4 race_capture_start: market_id=1.257604754
+  [2026-05-02T08:45:00.545315Z] race=4 ex_ladder_fallback: dropping EX_LADDER from combined call: SportsAPING/v1.0/listMarketBook 
+Params: {'marketIds': ['1.257604754'], 'priceProjection': {'priceData': ['EX_BEST_OFFERS', 'EX_ALL_OFFERS', 'EX_LADDER', 'SP_AVA
+  [2026-05-02T08:45:00.986069Z] race=4 racing_api_meet_missing: no Racing API meet for venue='Wentworth Park' date=2026-05-02 code=greyhound
+  [2026-05-02T08:45:43.584683Z] race=4 ex_ladder_unsupported: ladder-only call rejected 5x consecutively — disabling for remainder of race
+  [2026-05-02T10:02:20.532151Z] race=4 market_closed: first CLOSED at 2026-05-02T10:02:20.469971+00:00
+  [2026-05-02T10:47:21.123100Z] race=4 race_capture_done: bf_snaps=7345 ra_snaps=0
+
+=== §2/§3.3 — Field availability per code per phase ===
+
+--- race=1 thoroughbred/Hawkesbury/R1 ---
+  phase=STANDARD (n_top=2367, n_runner=18936)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 62.5%
+      ex.availableToLay: 62.5%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 62.5%
+      removalDate: 37.5%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 62.5%
+      sp.farPrice: 62.5%
+      sp.layLiabilityTaken: 62.5%
+      sp.nearPrice: 62.5%
+      status: 100.0%
+      totalMatched: 62.5%
+  phase=INTENSIVE (n_top=300, n_runner=2400)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 62.5%
+      ex.availableToLay: 62.5%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 62.5%
+      removalDate: 37.5%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 62.5%
+      sp.farPrice: 62.5%
+      sp.layLiabilityTaken: 62.5%
+      sp.nearPrice: 62.5%
+      status: 100.0%
+      totalMatched: 62.5%
+  phase=POST_START (n_top=124, n_runner=992)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 62.5%
+      ex.availableToLay: 61.8%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 62.5%
+      removalDate: 37.5%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 64.5%
+      sp.backStakeTaken: 62.5%
+      sp.farPrice: 22.2%
+      sp.layLiabilityTaken: 62.5%
+      sp.nearPrice: 22.2%
+      status: 100.0%
+      totalMatched: 62.5%
+  phase=SUSPENDED (n_top=37, n_runner=296)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 30.4%
+      ex.availableToLay: 12.2%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 62.5%
+      removalDate: 37.5%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 100.0%
+      sp.backStakeTaken: 62.5%
+      sp.layLiabilityTaken: 62.5%
+      status: 100.0%
+      totalMatched: 62.5%
+  phase=CLOSED (n_top=2701, n_runner=21608)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 0.0%
+      ex.availableToLay: 0.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      removalDate: 37.5%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 100.0%
+      sp.backStakeTaken: 0.0%
+      sp.layLiabilityTaken: 0.0%
+      status: 100.0%
+
+--- race=2 thoroughbred/Newcastle/R4 ---
+  phase=STANDARD (n_top=3298, n_runner=46172)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 71.4%
+      ex.availableToLay: 71.4%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 45.3%
+      removalDate: 28.6%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 71.4%
+      sp.farPrice: 71.4%
+      sp.layLiabilityTaken: 32.7%
+      sp.nearPrice: 71.4%
+      status: 100.0%
+      totalMatched: 71.4%
+  phase=INTENSIVE (n_top=300, n_runner=4200)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 71.4%
+      ex.availableToLay: 71.4%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 71.4%
+      removalDate: 28.6%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 71.4%
+      sp.farPrice: 71.4%
+      sp.layLiabilityTaken: 71.4%
+      sp.nearPrice: 71.4%
+      status: 100.0%
+      totalMatched: 71.4%
+  phase=POST_START (n_top=143, n_runner=2002)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 71.4%
+      ex.availableToLay: 64.6%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 71.4%
+      removalDate: 28.6%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 81.1%
+      sp.backStakeTaken: 71.4%
+      sp.farPrice: 13.5%
+      sp.layLiabilityTaken: 71.4%
+      sp.nearPrice: 13.5%
+      status: 100.0%
+      totalMatched: 71.4%
+  phase=SUSPENDED (n_top=25, n_runner=350)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 28.6%
+      ex.availableToLay: 14.9%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 71.4%
+      removalDate: 28.6%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 92.0%
+      sp.backStakeTaken: 71.4%
+      sp.farPrice: 5.7%
+      sp.layLiabilityTaken: 71.4%
+      sp.nearPrice: 5.7%
+      status: 100.0%
+      totalMatched: 71.4%
+  phase=CLOSED (n_top=2701, n_runner=37814)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 0.0%
+      ex.availableToLay: 0.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      removalDate: 28.6%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 100.0%
+      sp.backStakeTaken: 0.0%
+      sp.layLiabilityTaken: 0.0%
+      status: 100.0%
+
+--- race=3 harness/Albion Park/R1 ---
+  phase=STANDARD (n_top=3298, n_runner=32980)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 78.7%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 100.0%
+      ex.availableToLay: 100.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 21.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 20.8%
+      sp.farPrice: 100.0%
+      sp.layLiabilityTaken: 9.7%
+      sp.nearPrice: 100.0%
+      status: 100.0%
+      totalMatched: 100.0%
+  phase=INTENSIVE (n_top=300, n_runner=3000)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 100.0%
+      ex.availableToLay: 100.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 100.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 100.0%
+      sp.farPrice: 100.0%
+      sp.layLiabilityTaken: 100.0%
+      sp.nearPrice: 100.0%
+      status: 100.0%
+      totalMatched: 100.0%
+  phase=POST_START (n_top=191, n_runner=1910)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 99.9%
+      ex.availableToLay: 96.1%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 100.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 60.7%
+      sp.backStakeTaken: 100.0%
+      sp.farPrice: 39.3%
+      sp.layLiabilityTaken: 100.0%
+      sp.nearPrice: 39.3%
+      status: 100.0%
+      totalMatched: 100.0%
+  phase=SUSPENDED (n_top=17, n_runner=170)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 42.4%
+      ex.availableToLay: 18.8%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 100.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 100.0%
+      sp.backStakeTaken: 100.0%
+      sp.layLiabilityTaken: 100.0%
+      status: 100.0%
+      totalMatched: 100.0%
+  phase=CLOSED (n_top=2701, n_runner=27010)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      adjustmentFactor: 100.0%
+      ex: 100.0%
+      ex.availableToBack: 0.0%
+      ex.availableToLay: 0.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 100.0%
+      sp.backStakeTaken: 0.0%
+      sp.layLiabilityTaken: 0.0%
+      status: 100.0%
+
+--- race=4 greyhound/Wentworth Park/R3 ---
+  phase=STANDARD (n_top=3298, n_runner=26384)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      ex: 100.0%
+      ex.availableToBack: 100.0%
+      ex.availableToLay: 100.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 17.4%
+      sp.farPrice: 100.0%
+      sp.layLiabilityTaken: 9.2%
+      sp.nearPrice: 100.0%
+      status: 100.0%
+      totalMatched: 100.0%
+  phase=INTENSIVE (n_top=300, n_runner=2400)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 78.3%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      ex: 100.0%
+      ex.availableToBack: 100.0%
+      ex.availableToLay: 100.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 50.4%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 66.9%
+      sp.farPrice: 100.0%
+      sp.layLiabilityTaken: 100.0%
+      sp.nearPrice: 100.0%
+      status: 100.0%
+      totalMatched: 100.0%
+  phase=POST_START (n_top=55, n_runner=440)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      ex: 100.0%
+      ex.availableToBack: 100.0%
+      ex.availableToLay: 100.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 100.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.backStakeTaken: 100.0%
+      sp.farPrice: 100.0%
+      sp.layLiabilityTaken: 100.0%
+      sp.nearPrice: 100.0%
+      status: 100.0%
+      totalMatched: 100.0%
+  phase=SUSPENDED (n_top=985, n_runner=7880)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      lastMatchTime: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      ex: 100.0%
+      ex.availableToBack: 0.1%
+      ex.availableToLay: 0.1%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      lastPriceTraded: 99.8%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 99.9%
+      sp.backStakeTaken: 99.8%
+      sp.farPrice: 0.1%
+      sp.layLiabilityTaken: 99.8%
+      sp.nearPrice: 0.1%
+      status: 100.0%
+      totalMatched: 99.8%
+  phase=CLOSED (n_top=2701, n_runner=21608)
+    top:
+      betDelay: 100.0%
+      betDelayModels: 0.0%
+      bspReconciled: 100.0%
+      complete: 100.0%
+      crossMatching: 100.0%
+      inplay: 100.0%
+      isMarketDataDelayed: 100.0%
+      marketId: 100.0%
+      numberOfActiveRunners: 100.0%
+      numberOfRunners: 100.0%
+      numberOfWinners: 100.0%
+      runnersVoidable: 100.0%
+      status: 100.0%
+      totalAvailable: 100.0%
+      totalMatched: 100.0%
+      version: 100.0%
+    runner:
+      ex: 100.0%
+      ex.availableToBack: 0.0%
+      ex.availableToLay: 0.0%
+      ex.tradedVolume: 0.0%
+      handicap: 100.0%
+      selectionId: 100.0%
+      sp: 100.0%
+      sp.actualSP: 100.0%
+      sp.backStakeTaken: 0.0%
+      sp.layLiabilityTaken: 0.0%
+      status: 100.0%
+
+=== §3.1 — sp.actualSP time-relative-to-jump curve per code ===
+
+race_code=thoroughbred (n_lines=12008)
+  phase=STANDARD
+    minute_bucket=[-60,-55): observed=4186 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-55,-50): observed=4200 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-50,-45): observed=4200 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-45,-40): observed=6344 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-40,-35): observed=6600 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-35,-30): observed=6600 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-30,-25): observed=6600 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-25,-20): observed=6600 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-20,-15): observed=6592 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-15,-10): observed=6600 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-10,-5): observed=6586 with_actual_sp=0 rate=0.0%
+  phase=INTENSIVE
+    minute_bucket=[-5,0): observed=6600 with_actual_sp=0 rate=0.0%
+  phase=POST_START
+    minute_bucket=[0,5): observed=2994 with_actual_sp=1560 rate=52.1%
+  phase=SUSPENDED
+    minute_bucket=[-10,-5): observed=14 with_actual_sp=0 rate=0.0%
+    minute_bucket=[0,5): observed=632 with_actual_sp=415 rate=65.7%
+  phase=CLOSED
+    minute_bucket=[0,5): observed=2974 with_actual_sp=2025 rate=68.1%
+    minute_bucket=[5,10): observed=6600 with_actual_sp=4500 rate=68.2%
+    minute_bucket=[10,15): observed=6586 with_actual_sp=4490 rate=68.2%
+    minute_bucket=[15,20): observed=6600 with_actual_sp=4500 rate=68.2%
+    minute_bucket=[20,25): observed=6600 with_actual_sp=4500 rate=68.2%
+    minute_bucket=[25,30): observed=6600 with_actual_sp=4500 rate=68.2%
+    minute_bucket=[30,35): observed=6600 with_actual_sp=4500 rate=68.2%
+    minute_bucket=[35,40): observed=6600 with_actual_sp=4500 rate=68.2%
+    minute_bucket=[40,45): observed=6600 with_actual_sp=4500 rate=68.2%
+    minute_bucket=[45,50): observed=3662 with_actual_sp=2500 rate=68.3%
+
+race_code=harness (n_lines=6514)
+  phase=STANDARD
+    minute_bucket=[-60,-55): observed=2990 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-55,-50): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-50,-45): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-45,-40): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-40,-35): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-35,-30): observed=2990 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-30,-25): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-25,-20): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-20,-15): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-15,-10): observed=3000 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-10,-5): observed=3000 with_actual_sp=0 rate=0.0%
+  phase=INTENSIVE
+    minute_bucket=[-5,0): observed=3000 with_actual_sp=0 rate=0.0%
+  phase=POST_START
+    minute_bucket=[0,5): observed=1910 with_actual_sp=1160 rate=60.7%
+  phase=SUSPENDED
+    minute_bucket=[0,5): observed=170 with_actual_sp=170 rate=100.0%
+  phase=CLOSED
+    minute_bucket=[0,5): observed=920 with_actual_sp=920 rate=100.0%
+    minute_bucket=[5,10): observed=3000 with_actual_sp=3000 rate=100.0%
+    minute_bucket=[10,15): observed=3000 with_actual_sp=3000 rate=100.0%
+    minute_bucket=[15,20): observed=2990 with_actual_sp=2990 rate=100.0%
+    minute_bucket=[20,25): observed=3000 with_actual_sp=3000 rate=100.0%
+    minute_bucket=[25,30): observed=3000 with_actual_sp=3000 rate=100.0%
+    minute_bucket=[30,35): observed=3000 with_actual_sp=3000 rate=100.0%
+    minute_bucket=[35,40): observed=3000 with_actual_sp=3000 rate=100.0%
+    minute_bucket=[40,45): observed=3000 with_actual_sp=3000 rate=100.0%
+    minute_bucket=[45,50): observed=2100 with_actual_sp=2100 rate=100.0%
+
+race_code=greyhound (n_lines=7345)
+  phase=STANDARD
+    minute_bucket=[-60,-55): observed=2392 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-55,-50): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-50,-45): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-45,-40): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-40,-35): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-35,-30): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-30,-25): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-25,-20): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-20,-15): observed=2392 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-15,-10): observed=2400 with_actual_sp=0 rate=0.0%
+    minute_bucket=[-10,-5): observed=2400 with_actual_sp=0 rate=0.0%
+  phase=INTENSIVE
+    minute_bucket=[-5,0): observed=2400 with_actual_sp=0 rate=0.0%
+  phase=POST_START
+    minute_bucket=[0,5): observed=440 with_actual_sp=0 rate=0.0%
+  phase=SUSPENDED
+    minute_bucket=[0,5): observed=1960 with_actual_sp=1952 rate=99.6%
+    minute_bucket=[5,10): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[10,15): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[15,20): observed=1120 with_actual_sp=1120 rate=100.0%
+  phase=CLOSED
+    minute_bucket=[15,20): observed=1280 with_actual_sp=1280 rate=100.0%
+    minute_bucket=[20,25): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[25,30): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[30,35): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[35,40): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[40,45): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[45,50): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[50,55): observed=2392 with_actual_sp=2392 rate=100.0%
+    minute_bucket=[55,60): observed=2400 with_actual_sp=2400 rate=100.0%
+    minute_bucket=[60,65): observed=1136 with_actual_sp=1136 rate=100.0%
+
+=== §3.3 — Field deltas vs snapshot writer ===
+runner-level API keys observed (any phase, any race): 17
+  adjustmentFactor
+  ex
+  ex.availableToBack
+  ex.availableToLay
+  ex.tradedVolume
+  handicap
+  lastPriceTraded
+  removalDate
+  selectionId
+  sp
+  sp.actualSP
+  sp.backStakeTaken
+  sp.farPrice
+  sp.layLiabilityTaken
+  sp.nearPrice
+  status
+  totalMatched
+
+top-level API keys observed (any phase, any race): 17
+  betDelay
+  betDelayModels
+  bspReconciled
+  complete
+  crossMatching
+  inplay
+  isMarketDataDelayed
+  lastMatchTime
+  marketId
+  numberOfActiveRunners
+  numberOfRunners
+  numberOfWinners
+  runnersVoidable
+  status
+  totalAvailable
+  totalMatched
+  version
+
+=== §3.4 — Cadence-of-meaningful-change per phase ===
+
+race_code=thoroughbred
+  phase=STANDARD samples=5664
+    best_back_change_rate: 7.1%
+    best_lay_change_rate: 5.6%
+    total_matched_change_rate: 5.6%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=INTENSIVE samples=600
+    best_back_change_rate: 43.7%
+    best_lay_change_rate: 42.5%
+    total_matched_change_rate: 63.2%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=POST_START samples=267
+    best_back_change_rate: 78.3%
+    best_lay_change_rate: 77.9%
+    total_matched_change_rate: 82.4%
+    market_status_change_rate: 0.4%
+    runner_status_change_rate: 0.0%
+  phase=SUSPENDED samples=62
+    best_back_change_rate: 12.9%
+    best_lay_change_rate: 12.9%
+    total_matched_change_rate: 4.8%
+    market_status_change_rate: 6.5%
+    runner_status_change_rate: 0.0%
+  phase=CLOSED samples=5402
+    best_back_change_rate: 0.0%
+    best_lay_change_rate: 0.0%
+    total_matched_change_rate: 0.0%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+
+race_code=harness
+  phase=STANDARD samples=3297
+    best_back_change_rate: 7.9%
+    best_lay_change_rate: 4.7%
+    total_matched_change_rate: 2.1%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=INTENSIVE samples=300
+    best_back_change_rate: 61.3%
+    best_lay_change_rate: 47.0%
+    total_matched_change_rate: 50.3%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=POST_START samples=191
+    best_back_change_rate: 81.7%
+    best_lay_change_rate: 88.0%
+    total_matched_change_rate: 72.8%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=SUSPENDED samples=17
+    best_back_change_rate: 11.8%
+    best_lay_change_rate: 11.8%
+    total_matched_change_rate: 0.0%
+    market_status_change_rate: 5.9%
+    runner_status_change_rate: 0.0%
+  phase=CLOSED samples=2701
+    best_back_change_rate: 0.0%
+    best_lay_change_rate: 0.0%
+    total_matched_change_rate: 0.0%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+
+race_code=greyhound
+  phase=STANDARD samples=3297
+    best_back_change_rate: 1.2%
+    best_lay_change_rate: 0.4%
+    total_matched_change_rate: 0.0%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=INTENSIVE samples=300
+    best_back_change_rate: 51.0%
+    best_lay_change_rate: 70.0%
+    total_matched_change_rate: 40.0%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=POST_START samples=55
+    best_back_change_rate: 80.0%
+    best_lay_change_rate: 80.0%
+    total_matched_change_rate: 100.0%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+  phase=SUSPENDED samples=985
+    best_back_change_rate: 0.2%
+    best_lay_change_rate: 0.2%
+    total_matched_change_rate: 0.2%
+    market_status_change_rate: 0.1%
+    runner_status_change_rate: 0.0%
+  phase=CLOSED samples=2701
+    best_back_change_rate: 0.0%
+    best_lay_change_rate: 0.0%
+    total_matched_change_rate: 0.0%
+    market_status_change_rate: 0.0%
+    runner_status_change_rate: 0.0%
+
+=== §3.5 — Betfair ↔ Racing API identity alignment ===
+
+race=1 thoroughbred/Hawkesbury/R1
+  bf_runners=8 ra_runners=8
+  ra off_time: 2026-05-02T01:20:00.000Z  bf scheduled: 2026-05-02T01:20:00Z
+  ra venue: Hawkesbury  bf venue: Hawkesbury
+  ra runners: ['Fondness', 'Grafology', 'Lafite', 'Nations League', 'Stormy Marco', 'Tenenbaum', 'The Roaring Sun', 'The Thorncaster']
+  ra_scratched=3 bf_removed_selection_ids=3
+  ra bundled bookmakers: ['Ladbrokes', 'Sportsbet']
+
+race=2 thoroughbred/Newcastle/R4
+  bf_runners=14 ra_runners=15
+  ra off_time: 2026-05-02T04:00:00.000Z  bf scheduled: 2026-05-02T04:00:00Z
+  ra venue: Newcastle  bf venue: Newcastle
+  ra runners: ["Aladdin's Girl", 'All Star', 'Canjustify', 'Celeman Zor', 'Chaithnia', 'Dance With Destiny', 'Gold Cup', 'Kharif', 'Landmark Lady', 'Not So Casual']...
+  ra_scratched=5 bf_removed_selection_ids=4
+  ra bundled bookmakers: ['Sportsbet', 'Ladbrokes']
+
+race=3 harness/Albion Park/R1
+  bf_runners=10 ra_runners=0
+  ra runners: []
+  ra_scratched=0 bf_removed_selection_ids=0
+
+race=4 greyhound/Wentworth Park/R3
+  bf_runners=8 ra_runners=0
+  ra runners: []
+  ra_scratched=0 bf_removed_selection_ids=0
