@@ -1,4 +1,4 @@
-**Last updated:** 2026-07-01 12:22 ACST (Session 211 close)
+**Last updated:** 2026-07-01 14:44 ACST (Session 212 close)
 
 **Timezone:** DR-021 standard applies — Adelaide anchors, no
 overrides active.
@@ -7,110 +7,96 @@ overrides active.
 
 ## Where we are
 
-**S211 root-caused the placings-recovery stall and locked the fix
-brief.** The diarised 1-Jul daily check (the S211 runner first-action)
-found ZERO burndown — deficit crept 41,340 → 41,633, stall alarm fired.
-That triggered a full root-cause diagnosis, and the standing "quota"
-model turned out to be FALSE.
+**S212 closed the git-drift gap, triaged the throughput fix, and
+locked + (via Code) executed the empty-runners diagnosis — which
+reframes the placings gate from pacing to DB contention.**
 
-Two faults, both evidenced:
-
-- **Fault A — throughput / false quota (the gate).** A live read-only
-  probe proved the Racing API returns NO quota/rate-limit headers, and a
-  full resulted date (2026-06-06: 24 meets / 153 races / 1,944 runners /
-  1,855 placings) fetched clean in **7.8s at ≤5/sec, zero empties.**
-  There is no daily budget to exhaust. What actually walls the job:
-  exceeding the per-second ceiling returns HTTP 200 with an EMPTY body
-  (not a 429) → `_api_get`'s `raise_for_status()` passes → logged
-  "truncated" → `run_backlog_pass` walls after 3
-  (`BACKLOG_WALL_THRESHOLD = 3`). Pacing is `BACKLOG_MIN_DELAY = 1.5`s
-  (~0.67/sec) — ~7× too slow vs the confirmed 5/sec. The nightly timer
-  fires 14:00 UTC / 23:30 ACST — peak contention with the live
-  collector (the plausible degradation trigger). And the nightly only
-  sweeps a 14-day recent window — it never touches the 41k historical
-  backlog (that needs a manual `--days`/`--date` run).
-- **Fault B — matching key / ghosts (deferred).** `upsert_race` keys on
-  `(race_date, venue_normalised, race_number)`, and `race_date` is the
-  two-path-skewed value (`race_date_semantics_report.md`), so backfilled
-  placings for ±1-day-skewed live rows can land on a duplicate GHOST row
-  instead of the real race. DR-032/034 territory → its own
-  governance-aware brief, NOT folded into the surgical fix.
-
-**Racing-API rate tier CONFIRMED: 5 req/sec** (support reply relayed
-this session; resolves the S205 open question). Support addressed the
-rate, not a daily cap — consistent with the no-quota probe finding.
-
-**Throughput-fix brief LOCKED + commissioned to Code.**
-`placings_throughput_fix_brief.md` (rebuild root, 124 lines, sha
-`8880f78c`). Surgical, two VPS files + one timer: §5.1 retry degraded
-`/races` fetches (+ log headers on first degraded response); §5.2 pace
-≤5/sec (set empirically); §5.3 de-fang the false wall (split hard-error
-vs post-retry-truncated, second threshold ~6 for the latter); §5.4 move
-the timer off the 14:00-UTC contention slot. §7 = a real bounded
-~40-date backlog burn measuring placings gained / req·sec / empty-200s
-before-vs-after retry / a GHOST-ROW tripwire (fault-B signal). Code's
-read-back FAITHFUL + two design calls approved (burn via
-`run_backlog_pass` capped ~40 not `main --days`; second wall threshold
-~6). Accepted: the burn WRITES real placings (intended recovery);
-`mode=ro` is verification queries only.
+- **Git baseline restored.** `c7f71ab` put Sessions 198–211 (46 files —
+  governance docs, briefs, reports, session records) under version
+  control after ~13 sessions of untracked drift; `.close_out_backups/`
+  + `skills/*.zip` gitignored. The runner's "brief hash mismatch"
+  open-flag was a FALSE alarm (git-blob SHA-1 `3f34…` vs the recorded
+  sha256 `8880f78c…` — identical content, verified twice). Stale
+  `.close_out_backups/` prompts + the `SESSION_9001` test fixtures were
+  operator-deleted.
+- **Throughput fix triaged — PARTIAL success.** Pacing corrected
+  (~3.15 req/sec clean, zero empty-200s); **ghost-row tripwire CLEAN
+  (fault B not biting)**; ~892 placings recovered (deficit 41,879 →
+  40,987); nightly timer moved to **05:30 ACST** (answers the dated
+  1-Jul timer-shift check). Surfaced the **empty-runners degradation
+  mode** as the real remaining gate.
+- **Empty-runners diagnosed — NOT pacing; it's DB write-contention.**
+  The diagnosis brief (`placings_empty_runners_diagnosis_brief.md`,
+  99 lines, sha `6bae8914`) was locked and Code executed it
+  out-of-session (~13:10–13:55). FINDING: a fetch-only client is immune
+  at ~9.8 req/sec (≈2× the 5/sec ceiling); the mode is triggered by the
+  `sync_day` **WRITE path contending with the live collector on the
+  shared `capture.db`** (throwaway-DB write immune; artificial latency
+  immune) — intermittent, resets ~2s of write-idle. No pacing config
+  defeats it; retry-defeatability unverifiable. Resolved to §5.3
+  **branch 3 (no behavioural change, instrumentation only).** The
+  follow-up is now an **architecture / operational-contention
+  question**, not a rate-tier / provider one. **Report present,
+  un-triaged — S213's first action.**
 
 **Prior anchor (S210):** cash-modal back-stake blank fix SHIPPED,
-committed `e2638fa`. Full detail in `sessions/SESSION_210.md`.
+committed `e2638fa`. Detail in `sessions/SESSION_210.md`.
 
 ## What's next
 
-**S212 first action (CONFIRMED with operator — AUTO, GATED) — triage
-Code's `placings_throughput_fix_report.md`.** If present on open →
-auto-triage: rows flowed at scale? req/sec ≤5? post-retry empties ~0?
-no unexpected wall? — and READ THE GHOST TRIPWIRE. Route: clean + no
-ghosts → commission the full-backlog burn brief; ghost tripwire fired →
-the `race_date` identity fix (fault B) becomes the priority brief with
-its DR-032/034 governance check. If the report is absent (Code hasn't
-run) → HOLD and notify.
+**S213 first action (CONFIRMED with operator — AUTO, no gate) — triage
+`placings_empty_runners_diagnosis_report.md`.** Read against the locked
+brief's §7/§8/§9; digest the DB-write-contention headline; confirm the
+instrumentation-only edit stayed in scope + the ghost tripwire; then
+route the contention question and **take stock with the operator on
+whether placings recovery stays worth chasing** — the pacing/provider
+rabbit hole is closed by the finding. Report is present, so no hold
+expected.
+
+**Contention routing to weigh at triage:** accept intermittent
+write-degradation as a fact of the shared DB (trickle regardless);
+serialise the backfill burn against the live collector's write windows;
+or a larger change to the capture.db write path. All operator-triage
+territory — none a pacing brief.
 
 **Then, in order:**
-1. **Settlement-worker brief** (IOU + manual-match-to-lay) — the next
-   build item; a money-path piece, diligence-first before Code.
+1. **Settlement-worker brief** (IOU + manual-match-to-lay) — next build
+   item; money-path, diligence-first before Code.
 2. **Promo-seed** → **W16 cutover.**
 
-**Parallel / not gating:** the Data Foundation harvest
-(§A.4 → §C/§D/§E → roadmap → supersede).
+**Parallel / not gating:** Data Foundation harvest (§A.4 → §C/§D/§E).
 
-**Parked (revisit-triggered):** DR-034 stance-4 fragment-collapse
-remediation — now effectively subsumed by fault B (the ghost/race_date
-identity fix); revisit when the S212 ghost tripwire reports.
+**Parked (revisit-triggered):** full-backlog burn (downstream of the
+contention resolution); fault-B / `race_date` identity (tripwire clean,
+no forcing event); DR-034 stance-4 fragment-collapse; Cowork sub-agent
+review → pre-W16 go/no-go.
 
-## Required reads for Session 212
+## Required reads for Session 213
 
 In order:
 1. `current_state.md` (this file).
 2. `standing_instructions.md` — in full per Cat 2.
 3. `project_context.md` — orientation primer.
-4. `sessions/SESSION_211.md` — the S211 record (recovery root-cause + throughput-fix brief).
+4. `sessions/SESSION_212.md` — the S212 record.
 
 Reference-only — read on demand:
-- `placings_throughput_fix_brief.md` — the locked contract Code executed; the triage reads its report against this.
-- `race_date_semantics_report.md` — fault-B mechanism (what the ghost tripwire is watching).
-- `placings_trickle_report.md` — prior recovery design/context.
+- `placings_empty_runners_diagnosis_report.md` — the report S213 triages.
+- `placings_empty_runners_diagnosis_brief.md` — the locked contract it's triaged against.
+- `placings_throughput_fix_report.md` — the burn that surfaced the mode (ghost-tripwire baseline).
 
 ## Pending operator-side actions
 
-**Between S211 → S212:**
-- **RUN THE CODE SESSION** against the locked throughput brief
-  (`placings_throughput_fix_brief.md`) — the load-bearing action; S212's
-  first action triages its report.
-- **Racing API rate tier** — REPLY RECEIVED (5 req/sec). Fold into
-  `BETHUB_DATA_REFERENCE.md` §G when docs are next touched; note there is
-  no daily quota (probe-confirmed).
-- **Delete the `SESSION_9001` watcher-test artefact** in
-  `/Users/tim/.bethub-cycle/results/` (Claude doesn't hard-delete).
-- **Delete consumed opening prompts** in `.close_out_backups/` — the
-  S212 prompt is the only one that should remain (Claude doesn't
-  hard-delete).
-- **GitHub off-machine backup of bethub-v3** — pending operator login
-  (the `e2638fa` checkpoint is local-only until this runs).
+**Between S212 → S213:**
+- **GitHub off-machine backup of bethub-rebuild + bethub-v3** — `c7f71ab`
+  (governance repo) and `e2638fa` (app repo) are LOCAL-only until an
+  off-machine push runs; pending operator login.
 - **Manage any live unmatched lays (S164)** — real exposure.
 - **v2:** running; jump-start-only to retirement.
+
+**Done this session (fold when docs next touched):** stale
+`.close_out_backups/` prompts + `SESSION_9001` fixtures deleted;
+Racing-API rate tier (5 req/sec, no daily quota) confirmed — fold into
+`BETHUB_DATA_REFERENCE.md` §G.
 
 **Carried (parking-lot):** the `by-market` results route follow-up; the
 settled-vs-pending-both-populated ordering edge; VPS git-hygiene debt
@@ -129,41 +115,41 @@ the blank cash-box inline-prompt parity.
 
 ## Open items
 
-Pointer-only — full detail in `sessions/SESSION_211.md`.
+Pointer-only — full detail in `sessions/SESSION_212.md`.
 
-**New / changed in S211:**
-- **Throughput-fix Code commission** — brief locked; run Code; S212
-  auto-triages (gated).
-- **Fault B — `race_date` identity-key / ghosts** — named next brief +
-  governance question (drop `race_date` from the canonical key?
-  DR-032/034); priority contingent on the S212 ghost tripwire.
-- **"Quota" model FALSE** — no daily API quota; correct doc/comment
-  framing when next touched.
+**New / changed in S212:**
+- **Empty-runners = DB write-contention** — S213 triages the report →
+  routes the architecture/contention question. Pacing/provider framing
+  retired.
+- **sha256-not-git-blob** — the open-ritual drift-check should compute
+  `shasum -a 256`, not `git hash-object` (the false-alarm source).
+  Advice recorded; future standing-instruction candidate.
 
-**Closed in S211:**
-- Racing-API rate-tier open question — 5/sec confirmed. ✅
-- "20-attempts/night cap is the choke" — DISPROVEN. ✅
-- "Move timer for fresh budget" — superseded (no budget; contention
-  move folded into brief §5.4). ✅
+**Closed in S212:**
+- Git 13-session uncommitted drift — `c7f71ab`. ✅
+- Stale `.close_out_backups/` prompts + `SESSION_9001` fixtures —
+  operator-deleted. ✅
+- Brief "hash mismatch" — diagnosed benign (git-blob vs sha256). ✅
+- Dated 1-Jul timer-shift check — timer at 05:30 ACST. ✅
+- Throughput-fix triage — partial success (pacing fixed, tripwire clean,
+  empty-runners surfaced). ✅
 
-**Carried to S212:**
+**Carried to S213:**
 - Settlement-worker brief (next build item).
 - Promo-seed; W16 cutover scoping.
 - Data Foundation arc (parallel, not gating).
-- Recovery: throughput fix in Code's hands; full-backlog burn + fault-B
-  ghost fix gated on the S212 triage.
+- Full-backlog burn + fault-B ghost fix — gated on the empty-runners
+  contention resolution.
+- Cowork sub-agent review → pre-W16 go/no-go.
 
 **Carry-forward sensitivity flags:**
-- **The burn WRITES to live capture.db** — intended recovery; idempotent
-  upserts, analytical DB not bet-facing, nightly capture.db backup
-  (19:30 UTC) exists; the ghost tripwire halts before any wider burn.
-- **Ghost floor is a floor-at-this-moment, not a ceiling** — genuine→ghost
-  as burn lands; don't over-read the raw deficit.
 - **Bet-safety — CLEAN** (read-only racing/analytical; no v3 / settlement
   / money path).
 - **capture.db reads read-only** (`mode=ro`, never copy); **v2 never
-  modified**; **VPS repo dirty** — surgical no-git discipline on VPS Code
-  work.
+  modified**; **VPS repo dirty** — surgical no-git discipline on VPS
+  Code work.
+- **The write-path contention finding** means burns intermittently
+  degrade — don't mistake a contention wall for a data or code fault.
 
 ## Active governing decision records
 
@@ -181,8 +167,7 @@ Pointer-only — full detail in `sessions/SESSION_211.md`.
 - **DR-033** (data-source roles) — placings analytical, settlement
   Betfair-only. **This session's work is analytical side.**
 - **DR-034** (canonical race-identity model) — LOCKED S206; live-proven
-  S209. Betfair WIN market = the spine. **The fault-B / ghost territory
-  (excluded from the throughput fix).**
+  S209. Betfair WIN market = the spine. **Fault-B / ghost territory.**
 - **DB read discipline** (`mode=ro`, never copy, `start_process` Python).
 
 Full DR list in `decisions.md`.
