@@ -1,2 +1,7 @@
 .DS_Store
 *.tmp
+
+# transient session scratch
+.close_out_backups/
+# packaged skill exports (build artefacts)
+skills/*.zip

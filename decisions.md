@@ -1330,3 +1330,80 @@ Built in Build 1 (promo-attach foundation), per `interface_triage/promo_attach_b
 - Session 174 (the finish-position pipeline diagnosis that surfaced the role confusion).
 
 **Date:** 2026-06-22
+
+
+---
+
+## DR-034: Canonical race identity — the Betfair WIN market is the spine; capture-store fragments resolve by completeness, not row id
+
+**Why:** Brief 1.1 surfaced that 87% of market-bearing capture rows
+share their `betfair_win_market_id` with ≥1 other row, because the
+capture store's natural key `(race_date, venue_normalised,
+race_number)` fragments one physical race into many rows (both
+components drift across the two ingest paths). BetHub had no defined
+cross-source race identity, so "which physical race is this" had no
+deterministic answer, and the shipped by-market route's "first by id"
+tie-break returns an empty discovery shell in the dominant case. This
+DR locks the identity model so every future data consumer keys races
+the same way.
+
+**Locked stance:**
+
+1. **The Betfair WIN market id is the canonical identity of a physical
+   race** wherever a Betfair market exists — the one field invariant
+   across all fragments of a race; consistent with DR-032. Runner
+   identity is `(WIN market_id, selection_id)`; the Betfair `event_id`
+   parents a race's WIN + PLACE markets.
+2. **The capture store's `races.id` is not a race identity** — it is a
+   per-fragment row id and must never be used as one (the trap "first
+   by id" fell into).
+3. **Races with no Betfair market take a second-class, analytical-only
+   identity:** `(scheduled_start→Adelaide-local date, canonical venue,
+   race number)`. The operational/earning path never relies on it
+   (DR-032 §6 requires a Betfair market at logging time; DR-033 settles
+   off Betfair).
+4. **Fragment-collision resolves by completeness, not row id.** Among
+   capture rows sharing a WIN market id, the authoritative fragment is
+   the most-complete one (resolved status → most runners → results
+   present → most recent), superseding the Brief 1.1 `ORDER BY id`
+   tie-break. Target end-state: collapse fragments under the market id
+   at read time and enforce identity at write time (remediation,
+   specified in §C/§D + roadmap, not executed by this DR). **The
+   placings-recovery backfill lands Racing-API finishing positions on
+   natural-key fragments via the subscription path, so its results are
+   a primary producer of the cross-sibling data this read-time collapse
+   must union — and are only fully spine-reachable once that collapse
+   runs (S206 backfill review).**
+5. **Per-source native keys map onto the spine** as in §B.3. The
+   Racing-API race id is not currently persisted (the subscription path
+   collapses it into the natural key); recording it is a named
+   remediation item.
+
+**Scope / what this is not:** A definition, not a build. This DR fixes
+how races are identified and reconciled; it does **not** change any
+schema, ingest path, or the live earning path, and commissions no code.
+Schema/ingest remediation is specified separately (§C/§D + roadmap) and
+executed under its own briefs. Bet-safe: analytical/governance only.
+
+**Cross-references:**
+- `BETHUB_DATA_REFERENCE.md` §B (the full identity & reconciliation
+  model this DR summarises).
+- DR-032 (Betfair canonical reference — the spine builds on it).
+- DR-033 (source roles — keeps the no-market identity analytical;
+  the placings backfill is the Racing-API analytical line in practice).
+- DR-027 / DR-028 (two-DB boundary — identity by reference, no
+  caching).
+- `vps_endpoint_enrichment_report.md` §4 (the duplication anatomy,
+  market `1.259530858`).
+- `race_date_semantics_report.md` (the fragmentation mechanism).
+- `placings_landing_fix_report.md` (S198 — the RC-2 write-side guard
+  applies this DR's principle at runner level: match on horse identity,
+  never the bare saddlecloth number).
+- `recovery_run_report.md` (S201 — the nightly backfill landing
+  positions on natural-key fragments; deficit-floor caveat per S206
+  review).
+- Brief 2 (`vps_client_api_rewrite_brief.md`, re-locks against this
+  identity).
+
+**Date:** 2026-06-30 (Session 206 — locked from the §B draft after the
+backfill cross-check).

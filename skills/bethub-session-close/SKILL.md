@@ -44,7 +44,7 @@ Run `TZ="Australia/Adelaide" date "+%Y-%m-%d %H:%M %Z"` via `Desktop Commander:s
 
 Verify before any close-out work begins:
 
-- [ ] Forward routing for next session is operator-confirmed. The Session 42 lesson — closing while forward routing was ambiguous left Session 43's opening prompt mis-targeted. If unclear, **stop and ask** before continuing.
+- [ ] **First-action gate (hard — operator instruction, S200).** Close-out does **not** complete until the **next session's first action is confirmed with the operator** — unless the operator has **explicitly** said there is no first action, in which case record that the next session opens with no defined first action and proceed. This is stronger than generic forward-routing confirmation: the runner launched at Step 12 drives the opening prompt's first action automatically, so an unconfirmed first action means an automated run against an unconfirmed target. If the first action isn't confirmed and hasn't been explicitly waived, **stop and ask** before continuing — do not guess. The Session 42 lesson (closing while forward routing was ambiguous left Session 43's opening prompt mis-targeted) is the weaker precedent this gate hardens.
 - [ ] All in-flight tool calls completed; nothing in pending state.
 - [ ] Pre-flight directory listing run (`Desktop Commander:list_directory` on rebuild folder root, depth 1). Surface any phantom or stale files.
 - [ ] No phantom files in scope — `system_snapshot.md`, `context_index.md`, `STATUS.md`, `CLAUDE.md` are v2 conventions and must not be created (governance.md §1).
@@ -132,7 +132,7 @@ Rotate session-N content in. Specifically:
 
 Write the opening prompt to `.close_out_backups/SESSION_<N+1>_opening_prompt.md`. Format per Session 43's working pattern (which itself follows governance.md "Open and close-out economy"):
 
-- Drafted-at timestamp + use-instruction (paste into a fresh chat in the Project).
+- Drafted-at timestamp + handoff note (the runner launched at close Step 12 consumes this prompt and runs its defined first action — no manual paste; per the Cat 2 auto-runner amendment).
 - One-paragraph orientation: re-run timestamp anchor per DR-021, pre-flight directory listing after named reads.
 - **Calendar-calibrated open directive** (Cat 1): compare current ACST against this close's timestamp.
 - **Drift-check directive** (Cat 1): verify (a) `current_state.md` last-updated matches this close's timestamp; (b) `sessions/SESSION_<N>.md` exists; (c) `v3_build_picture.md` updated if streams moved.
@@ -183,10 +183,26 @@ Re-run `Desktop Commander:list_directory` on the rebuild folder root and `sessio
 
 If verification fails on any item, surface to operator immediately. Do not declare close-out complete until state matches.
 
+### Step 12 — Launch the headless session runner (strictly last)
+
+The **final** action of close-out. Fires once, and only once **every** Step 1–11 verification has passed. Launch the out-of-session runner via `Desktop Commander:start_process`:
+
+```
+nohup /Users/tim/.bethub-cycle/session_cycle.sh "/Users/tim/Desktop/Projects/bethub-rebuild/.close_out_backups/SESSION_<N+1>_opening_prompt.md" >/dev/null 2>&1 & disown
+```
+
+Substitute `<N+1>` with the next session number — the same number used in Step 8's opening-prompt filename. The runner opens session N+1, runs the `bethub-session-open` ritual, executes the opening prompt's defined first action (honouring any `hold` / no-gate marker), then notifies the operator's laptop and phone.
+
+**Strictly last — non-negotiable.** This is the only step that spawns work outside the current session, so it runs after everything else is verified clean. If *any* Step 1–11 check failed — write failure, verification mismatch, missing opening prompt, phantom file, partial state — **do not launch.** Surface the failure and stop. Launching on top of a failed close-out would open the next session against a broken handoff; withholding the launch is the guarantee that **the next session never opens before this one's close-out is fully complete.**
+
+**Success condition:** `start_process` returns (the runner is detached and running). The close's one-line operator output (per Step 10 / Step 11) notes the launch — e.g. "close complete, Session N+1 runner launched." On any prior-step failure this step is skipped and the failure is what surfaces.
+
+**Why detached (`nohup … & disown`):** the runner outlives this chat session, so the current session can end without killing it. Output is discarded (`>/dev/null 2>&1`) because the runner reports to the operator through its own laptop/phone notification, not through this session's transcript.
+
 ## Negative scope — what this skill does not do
 
 - **Does not push through split triggers.** Step 3 explicitly recommends a minimal close on any split trigger. Pushing through is the Session 11 / Session 42 failure mode and is what this skill structurally prevents.
-- **Does not close without operator-confirmed forward routing.** Step 2 stops if forward routing is unclear. Step 8 names "Confirmed with operator" as load-bearing in the session record. Closing while routing is ambiguous left Session 43's opening prompt mis-targeted; the skill does not repeat that.
+- **Does not close without the next session's first action confirmed or explicitly waived.** Step 2's first-action gate (hard, S200) stops close-out until the operator has confirmed the next session's first action — or explicitly said there is none. Step 8 names "Confirmed with operator" as load-bearing in the session record. Because the Step 12 runner drives that first action automatically, closing on an unconfirmed first action means an unattended run against an unconfirmed target; the skill does not do that.
 - **Does not author a closing summary by default.** Cat 2 says omit when an opening prompt is produced. The skill defaults to omit; the operator can request explicitly.
 - **Does not modify canonical truth that wasn't substantively changed during the session.** `architecture.md`, `decisions.md`, `governance.md`, `vision.md`, `v3_data_requirements.md`, `dr029/dr029_scope.md`, `project_context.md` — these are session-substantive-work territory if they need editing, not close-out territory. Close-out updates `current_state.md`, `sessions/SESSION_<N>.md`, conditionally `v3_build_picture.md` and `standing_instructions.md`, and writes the opening prompt. Anything else means substantive work didn't get committed properly during the session.
 - **Does not silently degrade.** If something fails — file write, verification mismatch, anything — surface immediately. "Almost worked" is the same as "didn't work" for governance state.
@@ -226,6 +242,7 @@ Specific cross-references:
 - **Step 9 (sweep `.close_out_backups/`)** — pattern established Session 43 (Session 42's stale artefact caught at Session 43 open).
 - **Step 10 (closing summary)** — Cat 2 "Closing summary to operator: short, high-level, crucial detail only" + `governance.md` "Closing summary — when to omit."
 - **Step 11 (post-close verification)** — Cat 2 "After any long-running script call, re-run a state-snapshot read to verify canonical state matches expected."
+- **Step 12 (launch headless runner)** — Cat 2 (Session 198 opening-prompt auto-runner amendment) + operator instruction Session 199; the action-half that consumes the Step 8 opening prompt. Strictly last, all-verification-passed gate.
 
 When `standing_instructions.md` or `governance.md` is updated, this skill is reviewed at the next session open and updated if any procedural element shifted. The `bethub-session-open` skill catches that review explicitly via the drift-check.
 

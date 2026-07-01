@@ -15,7 +15,7 @@ The skill is the procedural layer that makes session-open consistent. It does no
 
 - Operator says "open session N", "start session N", "let's open session N", "kick off session N", "fresh chat for session N", or any close paraphrase that names a numbered session in the bethub-rebuild context.
 - Operator opens a fresh chat in the `bethub-rebuild` Claude Project and the first message is anything that implies starting work.
-- Operator pastes an opening prompt artefact (during transition; opening prompts are still load-bearing per `standing_instructions.md` Category 2 until `current_state.md` proves itself).
+- The headless runner launched at the previous session's close auto-opens the session and runs its defined first action (per the `standing_instructions.md` Category 2 auto-runner amendment); opening prompts remain load-bearing — the runner consumes the prompt, so there is no manual paste.
 
 **Does not fire:**
 
@@ -29,6 +29,19 @@ When the trigger is ambiguous, ask the operator directly: "Open Session N proper
 ## Open ritual — step by step
 
 Run these steps in order. Do not skip ahead. Each step has an explicit success condition; failure to meet it gets surfaced to the operator immediately, before continuing.
+
+### Step 0 — Fast-path: present the runner's saved open result
+
+Before running anything, check for the headless runner's saved result for this session at `/Users/tim/.bethub-cycle/results/SESSION_<N>_opening_prompt_result.md` (the runner writes one every close-launched open; the path basename derives from the opening-prompt file).
+
+**Fresh** = the result file exists AND its run stamp (the `_Ran: <ts>_` line, or the file mtime) is later than the previous session's close timestamp (from `sessions/SESSION_<N-1>.md` "Closed:" / `current_state.md` last-updated). A session-number mismatch is never fresh.
+
+- **If fresh → present it straight, no re-verify, and STOP the ritual here.** The runner already ran the full open ritual (timestamp anchor, required reads, pre-flight listing, governing DRs, drift-check, recap, conditional renders, first-action resolution) when it produced this result; re-running them is the exact double-work this step exists to kill. Surface the saved result as the session open (it already carries recap + drift-check + objective + the held-or-executed first action), prefixed with a one-line freshness note (e.g. "Runner opened this at 16:55 ACST — picking up from there."). Do **not** re-run Steps 1–7's heavy reads at open. The Project knowledge-base copies of `standing_instructions.md` / `project_context.md` cover behavioural discipline; load the canonical local reads only when substantive work begins that genuinely needs current-state precision. Then go straight to Step 8 (hand-off / wait for operator).
+- **If missing, stale (older than the last close), or session-number-mismatched → fall back to the full ritual** (Steps 1–8 below, as normal). A cold manual "open session N" with no runner result naturally lands here.
+
+**Why straight-no-re-verify (operator call, S200):** the runner's drift-check already ran; on a HOLD first action nothing has changed since; on an auto-executed first action the saved result reflects the work actually done. A live re-verify buys a few seconds of staleness insurance against near-zero risk and reintroduces the wait this step removes. Operator can override per-session ("re-run the open fresh").
+
+**Success condition:** either a fresh result is found and presented (ritual ends at Step 8), or the fast-path is cleanly declined and Steps 1–8 run in full. Never present a stale or mismatched result as if fresh.
 
 ### Step 1 — Timestamp anchor (DR-021)
 
@@ -187,10 +200,10 @@ Explicit non-behaviours, to keep the skill from drifting into adjacent ritual or
 
 - **Does not summarise or interpret the canonical truth.** The skill reads `standing_instructions.md`, `current_state.md`, `project_context.md`, and the named session record in full. It does not produce a "highlights" digest or a "key points" summary of these — they're read as written, not paraphrased.
 - **Does not pre-empt operator decisions.** If the orientation reads surface a routing question, an open question, or anything ambiguous, the skill flags it for the operator and waits for the call. It does not pick a route on the operator's behalf.
-- **Does not extend into substantive work.** The skill ends at Step 8 (hand-off). The next instruction comes from the operator (or from an opening prompt artefact if one was pasted). Drifting from open ritual directly into substantive work without the operator's go-ahead is out of scope.
+- **Does not extend into substantive work beyond the opening prompt's defined first action.** The skill ends at Step 8 (hand-off). The next step is either the prompt's first action (which the runner auto-executes when the prompt marks it no-gate) or the operator's instruction. Drifting into *other* substantive work without the operator's go-ahead is out of scope.
 - **Does not skip steps under "obvious" pressure.** "We just opened this morning, no need for a directory listing" is exactly the failure mode this skill prevents. Every step runs every open. The drift-check is cheapest precisely when nothing has gone wrong; skipping it because nothing seems wrong defeats its purpose.
 - **Does not author or modify `standing_instructions.md`, `current_state.md`, `v3_build_picture.md`, or any session record.** Those are session-close territory (or substantive-work territory for `standing_instructions.md` edits). The open ritual is read-only on canonical state.
-- **Does not suppress the close-out's opening prompt.** During the Phase 2 transition, opening prompts are still load-bearing per `standing_instructions.md` Category 2. If the operator pastes an opening prompt at session start, the skill runs alongside it (the prompt names the session-specific reads; the skill runs the procedural ritual). The two are complementary, not competing.
+- **Does not suppress the close-out's opening prompt.** Opening prompts remain load-bearing per `standing_instructions.md` Category 2. When the headless runner opens the session against the prompt (or the operator opens manually), the skill runs alongside it — the prompt names the session-specific reads and first action; the skill runs the procedural ritual. The two are complementary, not competing.
 
 ---
 

@@ -196,7 +196,7 @@ For empirical questions about v2 or capture.db state, queries run via `Desktop C
 
 ### Operator workflow
 
-Tim works between sessions reviewing artefacts (briefs that Claude has drafted, reports that Claude Code has produced). Operator review of artefacts is between-session work, not a session blocker — see standing_instructions.md Category 4. At every session close on a multi-session arc, Claude generates a complete opening prompt for the follow-up session without being asked. Tim pastes it into the next session to open.
+Tim works between sessions reviewing artefacts (briefs that Claude has drafted, reports that Claude Code has produced). Operator review of artefacts is between-session work, not a session blocker — see standing_instructions.md Category 4. At every session close on a multi-session arc, Claude generates a complete opening prompt for the follow-up session without being asked. The headless runner launched as the close's strictly-last action then consumes that prompt to open the next session and run its defined first action — no manual paste.
 
 Future state: once `current_state.md` proves itself reliable across two or three sessions running alongside opening prompts, Tim may switch to typing only "Open session N" / "Close session N" with Claude reading `current_state.md` plus `standing_instructions.md` plus flagged DRs to orient. No commitment to switch — switch only on evidence.
 
