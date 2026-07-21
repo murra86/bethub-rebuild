@@ -1,0 +1,13 @@
+=== netplan-eth0 (modem lanes) ===
+ipv4.ignore-auto-dns:                   yes
+ipv4.dns:                               --
+ipv4.dns-priority:                      200
+ipv4.never-default:                     yes
+ipv6.method:                            disabled
+ipv6.never-default:                     yes
+connection.multi-connect:               3 (multiple)
+=== netplan-wlan0 dns-priority ===
+ipv4.dns-priority:                      10
+=== 3proxy build ===
+Usage: /usr/local/bin/3proxy [conffile]
+git de5acb2, needs libssl-dev, from github.com/3proxy/3proxy

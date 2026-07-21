@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI pass #3 — BetLog row (P&L + insurance icon)</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#141b22; --line:#26313d; --line2:#1d2530;
+    --ink:#e7edf3; --dim:#93a4b5; --dimmer:#61707f;
+    --green:#3ec07a; --red:#e0655f; --navy:#63a8ff; --rose:#e07aa8; --amber:#e0a83e;
+    --new:#243447; --newedge:#2f6df0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:26px 18px 70px}
+  .wrap{max-width:1040px;margin:0 auto}
+  h1{font-size:21px;margin:0 0 4px}
+  .sub{color:var(--dim);margin:0 0 18px;font-size:13.5px}
+  h2{font-size:15px;margin:24px 0 10px}
+  .board{background:var(--panel);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:13px;min-width:900px}
+  th{color:var(--dimmer);font-weight:600;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;font-size:11px;letter-spacing:.3px;text-transform:uppercase}
+  td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line2);white-space:nowrap;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  .dim{color:var(--dim)} .dimmer{color:var(--dimmer)}
+  .sel{font-weight:600}
+  .chain{color:var(--dimmer);font-size:11px;margin-left:5px}
+  .back{color:var(--navy);font-weight:600} .lay{color:var(--rose);font-weight:600}
+  .won{color:var(--green);font-weight:600} .lost{color:var(--red);font-weight:600}
+  .pending{color:var(--amber);font-weight:600} .void{color:var(--dim);font-weight:600}
+  .fb{font-size:10.5px;font-weight:700;color:#cdc4fb;background:#211d3d;border:1px solid #3a3266;border-radius:20px;padding:2px 7px}
+  .gift{font-size:15px} .gift-lbl{font-size:10.5px;color:var(--green);margin-left:4px;font-weight:600}
+  /* new columns highlighted */
+  th.new,td.new{background:var(--new);border-left:1px solid var(--newedge)}
+  th.new{color:#a9c6f5}
+  .pos{color:var(--green);font-weight:700} .neg{color:var(--red);font-weight:700}
+  .callout{margin:14px 0 0;background:#0c1620;border:1px solid #21445f;border-left:3px solid var(--navy);border-radius:8px;padding:11px 14px;font-size:13px;color:#c6d6e6}
+  .callout b{color:#eaf2fb} .callout code{background:#132231;color:#a9c6f5;padding:1px 6px;border-radius:4px;font-size:12px}
+  .opt{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:640px){.opt{grid-template-columns:1fr}}
+  .card{background:#1a222c;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .card.pick{border-color:#22543a;background:#10261c}
+  .card .tag{font-size:10.5px;font-weight:700;letter-spacing:.5px;color:var(--green)}
+  .card h3{margin:3px 0 6px;font-size:14px} .card p{margin:0;font-size:12.6px;color:var(--dim)}
+  .foot{margin-top:24px;border-top:1px solid var(--line);padding-top:13px;color:var(--dimmer);font-size:12.5px}
+  .foot p{margin:7px 0} .foot b{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>UI pass #3 — the BetLog row</h1>
+  <p class="sub">Item 1 of the display tweaks. Two additions to your bet list, both from data already on the row — <b style="color:#a9c6f5">a P&amp;L column</b> and <b>a 🎁 on insurance-triggered bets</b>. Everything else is exactly as it is now. Made-up bets.</p>
+
+  <div class="board">
+    <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th><th>Race</th><th>Selection</th><th>Acct</th><th>Book</th>
+          <th>Side</th><th>Stake</th><th>Promo</th><th>State</th>
+          <th class="new">P&amp;L&nbsp;◂ new</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim">07-20</td><td class="dim">Wagga R7</td>
+          <td class="sel">County Kilkenny</td><td class="dim">Tim</td><td class="dim">BetRight</td>
+          <td class="back">back</td><td>$50.00 @ 3.40</td>
+          <td><span class="gift">🎁</span></td><td class="won">Won</td>
+          <td class="new pos">+$120.00</td>
+        </tr>
+        <tr>
+          <td class="dim">07-20</td><td class="dim">Wagga R7</td>
+          <td class="sel">Rapid Vision <span class="chain">⛓ cycle</span></td><td class="dim">Tim</td><td class="dim">BetRight</td>
+          <td class="lay">lay</td><td>$46.20 @ 2.72</td>
+          <td class="dimmer">—</td><td class="lost">Lost</td>
+          <td class="new neg">−$80.24</td>
+        </tr>
+        <tr>
+          <td class="dim">07-20</td><td class="dim">Sandown R6</td>
+          <td class="sel">Northerly Wind</td><td class="dim">Sarie</td><td class="dim">TAB</td>
+          <td class="back">back</td><td>$25.00 @ 4.20</td>
+          <td><span class="fb">FB</span></td><td class="won">Won</td>
+          <td class="new pos">+$80.00</td>
+        </tr>
+        <tr>
+          <td class="dim">07-20</td><td class="dim">Caulfield R4</td>
+          <td class="sel">Emerald Lady</td><td class="dim">Leigh</td><td class="dim">Sportsbet</td>
+          <td class="back">back</td><td>$30.00 @ 6.00</td>
+          <td><span class="gift">🎁</span></td><td class="pending">Pending</td>
+          <td class="new dimmer">—</td>
+        </tr>
+        <tr>
+          <td class="dim">07-20</td><td class="dim">Flemington R2</td>
+          <td class="sel">Quamby</td><td class="dim">Tim</td><td class="dim">Betfair</td>
+          <td class="lay">lay</td><td class="dim">Unmatched $40.00</td>
+          <td class="dimmer">—</td><td class="void">Void</td>
+          <td class="new dimmer">$0.00</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>The P&amp;L column</b> (far right, new): green for a win, red for a loss, a dash while pending, $0 on a void — the same figures that were previously only inside the expanded row. Now you see your result on the row without tapping in.
+  </div>
+  <div class="callout" style="border-left-color:var(--green)">
+    <b>The 🎁</b> sits in the Promo column and marks a bet your insurance promo actually triggered on (safety-net + a promo attached). So you can scan the list and instantly see which bets are riding insurance — distinct from a free bet (<span class="fb">FB</span>) or a plain promo.
+  </div>
+
+  <h2>One choice for you — where the P&amp;L column sits</h2>
+  <div class="opt">
+    <div class="card pick">
+      <div class="tag">RECOMMENDED</div>
+      <h3>Far right, after State</h3>
+      <p>"Won → +$120". Reads left-to-right as outcome-then-money, and it's a clean add — your locked 9-column order doesn't move at all, P&amp;L just tacks on the end.</p>
+    </div>
+    <div class="card">
+      <h3>Right after Stake</h3>
+      <p>Groups the money together (stake next to result). But it pushes Promo/State right and technically reorders the columns you locked — more disruptive to the layout you're used to.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p><b>Design intent:</b></p>
+    <p>1. <b>Nothing existing moves</b> (recommended option) — the 9 columns you locked stay put; P&amp;L is a 10th on the end and the 🎁 lives inside the Promo column that's already there.</p>
+    <p>2. <b>Both are display-only</b> — the P&amp;L and the insurance flag are already on every bet; nothing new gets calculated or stored.</p>
+    <p>3. The row gets a little wider with the 10th column. On the desktop tool that's fine; on a narrow window it scrolls sideways rather than squashing (as the board already does).</p>
+    <p>4. Icon is a placeholder — 🎁 gift, or a 🛡 shield if you'd rather it read as "protected". Your pick.</p>
+  </div>
+
+</div>
+</body>
+</html>

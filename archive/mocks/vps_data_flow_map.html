@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BetHub Data Flow Map — S238</title>
+<style>
+  :root{
+    --bg:#f6f4ef; --card:#ffffff; --ink:#1c2733; --muted:#5c6b7a;
+    --line:#d8d2c6; --navy:#1f3a5f; --teal:#0e7c7b; --amber:#b97e14;
+    --rose:#a94456; --green:#2e7d4f; --grey:#8a94a0;
+    --chip-t:#2e7d4f; --chip-h:#b97e14; --chip-g:#a94456;
+    --mono:"SF Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,"Segoe UI",sans-serif;padding:28px 34px 48px}
+  h1{font-size:21px;margin-bottom:2px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+
+  .rule{background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:14.5px;margin-bottom:26px}
+  .rule b{color:#ffd98a}
+
+  .lane{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.45);padding:18px 20px 20px;margin-bottom:26px;position:relative}
+  .lane-tag{position:absolute;top:-11px;left:16px;background:var(--bg);padding:0 10px;font-weight:700;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+  .lane-tag.live{color:var(--teal)} .lane-tag.mem{color:var(--navy)}
+  .lane-note{color:var(--muted);font-size:12.5px;margin:-6px 0 14px}
+
+  .flow{display:flex;align-items:stretch;gap:0}
+  .col{display:flex;flex-direction:column;gap:12px;flex:1;min-width:0}
+  .arrowcol{display:flex;flex-direction:column;justify-content:center;align-items:center;width:56px;flex:none;color:var(--grey)}
+  .arrowcol .a{font-size:22px;line-height:1}
+  .arrowcol .lbl{font-size:10.5px;text-align:center;color:var(--muted);margin-top:4px;max-width:56px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:0 1px 2px rgba(28,39,51,.06)}
+  .card h3{font-size:13.5px;margin-bottom:2px}
+  .card .meta{font-size:11.5px;color:var(--muted);margin-bottom:7px}
+  .card ul{list-style:none;font-size:12.5px}
+  .card li{padding:1.5px 0 1.5px 14px;position:relative}
+  .card li::before{content:"·";position:absolute;left:3px;color:var(--grey)}
+  .card.src{border-left:4px solid var(--teal)}
+  .card.db{border-left:4px solid var(--navy)}
+  .card.feat{border-left:4px solid var(--green)}
+  .card.feat.blocked{border-left-color:var(--rose)}
+  .card.live-side{border-left:4px solid var(--teal)}
+
+  .chips{display:flex;gap:5px;margin:6px 0 2px}
+  .chip{font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:20px;color:#fff}
+  .chip.t{background:var(--chip-t)} .chip.h{background:var(--chip-h)}
+  .chip.g{background:var(--chip-g)} .chip.off{background:#c9c3b8;color:#6d675d;text-decoration:line-through}
+  .chip.soon{background:#fff;color:var(--chip-g);border:1.5px dashed var(--chip-g);text-decoration:none}
+
+  .tbl{font:11.5px var(--mono);width:100%;border-collapse:collapse;margin-top:6px}
+  .tbl td{padding:2.5px 4px;border-top:1px dashed var(--line);white-space:nowrap}
+  .tbl td:last-child{text-align:right;color:var(--muted)}
+  .fields{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.5}
+  .fields b{color:var(--ink);font-weight:600}
+
+  .gaps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px}
+  .gap{background:#fdf6ec;border:1px solid #ecd9b0;border-radius:10px;padding:11px 13px;font-size:12.5px}
+  .gap b{display:block;font-size:12.5px;margin-bottom:3px}
+  .gap.red{background:#fbeff1;border-color:#e4bcc4}
+  .gap .tag{font:600 10px var(--mono);padding:2px 6px;border-radius:4px;background:var(--amber);color:#fff;margin-left:4px}
+  .gap.red .tag{background:var(--rose)}
+
+  h2{font-size:14px;margin:4px 0 10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .money{font:600 10.5px var(--mono);color:var(--teal)}
+  @media(max-width:1100px){.flow{flex-direction:column}.arrowcol{width:100%;padding:6px 0}.arrowcol .a{transform:rotate(90deg)}.gaps{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<h1>BetHub data flows — sources → capture → tool features</h1>
+<div class="sub">S238 survey, 13 Jul 2026 · companion to <span style="font-family:var(--mono)">vps_data_map.md</span> · row counts live from capture.db</div>
+
+<div class="rule">THE GOLDEN RULE — a race can be manually logged <b>if and only if</b> the collector saw its Betfair market live before the jump. Nothing restores a market id afterwards (Betfair delists closed markets). Caulfield, greyhounds, fragile harness: all this one rule.</div>
+
+<!-- LANE 1: LIVE LINE -->
+<div class="lane">
+  <div class="lane-tag live">Line 1 · Live — v3's own Betfair connection (VPS not involved)</div>
+  <div class="lane-note">Real-time. Works even when the VPS is down. All money paths live here.</div>
+  <div class="flow">
+    <div class="col" style="max-width:260px">
+      <div class="card live-side">
+        <h3>Betfair Exchange (live)</h3>
+        <div class="meta">v3 <span style="font-family:var(--mono)">betfair_client</span> · REST + stream</div>
+        <div class="chips"><span class="chip t">THORO</span><span class="chip h">HARNESS</span><span class="chip g">DOGS</span><span class="chip soon">SPORTS ready</span></div>
+      </div>
+    </div>
+    <div class="arrowcol"><div class="a">→</div><div class="lbl">direct</div></div>
+    <div class="col">
+      <div class="card feat"><h3>Race page — live prices, quick lay ⚡, burst flow</h3><div class="meta">back/lay ladders, projected SP, in-play flag</div></div>
+      <div class="card feat"><h3>Money paths <span class="money">FENCED</span></h3><div class="meta">bet placement · settlement workers · reconciliation · account funds</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LANE 2: MEMORY LINE -->
+<div class="lane">
+  <div class="lane-tag mem">Line 2 · Memory — the VPS capture (the tool's history)</div>
+  <div class="lane-note">Three sources write one database on the VPS. v3 reads it over the 8400 tunnel for ONE feature: manual bet entry. Analytics reads it directly.</div>
+  <div class="flow">
+
+    <!-- SOURCES -->
+    <div class="col" style="max-width:295px">
+      <div class="card src">
+        <h3>1 · Betfair collector</h3>
+        <div class="meta">continuous during racing · event type 7</div>
+        <div class="chips"><span class="chip t">THORO</span><span class="chip h">HARNESS</span><span class="chip off">DOGS</span></div>
+        <ul><li>market + selection ids <b>(the loggability stamp)</b></li><li>price snapshots: back/lay + depth</li><li>BSP, SP projections, matched volume</li><li>market status, scratchings</li></ul>
+      </div>
+      <div class="card src">
+        <h3>2 · Subscription feed</h3>
+        <div class="meta">nightly 05:30 + backlog sweep · The Racing API</div>
+        <div class="chips"><span class="chip t">THORO</span><span class="chip off">HARNESS</span><span class="chip off">DOGS</span></div>
+        <ul><li>results: positions, margins, official SP</li><li>runner form: jockey/trainer/weight/rating</li><li>breeding, stewards comments, career %</li><li>race class, prize, track condition</li></ul>
+      </div>
+      <div class="card src">
+        <h3>3 · Bookmaker odds capture</h3>
+        <div class="meta">continuous during racing · scrapes</div>
+        <div class="chips"><span class="chip t">THORO</span><span class="chip h">HARNESS</span><span class="chip g">DOGS</span></div>
+        <ul><li>fixed win/place odds per book over time</li><li>bookmaker race ids (TAB, SB, Lads, Neds…)</li><li><i>creates dog race rows — but with no Betfair identity</i></li></ul>
+      </div>
+    </div>
+
+    <div class="arrowcol"><div class="a">→</div><div class="lbl">upserts</div></div>
+
+    <!-- DB -->
+    <div class="col" style="max-width:300px">
+      <div class="card db">
+        <h3>capture.db (VPS)</h3>
+        <div class="meta">SQLite · one row per race/runner, snapshots over time</div>
+        <table class="tbl">
+          <tr><td>races</td><td>97,447</td></tr>
+          <tr><td>runners</td><td>582,937</td></tr>
+          <tr><td>betfair_snapshots</td><td>3,555,468</td></tr>
+          <tr><td>bookmaker_snapshots</td><td>6,404,672</td></tr>
+          <tr><td>betfair_historical</td><td>163,809</td></tr>
+        </table>
+        <div class="fields">
+          <b>races</b> — identity (date·venue·number), <b>betfair_win_market_id</b>, per-book ids, distance/class/condition/prize, coverage flags, capture status<br>
+          <b>runners</b> — name/number/barrier, <b>betfair_selection_id</b>, form, results (position·margin·SP), scratch detail<br>
+          <b>snapshots</b> — best back/lay + sizes, depth, BSP, minutes-to-jump, per-book win/place odds
+        </div>
+      </div>
+      <div class="card db">
+        <h3>Watchdogs on this box</h3>
+        <ul><li>liveness check 15-min → email alert (→ gmail + Claude watch)</li><li>ops/vps_health at session open</li><li>nightly backup, prune-first keep-2</li></ul>
+      </div>
+    </div>
+
+    <div class="arrowcol"><div class="a">→</div><div class="lbl">8400 tunnel · read-only API</div></div>
+
+    <!-- CONSUMERS -->
+    <div class="col">
+      <div class="card feat">
+        <h3>Log Past Bet (manual entry) — the ONLY v3 consumer</h3>
+        <div class="meta">via vps_client · 3 routes · date → venue → race → runner</div>
+        <ul><li>picker serves only rows holding a <b>betfair_win_market_id</b> (the golden rule, DR-032 §6)</li><li>settle-at-entry uses captured SP + results</li><li>stamps the bet leg with Betfair identity</li></ul>
+        <div class="chips"><span class="chip t">THORO</span><span class="chip h">HARNESS</span><span class="chip off">DOGS</span></div>
+      </div>
+      <div class="card feat">
+        <h3>Analytics (research line)</h3>
+        <div class="meta">reads capture.db directly, not through v3</div>
+        <ul><li>EV validation (163k results)</li><li>price-pressure research</li><li>Harville calibration</li></ul>
+      </div>
+      <div class="card feat blocked">
+        <h3>Sports (future — nothing captured)</h3>
+        <div class="meta">v3's live line already quotes sports; the VPS has no memory of them</div>
+        <ul><li>decision due at Strategy-3 build: sports collector vs stamp-at-bet-time</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAPS -->
+<h2>Gaps & fixes in flight</h2>
+<div class="gaps">
+  <div class="gap red"><b>Dogs never captured <span class="tag">W7</span></b>Collector subscribes horse racing only (type 7). Add type 4339 → dogs become as loggable as harness. ~2× daily race volume.</div>
+  <div class="gap"><b>Code mis-filing <span class="tag">W7</span></b>track_type knows surface, not code — harness sits as 'turf'. Stamp T/H/G from the Betfair event type at discovery.</div>
+  <div class="gap"><b>Harness has no safety net</b>Subscription backfill is thoroughbred-only. Harness (and dogs) loggability = collector uptime. Mitigation: W2 fast detect + W3 auto-restart.</div>
+  <div class="gap"><b>Outage = permanent loss <span class="tag">W1–W3</span></b>14h-blind alerts to an unwatched inbox, no self-restart. Hardening pass: gmail alerts ≤60 min, collector restarts itself, Claude watches the mailbox.</div>
+</div>
+
+</body>
+</html>

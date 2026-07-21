@@ -1,0 +1,330 @@
+<title>Money — BetHub v3 redesign mock</title>
+<style>
+  :root {
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --ink: #17160f;
+    --sub: #625f53;
+    --faint: #8d8a7c;
+    --line: #e5e3d8;
+    --line-soft: #efeee6;
+    --navy: #33507a;
+    --navy-soft: #eef2f8;
+    --profit: #0b7d2e;
+    --loss: #c0392b;
+    --loss-soft: #faf0ee;
+    --amber-soft: #faf3dd;
+    --amber-ink: #7c6410;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #191914;
+      --card: #201f19;
+      --ink: #f0efe6;
+      --sub: #b3b0a0;
+      --faint: #85826f;
+      --line: #35342b;
+      --line-soft: #2a2922;
+      --navy: #8fb0dd;
+      --navy-soft: #232a36;
+      --profit: #4dbb6e;
+      --loss: #e57567;
+      --loss-soft: #33221f;
+      --amber-soft: #322b14;
+      --amber-ink: #d9b954;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #191914; --card: #201f19; --ink: #f0efe6; --sub: #b3b0a0;
+    --faint: #85826f; --line: #35342b; --line-soft: #2a2922;
+    --navy: #8fb0dd; --navy-soft: #232a36; --profit: #4dbb6e;
+    --loss: #e57567; --loss-soft: #33221f;
+    --amber-soft: #322b14; --amber-ink: #d9b954;
+  }
+  :root[data-theme="light"] {
+    --paper: #fafaf7; --card: #ffffff; --ink: #17160f; --sub: #625f53;
+    --faint: #8d8a7c; --line: #e5e3d8; --line-soft: #efeee6;
+    --navy: #33507a; --navy-soft: #eef2f8; --profit: #0b7d2e;
+    --loss: #c0392b; --loss-soft: #faf0ee;
+    --amber-soft: #faf3dd; --amber-ink: #7c6410;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    margin: 0;
+    padding: 28px 20px 64px;
+    line-height: 1.45;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+
+  .mockbar {
+    font-size: 12px; color: var(--amber-ink); background: var(--amber-soft);
+    border-radius: 6px; padding: 6px 12px; margin-bottom: 22px;
+    display: inline-block;
+  }
+
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--faint); font-weight: 600;
+  }
+
+  /* ---- headline band: hero P&L + KPI tiles ---- */
+  .band {
+    display: grid; grid-template-columns: minmax(240px, 1.1fr) 2fr;
+    gap: 14px; align-items: stretch; margin-bottom: 10px;
+  }
+  @media (max-width: 720px) { .band { grid-template-columns: 1fr; } }
+
+  .hero {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 20px 16px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .hero .figure {
+    font-size: 52px; font-weight: 750; letter-spacing: -0.01em;
+    line-height: 1.05; margin: 6px 0 2px; color: var(--loss);
+  }
+  .hero .figure.profit { color: var(--profit); }
+  .hero .window { font-size: 12.5px; color: var(--sub); }
+  .audit {
+    margin-top: 14px; font-size: 12.5px; color: var(--sub);
+    display: flex; gap: 7px; align-items: baseline;
+  }
+  .audit .tick { color: var(--profit); font-weight: 700; }
+
+  .tiles {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+  }
+  @media (max-width: 500px) { .tiles { grid-template-columns: 1fr; } }
+  .tile {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 14px 16px 12px;
+  }
+  .tile .val {
+    font-size: 24px; font-weight: 700; margin-top: 4px; letter-spacing: -0.01em;
+  }
+  .tile .note { font-size: 12px; color: var(--sub); margin-top: 2px; }
+  .tile .val .pos { color: var(--profit); }
+
+  /* ---- person cards ---- */
+  h2.section {
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--faint); font-weight: 650; margin: 30px 0 10px;
+  }
+  .people {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+  }
+  @media (max-width: 720px) { .people { grid-template-columns: 1fr; } }
+  .person {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 12px 16px 6px;
+  }
+  .person header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+  .person header .name { font-weight: 700; font-size: 15px; }
+  .person header .holdertotal {
+    font-variant-numeric: tabular-nums; font-weight: 700; font-size: 15px;
+  }
+  .person table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .person td { padding: 7px 0; border-bottom: 1px solid var(--line-soft); }
+  .person tr:last-child td { border-bottom: none; }
+  .person td.num {
+    text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .person td.chips { text-align: right; width: 30%; }
+  td .chip {
+    display: inline-block; font-size: 11px; border-radius: 4px;
+    padding: 1px 7px; margin-left: 6px; white-space: nowrap;
+  }
+  .chip.fb { background: var(--navy-soft); color: var(--navy); }
+  .chip.pending { background: var(--amber-soft); color: var(--amber-ink); }
+  .floatrow td { color: var(--sub); }
+  .floatrow td:first-child::before {
+    content: "◇ "; color: var(--faint);
+  }
+  .plusminus { border: 1px solid var(--line); background: none;
+    color: var(--sub); border-radius: 5px; font-size: 12px;
+    padding: 1px 8px; cursor: pointer; font-family: inherit;
+  }
+  .plusminus:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ---- movements ledger ---- */
+  details.moves {
+    margin-top: 26px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 10px;
+  }
+  details.moves summary {
+    cursor: pointer; padding: 12px 16px; font-size: 13px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--faint); font-weight: 650; list-style: none;
+    display: flex; justify-content: space-between;
+  }
+  details.moves summary::after { content: "▾"; color: var(--faint); }
+  details[open].moves summary::after { content: "▴"; }
+  .moves table {
+    width: 100%; border-collapse: collapse;
+    font-family: var(--mono); font-size: 12.5px;
+  }
+  .moves td {
+    padding: 6px 16px; border-top: 1px solid var(--line-soft);
+    color: var(--sub);
+  }
+  .moves td.num {
+    text-align: right; font-variant-numeric: tabular-nums; color: var(--ink);
+  }
+  .moves tr.reversed td { color: var(--faint); text-decoration: line-through; }
+  .moves tr.reversed td:last-child { text-decoration: none; }
+  .moves .tag {
+    font-family: var(--sans); font-size: 10.5px; border-radius: 4px;
+    padding: 1px 6px; margin-left: 6px; text-decoration: none;
+    display: inline-block;
+  }
+  .tag.rev { background: var(--navy-soft); color: var(--navy); }
+  .tag.was { background: var(--line-soft); color: var(--faint); }
+  .moves .revbtn {
+    font-family: var(--sans); font-size: 11.5px; color: var(--sub);
+    background: none; border: 1px solid var(--line); border-radius: 5px;
+    padding: 1px 8px; cursor: pointer;
+  }
+
+  .footnote {
+    margin-top: 26px; font-size: 12.5px; color: var(--sub);
+    border-top: 1px solid var(--line); padding-top: 14px; max-width: 66ch;
+  }
+  .footnote strong { color: var(--ink); }
+</style>
+
+<div class="wrap">
+  <div class="mockbar">Design mock — live figures as at 15:25 ACST, 9 Jul 2026. Nothing here is wired up.</div>
+
+  <!-- Headline band -->
+  <div class="band">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Profit &amp; loss</div>
+        <div class="figure">▼ −$3.30</div>
+        <div class="window">Since day 0 · 7–9 Jul · after $1,652.00 banked back to you</div>
+      </div>
+      <div class="audit">
+        <span class="tick">✓</span>
+        <span>Self-check passed — the cash ledger and the bet ledger derive this number independently and agree to the cent.</span>
+      </div>
+    </div>
+
+    <div class="tiles">
+      <div class="tile">
+        <div class="eyebrow">Operation cash</div>
+        <div class="val">$11,458.67</div>
+        <div class="note">$11,083.65 at books · $375.02 in floats</div>
+      </div>
+      <div class="tile">
+        <div class="eyebrow">Back to your bank</div>
+        <div class="val"><span class="pos">+$1,652.00</span></div>
+        <div class="note">sent in $0 · returned $1,652.00 · net, since day 0</div>
+      </div>
+      <div class="tile">
+        <div class="eyebrow">At risk right now</div>
+        <div class="val">$0.00</div>
+        <div class="note">no pending stakes</div>
+      </div>
+      <div class="tile">
+        <div class="eyebrow">Bonus bets in hand</div>
+        <div class="val">$0.00</div>
+        <div class="note">0 free bets banked</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Person cards -->
+  <h2 class="section">Where the money sits</h2>
+  <div class="people">
+    <div class="person">
+      <header><span class="name">Sarie</span><span class="holdertotal">$4,293.03</span></header>
+      <table>
+        <tr><td>TABTouch</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$1,287.50</td></tr>
+        <tr><td>TAB</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$1,040.00</td></tr>
+        <tr><td>PointsBet</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$889.80</td></tr>
+        <tr><td>Betr</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$695.73</td></tr>
+        <tr><td>StarSports</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$380.00</td></tr>
+        <tr class="floatrow"><td>Cash float <button class="plusminus">＋/−</button></td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$0.00</td></tr>
+      </table>
+    </div>
+
+    <div class="person">
+      <header><span class="name">Tim</span><span class="holdertotal">$4,614.57</span></header>
+      <table>
+        <tr><td>BetFair</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$3,022.37</td></tr>
+        <tr><td>TAB</td><td class="chips"><span class="chip fb">$50 free bet</span> <button class="plusminus">＋/−</button></td><td class="num">$1,592.20</td></tr>
+      </table>
+    </div>
+
+    <div class="person">
+      <header><span class="name">Kate</span><span class="holdertotal">$1,560.87</span></header>
+      <table>
+        <tr><td>PointsBet</td><td class="chips"><span class="chip pending">$25 pending</span> <button class="plusminus">＋/−</button></td><td class="num">$734.00</td></tr>
+        <tr><td>TABTouch</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$246.85</td></tr>
+        <tr><td>CrownBet</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$205.00</td></tr>
+        <tr><td>StarSports</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$0.00</td></tr>
+        <tr class="floatrow"><td>Cash float <button class="plusminus">＋/−</button></td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$375.02</td></tr>
+      </table>
+    </div>
+
+    <div class="person">
+      <header><span class="name">Leigh</span><span class="holdertotal">$990.20</span></header>
+      <table>
+        <tr><td>TAB</td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$990.20</td></tr>
+        <tr class="floatrow"><td>Cash float <button class="plusminus">＋/−</button></td><td class="chips"><button class="plusminus">＋/−</button></td><td class="num">$0.00</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Movements ledger -->
+  <details class="moves">
+    <summary><span>Money movements — today</span></summary>
+    <table>
+      <tr>
+        <td>15:00</td><td>Return to Tim's bank — Kate</td>
+        <td class="num">$1,652.00</td><td></td>
+      </tr>
+      <tr>
+        <td>14:58</td><td>Withdraw — Kate @ PickleBet</td>
+        <td class="num">$557.02</td>
+        <td><button class="revbtn">Reverse</button></td>
+      </tr>
+      <tr class="reversed">
+        <td>14:58</td><td>Deposit — Kate @ StarSports <span class="tag was">reversed</span></td>
+        <td class="num">$670.00</td><td></td>
+      </tr>
+      <tr>
+        <td>14:59</td><td>Withdraw — Kate @ StarSports <span class="tag rev">↩ reversal</span></td>
+        <td class="num">$670.00</td><td></td>
+      </tr>
+      <tr>
+        <td>14:57</td><td>Withdraw — Kate @ PointsBet</td>
+        <td class="num">$800.00</td>
+        <td><button class="revbtn">Reverse</button></td>
+      </tr>
+      <tr>
+        <td>13:53</td><td>Deposit — Kate @ CrownBet</td>
+        <td class="num">$325.00</td>
+        <td><button class="revbtn">Reverse</button></td>
+      </tr>
+    </table>
+  </details>
+
+  <p class="footnote">
+    <strong>Recording movements.</strong> Every book row’s ＋/− records a deposit or withdrawal; a float row’s ＋/− records a top-up, a return to your bank, or a profit share. Each entry lands in the movements ledger below, where it can be reversed.<br><br><strong>How the P&amp;L is derived.</strong> Cash at books and floats now,
+    plus everything returned to your bank and any profit shares, minus what you
+    sent in and the opening balances. The same number is derived a second way —
+    every settled bet's win/loss plus bonus cash, minus stakes still on — and the
+    two must agree before the headline shows a green tick. Your own float isn't
+    shown: money you take out is banked, not floated, and it lives in the
+    "Back to your bank" tile.
+  </p>
+</div>

@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All pages — clean pass (mock)</title>
+<style>
+  :root {
+    --paper: #191914; --card: #201f19; --card2: #262520;
+    --ink: #f0efe6; --sub: #b3b0a0; --faint: #85826f;
+    --line: #35342b; --line-soft: #2a2922;
+    --navy: #8fb0dd; --navy-soft: #232a36; --sel: #2c3b52;
+    --rose: #d795ab; --rose-soft: #322028;
+    --profit: #4dbb6e; --profit-soft: #1d2b1f;
+    --loss: #e57567; --loss-soft: #33201c;
+    --amber: #d9b954; --amber-soft: #322b14;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--sub); margin: 0;
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 13px; line-height: 1.45; padding-bottom: 80px;
+  }
+  .mockbar {
+    font-size: 12px; color: var(--amber); background: var(--amber-soft);
+    border-radius: 6px; padding: 6px 12px; margin: 14px 18px; display: inline-block;
+  }
+
+  /* ---- the nav, redesigned (active page now visible) ---- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; gap: 4px;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    padding: 8px 18px; flex-wrap: wrap;
+  }
+  .brand { font-weight: 650; color: var(--ink); margin-right: 12px; font-size: 13.5px; }
+  .navLink {
+    background: none; border: 1px solid transparent; color: var(--sub);
+    border-radius: 6px; padding: 4px 10px; font-size: 12.5px; cursor: pointer;
+  }
+  .navLink:hover { background: var(--card2); color: var(--ink); }
+  .navLink.on { background: var(--sel); border-color: var(--navy); color: var(--ink); }
+  .navRight { margin-left: auto; }
+
+  .page { max-width: 1000px; margin: 18px auto; padding: 0 18px; display: none; }
+  .page.on { display: block; }
+
+  h1 { font-size: 17px; color: var(--ink); font-weight: 650; margin: 6px 0 2px; }
+  .subhead { color: var(--faint); font-size: 12.5px; margin: 0 0 14px; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+  .panelHead {
+    padding: 7px 12px; border-bottom: 1px solid var(--line); color: var(--faint);
+    font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 650;
+    display: flex; gap: 8px; align-items: baseline;
+  }
+  .panelHead .count { color: var(--amber); }
+  .rowlabel { font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); font-weight: 650; text-align: right; }
+
+  .chip {
+    background: var(--card2); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 7px; padding: 4px 11px; cursor: pointer; font-size: 12px; font-weight: 600;
+    display: inline-flex; flex-direction: column; align-items: center; line-height: 1.25;
+  }
+  .chip.on { background: var(--sel); border-color: var(--navy); }
+  .chip.dim { opacity: .55; font-weight: 500; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .filterGrid { display: grid; grid-template-columns: 56px 1fr; gap: 7px 10px; align-items: center; padding: 10px 12px; }
+  .dateInput, select.mock {
+    background: var(--paper); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 5px; padding: 3px 8px; font-size: 12px; font-family: var(--mono);
+  }
+  select.mock { font-family: inherit; }
+
+  table.t { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .t th {
+    background: var(--card2); padding: 5px 10px; text-align: left; font-size: 10px;
+    text-transform: uppercase; letter-spacing: .05em; color: var(--faint); font-weight: 650;
+    border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .t td { padding: 5px 10px; border-bottom: 1px solid var(--line-soft); }
+  .t td.num, .t th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .t tr:hover td { background: var(--card2); }
+  .t .ink { color: var(--ink); font-weight: 550; }
+
+  .sidetag {
+    font-size: 10px; font-weight: 800; letter-spacing: .06em; border-radius: 4px;
+    padding: 1px 7px; text-align: center; display: inline-block; width: 46px;
+  }
+  .sidetag.back { color: var(--navy); border: 1px solid var(--navy); background: var(--sel); }
+  .sidetag.lay { color: var(--rose); border: 1px solid var(--rose); background: var(--rose-soft); }
+
+  .won { color: var(--profit); font-weight: 700; }
+  .lost { color: var(--loss); font-weight: 600; }
+  .voided { color: var(--faint); text-decoration: line-through; }
+  .pend { color: var(--faint); }
+  .flag { color: var(--amber); font-weight: 700; }
+  .fbmark { background: var(--amber-soft); color: var(--amber); border-radius: 4px; padding: 0 5px; font-size: 10px; font-weight: 700; }
+
+  .btn {
+    background: var(--card2); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 6px; padding: 3px 10px; cursor: pointer; font-size: 11.5px;
+  }
+  .btn:hover { border-color: var(--faint); }
+  .btnWon { border-color: var(--profit); color: var(--profit); background: var(--profit-soft); }
+  .btnLost { border-color: var(--loss); color: var(--loss); background: var(--loss-soft); }
+  .btnVoid { color: var(--faint); }
+  .btnNavy { background: var(--sel); border-color: var(--navy); color: var(--ink); font-weight: 650; }
+  .btnGhost { background: none; color: var(--sub); }
+
+  .inlineConfirm {
+    background: var(--amber-soft); border: 1px solid var(--amber); border-radius: 6px;
+    color: var(--amber); padding: 4px 10px; font-size: 11.5px; display: inline-flex; gap: 8px; align-items: center;
+  }
+
+  .note { font-size: 12.5px; color: var(--sub); max-width: 74ch; }
+  .note b { color: var(--ink); }
+  .why { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 10px; }
+  .why h3 { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 0 0 6px; }
+
+  .cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 720px) { .cards2 { grid-template-columns: 1fr; } }
+
+  .toast {
+    background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--profit);
+    border-radius: 8px; padding: 7px 12px; font-size: 12.5px; color: var(--sub); margin-bottom: 12px;
+  }
+  .toast b { color: var(--profit); }
+
+  .secNum { color: var(--navy); font-weight: 700; margin-right: 6px; }
+  .fieldCol { display: inline-flex; flex-direction: column; gap: 2px; font-size: 10px; color: var(--faint); text-transform: uppercase; letter-spacing: .05em; }
+  .fieldCol input { background: var(--paper); border: 1px solid var(--line); color: var(--ink); border-radius: 5px; padding: 3px 8px; width: 92px; font-size: 12.5px; font-family: var(--mono); }
+  .formRow { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; padding: 10px 12px; }
+</style>
+</head>
+<body>
+
+<div class="mockbar">Design mock — every page in the race-page language. Click the nav to flip pages. Nothing is wired.</div>
+
+<!-- ================= NAV (redesigned: active page visible) ================= -->
+<nav class="nav" id="nav">
+  <span class="brand">BetHub v3</span>
+  <button class="navLink" disabled title="Already live — built earlier today">Racing ✓</button>
+  <button class="navLink on" data-page="burst">Burst review</button>
+  <button class="navLink" data-page="queue">Manual queue</button>
+  <button class="navLink" data-page="betlog">BetLog</button>
+  <button class="navLink" data-page="logpast">Log Past Bet</button>
+  <button class="navLink" data-page="money" title="The reference look — unchanged">Money ✓</button>
+  <button class="navLink" data-page="accounts">Accounts</button>
+  <button class="navLink navRight" data-page="health">Health</button>
+</nav>
+
+<!-- ================= BURST REVIEW ================= -->
+<div class="page on" id="page-burst">
+  <h1>Burst review</h1>
+  <p class="subhead">End-of-day sweep — settle what the day left open, pair bonus spends to their credits.</p>
+
+  <div class="panel">
+    <div class="panelHead">Unsettled soft-book bets <span class="count">· 2</span></div>
+    <table class="t">
+      <tr>
+        <td><span class="sidetag back">BACK</span></td>
+        <td class="ink">Dam Impact</td>
+        <td>Kate · CrownBet</td>
+        <td class="num">$50.00 @ 7.00</td>
+        <td style="text-align:right">
+          <button class="btn btnWon">Won</button>
+          <button class="btn btnLost">Lost</button>
+          <button class="btn btnVoid">Void</button>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="sidetag back">BACK</span></td>
+        <td class="ink">Zousain Star</td>
+        <td>Sarie · TABTouch</td>
+        <td class="num">$50.00 @ 4.60</td>
+        <td style="text-align:right">
+          <span class="inlineConfirm">Lost — but placed. Bonus landed? <button class="btn btnWon">Yes — credit $50</button> <button class="btn">just lost</button> <button class="btn btnGhost">✕</button></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead">Bonus spends awaiting their credit <span class="count">· 1</span></div>
+    <table class="t">
+      <tr>
+        <td><span class="fbmark">FREE</span></td>
+        <td class="ink">$50 spend — Chapel Lane</td>
+        <td>Kate · CrownBet</td>
+        <td class="num">$50.00 @ 17.0</td>
+        <td style="text-align:right"><button class="btn btnNavy">Pair with $50 credit</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead">Banked, unspent bonuses</div>
+    <table class="t">
+      <tr><td class="ink">$25.00</td><td>Leigh · PointsBet</td><td class="pend">2nd → Bonus $25 · Tue</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead">Watchdog — lost qualifiers with no credit <span style="color:var(--profit)">· clear</span></div>
+    <table class="t"><tr><td class="pend">Nothing waiting. <label style="float:right;font-size:11px"><input type="checkbox"> include dismissed</label></td></tr></table>
+  </div>
+
+  <div class="why">
+    <h3>What changed</h3>
+    <p class="note">Same four sections, same one-tap actions — recut from its own odd near-black
+    style onto the app language. <b>Won / Lost are now green / red outline buttons</b> instead of
+    identical grey ones, so at the end of a long day the finger goes to the right button without
+    reading. Section counts ride the headers; the all-clear reads green.</p>
+  </div>
+</div>
+
+<!-- ================= MANUAL QUEUE ================= -->
+<div class="page" id="page-queue">
+  <h1>Manual queue</h1>
+  <p class="subhead">Bets the settlement worker couldn't resolve on its own — each one wants a human call.</p>
+
+  <div class="panel">
+    <div class="panelHead">Parked <span class="count">· 1</span> <span style="margin-left:auto;text-transform:none;letter-spacing:0">auto-refreshing · 3s</span></div>
+    <table class="t">
+      <thead><tr><th>Event</th><th>Runner</th><th class="num">Stake</th><th class="num">Price</th><th>Why it parked</th><th class="num">Waiting</th></tr></thead>
+      <tr>
+        <td class="ink">Murray Bridge R5</td>
+        <td class="ink">Salty Rain</td>
+        <td class="num">$39.68</td>
+        <td class="num">6.4</td>
+        <td><span class="flag">market closed, no winner filed</span></td>
+        <td class="num">12 min</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="panel" style="max-width:640px">
+    <div class="panelHead">The bet card (opens on tap)</div>
+    <div style="padding:12px">
+      <div style="color:var(--ink);font-weight:650;font-size:14px">Salty Rain — Murray Bridge R5</div>
+      <div class="pend" style="margin:2px 0 10px">LAY $39.68 @ 6.4 · Betfair · placed 14:29, parked 14:41</div>
+      <div class="note" style="margin-bottom:10px">Betfair last read: market <b>CLOSED</b>, no winner on any runner —
+      <span class="flag">held rather than guessed</span> (the market-winnerless hold).</div>
+      <div class="chips">
+        <button class="btn btnWon">Settle won</button>
+        <button class="btn btnLost">Settle lost</button>
+        <button class="btn btnVoid">Void</button>
+        <button class="btn btnGhost">close — no action</button>
+      </div>
+      <div style="margin-top:8px"><span class="inlineConfirm">Settle WON for +$39.68? reason (optional): <input style="background:none;border:none;border-bottom:1px solid var(--amber);color:var(--ink);width:130px"> <button class="btn btnWon">Confirm</button> <button class="btn btnGhost">✕</button></span></div>
+    </div>
+  </div>
+
+  <div class="why">
+    <h3>What changed</h3>
+    <p class="note">Dark re-skin of the table and the bet card. The card leads with <b>what the bet is and
+    why it parked in plain words</b>; the raw Betfair detail folds below instead of dominating. The
+    won/lost/void buttons carry their status colours, and the confirm step happens <b>inline in amber</b>
+    — same pattern as the insurance question on BetLog — instead of a second panel. Void is plain grey
+    now (it was purple here and nowhere else).</p>
+  </div>
+</div>
+
+<!-- ================= BETLOG ================= -->
+<div class="page" id="page-betlog">
+  <h1>BetLog</h1>
+  <p class="subhead">Every bet, newest first.</p>
+
+  <div class="panel">
+    <div class="filterGrid">
+      <span class="rowlabel">person</span>
+      <span class="chips"><button class="chip on">Kate</button><button class="chip">Sarie</button><button class="chip">Tim</button><button class="chip">Leigh</button></span>
+      <span class="rowlabel">book</span>
+      <span class="chips"><button class="chip">CrownBet</button><button class="chip">PointsBet</button><button class="chip">TABTouch</button><button class="chip">Betfair</button></span>
+      <span class="rowlabel">show</span>
+      <span class="chips">
+        <button class="chip on">Pending</button><button class="chip">Settled</button><button class="chip">All</button>
+        <span style="width:10px"></span>
+        <button class="chip">Free</button><button class="chip">Cash</button>
+        <span style="width:10px"></span>
+        <select class="mock"><option>any promo</option></select>
+        <input type="date" class="dateInput" value="2026-07-09"> <input type="date" class="dateInput">
+      </span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <table class="t">
+      <thead><tr><th></th><th>Selection</th><th>Who</th><th class="num">Stake @ price</th><th>State</th><th class="num">P&amp;L</th></tr></thead>
+      <tr>
+        <td><span class="sidetag back">BACK</span></td>
+        <td class="ink">Dam Impact <span class="fbmark">FREE</span></td>
+        <td>Kate · CrownBet</td>
+        <td class="num">$50.00 @ 7.00</td>
+        <td class="pend">pending</td>
+        <td class="num pend">—</td>
+      </tr>
+      <tr>
+        <td><span class="sidetag lay">LAY</span></td>
+        <td class="ink">Dam Impact ⛓</td>
+        <td>Tim · Betfair</td>
+        <td class="num">$39.68 @ 6.4 <span class="flag">partial $14.38</span></td>
+        <td class="pend">working</td>
+        <td class="num pend">—</td>
+      </tr>
+      <tr>
+        <td><span class="sidetag back">BACK</span></td>
+        <td class="ink">Zousain Star</td>
+        <td>Sarie · TABTouch</td>
+        <td class="num">$50.00 @ 4.60</td>
+        <td class="won">Won</td>
+        <td class="num won">+$180.00</td>
+      </tr>
+      <tr>
+        <td><span class="sidetag back">BACK</span></td>
+        <td class="ink">Final Award</td>
+        <td>Leigh · PointsBet</td>
+        <td class="num">$25.00 @ 8.00</td>
+        <td class="lost">Lost</td>
+        <td class="num lost">−$25.00</td>
+      </tr>
+    </table>
+    <div style="padding:10px 12px;border-top:1px solid var(--line)">
+      <div class="pend" style="font-size:11px;margin-bottom:6px">TUCKED-IN DETAIL (open row)</div>
+      <div class="note" style="margin-bottom:8px">Placed 14:31:22 · commission 8.0% (default) · strategy <b>promo qualifier</b> · cycle net <b class="won">+$4.84</b></div>
+      <div class="chips">
+        <button class="btn btnWon">Won</button>
+        <button class="btn btnLost">Lost</button>
+        <button class="btn btnVoid">Void</button>
+        <button class="btn">edit</button>
+        <span class="inlineConfirm">Settle WON — pays $300.00? <button class="btn btnWon">Confirm</button> <button class="btn btnGhost">✕</button></span>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;color:var(--faint);font-size:12px"><span>‹ newer</span><span>1–25 of 212</span><span>older ›</span></div>
+
+  <div class="why">
+    <h3>What changed</h3>
+    <p class="note"><b>The seven filter dropdowns become the same chip rows as the race page</b> — person,
+    book, then show-state — so filtering is taps, not menu-diving, and the codes-only
+    "account-at-book" dropdown is gone (person + book chips cover it). Rows carry the BACK/LAY tags
+    and the one green / one red / amber-for-partial discipline. <b>Settle and delete confirms move
+    inline</b> (amber strip, same as the insurance question) — no more browser pop-ups, which also
+    means no more risk of the pop-up jamming the page. Everything else — tuck-in detail, edit,
+    pagination, 10-second refresh — stays where it was.</p>
+  </div>
+</div>
+
+<!-- ================= LOG PAST BET ================= -->
+<div class="page" id="page-logpast">
+  <h1>Log Past Bet</h1>
+  <p class="subhead">A bet that already ran — find the race, describe the bet, give the outcome.</p>
+
+  <div class="panel">
+    <div class="panelHead"><span class="secNum">1</span> Race</div>
+    <div class="formRow">
+      <label class="fieldCol">date<input value="2026-07-08"></label>
+      <select class="mock"><option>Gawler (8 races)</option></select>
+      <select class="mock"><option>R6</option></select>
+      <select class="mock"><option>4. Port Vincent (b4)</option></select>
+      <span class="pend" style="font-size:11px">✓ matched — Gawler R6 1100m, Win market found</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead"><span class="secNum">2</span> Bet</div>
+    <div class="filterGrid">
+      <span class="rowlabel">person</span>
+      <span class="chips"><button class="chip">Kate</button><button class="chip on">Sarie</button><button class="chip">Tim</button><button class="chip">Leigh</button></span>
+      <span class="rowlabel">book</span>
+      <span class="chips"><button class="chip on">TABTouch</button><button class="chip">CrownBet</button><button class="chip">PointsBet</button><button class="chip dim">StarSports</button></span>
+      <span class="rowlabel">side</span>
+      <span class="chips"><button class="chip on">Back</button><button class="chip">Lay</button>
+        <span style="width:14px"></span>
+        <label class="fieldCol">stake $<input value="50.00"></label>
+        <label class="fieldCol">odds<input value="4.60"></label>
+        <select class="mock"><option>promo: 2nd → Bonus $50</option></select>
+        <button class="chip">Free bet</button>
+      </span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead"><span class="secNum">3</span> Outcome</div>
+    <div class="formRow">
+      <button class="chip on">Won</button><button class="chip">Lost</button><button class="chip">Void</button>
+      <label style="color:var(--sub);font-size:12px"><input type="checkbox" checked> ran in the insured spots</label>
+      <span style="flex:1"></span>
+      <button class="btn btnNavy" style="padding:6px 16px">Log settled bet</button>
+    </div>
+  </div>
+
+  <div class="toast"><b>✓ Saved</b> — Sarie · TABTouch · $50 on Port Vincent @ 4.60, Won · bonus credited $50</div>
+
+  <div class="why">
+    <h3>What changed</h3>
+    <p class="note">The good bones stay — <b>the 1·2·3 sections are the right shape</b> and the race
+    cascade stays as dropdowns (venues and runners are long lists; menus are correct there). What
+    turns into chips is everything with few options: <b>person, book, Back/Lay, Won/Lost/Void</b> —
+    same muscle memory as the race page, balances under the book chips too. The out-of-place dark
+    "saved" island becomes the standard green-edged toast. One page, one language.</p>
+  </div>
+</div>
+
+<!-- ================= MONEY (reference) ================= -->
+<div class="page" id="page-money">
+  <h1>Money</h1>
+  <p class="subhead">Unchanged — this page set the standard the rest now follows.</p>
+  <div class="panel"><div style="padding:14px">
+    <span style="font-size:40px;font-family:var(--mono);color:var(--loss);font-weight:700">▼ −$3.30</span>
+    <span class="pend" style="margin-left:12px">self-check ✓ both ledgers agree to the cent</span>
+  </div></div>
+  <div class="why"><h3>What changed</h3><p class="note">Nothing. The hero, tiles, person cards and ledger
+  stay exactly as approved. The only touch: its <b>Reverse confirm goes inline</b> (amber strip) instead
+  of a browser pop-up, matching everywhere else.</p></div>
+</div>
+
+<!-- ================= ACCOUNTS ================= -->
+<div class="page" id="page-accounts">
+  <h1>Accounts setup</h1>
+  <p class="subhead">People, books, and who's registered where.</p>
+
+  <div class="panel">
+    <div class="panelHead">People</div>
+    <table class="t">
+      <tr><td class="ink">Kate</td><td class="pend">9 books</td><td style="text-align:right"><button class="btn btnGhost">archive</button></td></tr>
+      <tr><td class="ink">Sarie</td><td class="pend">7 books</td><td style="text-align:right"><span class="inlineConfirm">Archive Sarie? <button class="btn btnLost">Archive</button> <button class="btn btnGhost">✕</button></span></td></tr>
+    </table>
+    <div class="formRow"><label class="fieldCol">name<input style="width:160px"></label><button class="btn btnNavy">Add person</button></div>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead">Books</div>
+    <table class="t">
+      <tr><td class="ink">CrownBet</td><td class="pend">cluster: BetMakers · web</td><td style="text-align:right"><button class="btn btnGhost">archive</button></td></tr>
+      <tr><td class="ink">TABTouch</td><td class="pend">cluster: TAB · app</td><td style="text-align:right"><button class="btn btnGhost">archive</button></td></tr>
+    </table>
+    <div class="filterGrid">
+      <span class="rowlabel">add</span>
+      <span class="chips"><label class="fieldCol">name<input style="width:140px"></label></span>
+      <span class="rowlabel">cluster</span>
+      <span class="chips"><button class="chip">BetMakers</button><button class="chip on">TAB</button><button class="chip">Uncat.</button></span>
+      <span class="rowlabel">platform</span>
+      <span class="chips"><button class="chip on">web</button><button class="chip">app</button> <span style="flex:1"></span><button class="btn btnNavy">Add book</button></span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead">Registrations — who plays where</div>
+    <div class="filterGrid">
+      <span class="rowlabel">person</span>
+      <span class="chips"><button class="chip on">Kate</button><button class="chip">Sarie</button><button class="chip">Tim</button><button class="chip">Leigh</button></span>
+      <span class="rowlabel">book</span>
+      <span class="chips">
+        <button class="chip on">PickleBet</button><button class="chip dim" title="already registered">CrownBet ✓</button><button class="chip dim" title="already registered">TABTouch ✓</button>
+        <span style="flex:1"></span><button class="btn btnNavy">Register Kate at PickleBet</button>
+      </span>
+    </div>
+    <div class="toast" style="margin:0 12px 12px"><b>✓ Registered</b> — record the opening deposit now? <button class="btn btnNavy" style="margin-left:8px">Open Money → deposit</button></div>
+  </div>
+
+  <div class="why">
+    <h3>What changed</h3>
+    <p class="note">Dark re-skin, and <b>registrations become the same person-chips + book-chips pick
+    as the race page</b> — books she's already at show ticked and faded, so "where isn't Kate yet"
+    answers itself. Cluster and platform (three-ish options each) become chips. <b>Archive gets an
+    inline are-you-sure</b> — it had none at all. The register→deposit hand-off stays.</p>
+  </div>
+</div>
+
+<!-- ================= HEALTH ================= -->
+<div class="page" id="page-health">
+  <h1>Health</h1>
+  <p class="subhead">Is the backend up.</p>
+  <div class="panel" style="max-width:420px">
+    <div style="padding:12px">
+      <div style="background:var(--profit-soft);color:var(--profit);border-radius:6px;padding:6px 12px;font-weight:650;display:inline-block;margin-bottom:10px">● API reachable</div>
+      <table class="t">
+        <tr><td class="pend">status</td><td class="num ink">ok</td></tr>
+        <tr><td class="pend">version</td><td class="num ink">0.37.0</td></tr>
+        <tr><td class="pend">timestamp</td><td class="num ink">2026-07-09 19:41:07</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="why"><h3>What changed</h3><p class="note">Cosmetic only — the light page goes dark-card
+  like everything else. Green dot when up, red when not.</p></div>
+</div>
+
+<script>
+  const nav = document.getElementById('nav');
+  nav.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-page]');
+    if (!b) return;
+    nav.querySelectorAll('.navLink').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+    document.getElementById('page-' + b.dataset.page).classList.add('on');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burst flow — selection stack + single-pass lay→back (mock)</title>
+<style>
+  :root {
+    --paper: #191914; --card: #201f19; --card2: #262520;
+    --ink: #f0efe6; --sub: #b3b0a0; --faint: #85826f;
+    --line: #35342b; --line-soft: #2a2922;
+    --navy: #8fb0dd; --navy-soft: #232a36;
+    --profit: #4dbb6e; --loss: #e57567;
+    --amber-soft: #322b14; --amber-ink: #d9b954;
+    --sel: #2c3b52;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink); margin: 0;
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    padding: 26px 18px 60px; line-height: 1.45;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  .mockbar {
+    font-size: 12px; color: var(--amber-ink); background: var(--amber-soft);
+    border-radius: 6px; padding: 6px 12px; margin-bottom: 20px; display: inline-block;
+  }
+  h2 {
+    font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--faint); font-weight: 650; margin: 30px 0 10px;
+  }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+
+  .rowlabel { font-size: 10px; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); margin: 10px 0 5px; font-weight: 650; }
+  .rowlabel:first-child { margin-top: 0; }
+  .chips { display: flex; gap: 7px; flex-wrap: wrap; }
+  .chip {
+    background: var(--card2, #262520); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 7px; padding: 5px 13px; cursor: pointer; font-size: 13px; font-weight: 600;
+    display: flex; flex-direction: column; align-items: center; gap: 1px; line-height: 1.2;
+  }
+  .chip small { font-weight: 400; font-size: 10.5px; color: var(--sub); }
+  .chip.on { background: var(--sel); border-color: var(--navy); }
+  .chip.dim { opacity: .55; font-weight: 500; }
+  .promoChip { padding: 4px 10px; font-size: 12px; }
+  .modeChip { border-style: dashed; color: var(--sub); font-weight: 500; }
+
+  .flow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  @media (max-width: 700px) { .flow { grid-template-columns: 1fr; } }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
+  .step .steptag { font-size: 10px; letter-spacing: .09em; text-transform: uppercase; color: var(--navy); font-weight: 700; margin-bottom: 8px; }
+  .laysummary { color: var(--profit); font-size: 12.5px; margin-bottom: 10px; }
+  .fields { display: flex; gap: 10px; margin: 10px 0; }
+  .field { display: flex; flex-direction: column; gap: 2px; font-size: 10px; color: var(--faint); text-transform: uppercase; }
+  .field input {
+    background: var(--paper); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 5px; padding: 4px 8px; width: 90px; font-size: 13px;
+  }
+  .cta {
+    background: var(--sel); border: 1px solid var(--navy); color: var(--ink);
+    border-radius: 7px; padding: 6px 18px; font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .ghost { background: none; border: 1px solid var(--line); color: var(--sub); border-radius: 7px; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+  .modalbody { font-size: 13px; color: var(--sub); }
+  .modalbody b { color: var(--ink); }
+  .note { font-size: 12.5px; color: var(--sub); max-width: 68ch; }
+  .note b { color: var(--ink); }
+  .why { border-top: 1px solid var(--line); margin-top: 30px; padding-top: 14px; }
+  .arrow { text-align: center; color: var(--faint); font-size: 20px; padding-top: 60px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mockbar">Design mock — burst-flow redesign. Buttons are illustrative, nothing is wired.</div>
+
+  <!-- ============ 1. THE SELECTION STACK ============ -->
+  <h2>1 · The selection stack (replaces the person/book dropdowns)</h2>
+  <div class="panel">
+    <div class="rowlabel">Person</div>
+    <div class="chips">
+      <button class="chip on">Kate</button>
+      <button class="chip">Sarie</button>
+      <button class="chip">Tim</button>
+      <button class="chip">Leigh</button>
+    </div>
+
+    <div class="rowlabel">Kate’s books — most active first · balance underneath</div>
+    <div class="chips">
+      <button class="chip on">CrownBet<small>$205.00</small></button>
+      <button class="chip">PointsBet<small>$734.00</small></button>
+      <button class="chip">StarSports<small>$0.00</small></button>
+      <button class="chip">TABTouch<small>$246.85</small></button>
+      <button class="chip dim">PickleBet<small>$0.00</small></button>
+    </div>
+
+    <div class="rowlabel">Promos at CrownBet — most used first</div>
+    <div class="chips">
+      <button class="chip promoChip on">2nd → Bonus $50</button>
+      <button class="chip promoChip">2nd/3rd → Bonus $50</button>
+      <button class="chip promoChip">2nd → Bonus $25</button>
+      <button class="chip promoChip">2nd/3rd → Bonus $25</button>
+      <button class="chip promoChip modeChip">other ▾</button>
+      <button class="chip promoChip modeChip">Free bet</button>
+      <button class="chip promoChip modeChip">No promo</button>
+      <button class="chip promoChip modeChip">+ new</button>
+    </div>
+  </div>
+  <p class="note" style="margin-top:8px">
+    Three taps arm everything, all targets visible at once — no opening a
+    list to see what's in it. Book chips carry the <b>live balance</b> so
+    "can I even bet here" is answered at a glance; a $0 book fades but stays
+    tappable. Book order is set <b>once at day-open</b> (yesterday's most
+    active first) and then <b>frozen for the day</b> — buttons that shuffle
+    mid-session break muscle memory, which matters more at burst pace than
+    perfect ordering.
+  </p>
+
+  <!-- ============ 2. SINGLE-PASS LAY → BACK ============ -->
+  <h2>2 · Single pass: ⚡ lay, then the back — one flow, like v2</h2>
+  <div class="flow">
+    <div class="step">
+      <div class="steptag">Step 1 — ⚡ on the runner (as now)</div>
+      <div class="modalbody">
+        <b>8. Dam Impact</b> — lay @ <b>6.4</b>, stake <b>$39.68</b><br>
+        liability $214.27 · persists in-play<br><br>
+        <button class="cta">Place Lay</button>
+      </div>
+    </div>
+    <div class="step">
+      <div class="steptag">Step 2 — the same box becomes the back log</div>
+      <div class="laysummary">✓ Lay placed — $14.38 matched, rest working</div>
+      <div class="rowlabel">Person</div>
+      <div class="chips">
+        <button class="chip on">Kate</button>
+        <button class="chip">Sarie</button>
+        <button class="chip">Tim</button>
+        <button class="chip">Leigh</button>
+      </div>
+      <div class="rowlabel">Book</div>
+      <div class="chips">
+        <button class="chip on">CrownBet</button>
+        <button class="chip">PointsBet</button>
+        <button class="chip">TABTouch</button>
+      </div>
+      <div class="fields">
+        <label class="field">stake $<input value="30.00"></label>
+        <label class="field">odds<input value="7.00"></label>
+      </div>
+      <button class="cta">Log the back — free bet</button>
+      <button class="ghost">skip — log it later</button>
+    </div>
+  </div>
+  <p class="note" style="margin-top:8px">
+    The lay confirmation and the back log become <b>one continuous box</b> —
+    no hunting for the LOG button afterwards (this morning's $50 free-bet
+    miss). Person and book arrive <b>preselected from the top bar</b> (or
+    the last back you logged), stake prefills from the free-bet face, odds
+    from the soft price you typed — so the usual case is <b>zero to two taps
+    then Log</b>. "Skip" keeps the never-blocked rule; a skipped back still
+    shows as the board's ⚠ unpaired-lay flag and lands in Burst review.
+  </p>
+
+  <!-- ============ WHY ============ -->
+  <div class="why">
+    <p class="note">
+      <b>The UX principles doing the work here</b> (so you can push back on
+      the right level): <b>buttons beat dropdowns</b> whenever there are
+      seven or fewer options — everything is visible and one tap instead of
+      two; <b>most-likely-next is preselected</b> so the common case is
+      confirming, not choosing; <b>frequency orders, position sticks</b> —
+      ordering by activity helps only if things stay where your thumb
+      learned they are; and <b>the key number rides the button</b> (book
+      balances) so decisions don't need a trip to another page.
+    </p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI pass mock — black-on-white theme + session fixes (14 Jul)</title>
+<style>
+  /* ============ the proposed token swap: black content, white frame ============ */
+  :root{
+    --frame:#ffffff;          /* page beyond borders/margins — stays white */
+    --sheet:#111417;          /* content surface: near-black */
+    --sheet-2:#1a1e23;        /* raised cards / inputs on the sheet */
+    --sheet-3:#23282e;        /* hover / active rows */
+    --ink:#e8e6e1;            /* primary text on black */
+    --ink-dim:#9aa3ad;        /* secondary text */
+    --line:#2e343b;           /* hairlines on black */
+    --back:#3d6db5;           /* navy BACK (Betfair convention, lifted for dark) */
+    --lay:#d16b80;            /* rose LAY */
+    --green:#3fa46a; --amber:#d9a13b; --red:#d95757;
+    --mono:"SF Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--frame);color:#1c2733;font:14px/1.45 -apple-system,"Segoe UI",sans-serif;padding:26px 30px 60px}
+  h1{font-size:18px;margin-bottom:4px} .note{color:#5c6b7a;font-size:12.5px;margin-bottom:20px}
+  h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#5c6b7a;margin:30px 0 10px}
+
+  /* black content sheet sitting on the white frame */
+  .sheet{background:var(--sheet);color:var(--ink);border-radius:14px;padding:18px 20px;max-width:860px;box-shadow:0 2px 14px rgba(15,18,22,.25)}
+  .sheet h3{font-size:14px;margin-bottom:12px;color:var(--ink)}
+  label{display:block;font-size:11px;color:var(--ink-dim);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.05em}
+  .input{background:var(--sheet-2);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:8px 11px;font-size:14px;width:240px}
+  .chiprow{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .chip{background:var(--sheet-2);border:1px solid var(--line);color:var(--ink-dim);border-radius:18px;padding:6px 12px;font-size:12.5px;cursor:pointer}
+  .chip.on{background:var(--back);border-color:var(--back);color:#fff;font-weight:600}
+
+  /* EV chips */
+  .ev{font:600 12px var(--mono);border-radius:5px;padding:3px 7px}
+  .ev.neg{background:rgba(217,87,87,.16);color:var(--red)}
+  .ev.mid{background:rgba(217,161,59,.15);color:var(--amber)}
+  .ev.pos{background:rgba(63,164,106,.16);color:var(--green)}
+
+  /* promo bar with a REAL selected state */
+  .promo{display:flex;gap:8px;margin-top:6px}
+  .pbtn{background:var(--sheet-2);border:1.5px solid var(--line);color:var(--ink);border-radius:9px;padding:8px 13px;font-size:12.5px;cursor:pointer;position:relative}
+  .pbtn.sel{border-color:var(--green);background:rgba(63,164,106,.14);font-weight:700}
+  .pbtn.sel::after{content:"✓";position:absolute;top:-7px;right:-7px;background:var(--green);color:#fff;border-radius:50%;width:16px;height:16px;font-size:10px;line-height:16px;text-align:center}
+  .auto{font-size:10.5px;color:var(--green);margin-top:4px}
+
+  /* runner list: scrolls, never clips — FULL existing column set retained */
+  .runners{max-height:392px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;margin-top:8px;scrollbar-gutter:stable}
+  .rhead,.runner{display:grid;grid-template-columns:24px minmax(130px,1fr) 62px 62px 64px 62px 66px 66px 70px 58px;gap:6px;align-items:center;padding:7px 10px;border-bottom:1px solid var(--line);font-size:12.5px}
+  .rhead{position:sticky;top:0;background:var(--sheet);color:var(--ink-dim);font-size:10px;text-transform:uppercase;letter-spacing:.04em;z-index:1}
+  .runner:hover{background:var(--sheet-3)}
+  .runner .no{color:var(--ink-dim);font:600 12px var(--mono)}
+  .price{font:600 12px var(--mono);text-align:center;border-radius:6px;padding:5px 0;cursor:pointer}
+  .price.b{background:rgba(61,109,181,.22);color:#9dc0ee}
+  .price.l{background:rgba(209,107,128,.2);color:#eda9b8}
+  .mono{font:600 11.5px var(--mono);text-align:center;color:var(--ink-dim)}
+  .soft{background:var(--sheet-2);border:1px solid var(--line);border-radius:6px;color:var(--ink);font:600 11.5px var(--mono);text-align:center;padding:4px 0;width:100%}
+  .close{font:600 11.5px var(--mono);text-align:center}
+  .close.short{color:var(--green)} .close.drift{color:var(--red)} .close.flat{color:var(--ink-dim)}
+  .fade{position:sticky;bottom:0;height:26px;background:linear-gradient(rgba(17,20,23,0),var(--sheet));pointer-events:none;margin-top:-26px}
+  .scrollhint{font-size:10.5px;color:var(--ink-dim);text-align:center;padding:3px 0 6px}
+
+  /* duplicate-account warning strip */
+  .warn{background:rgba(217,161,59,.13);border:1px solid rgba(217,161,59,.5);color:#ecc57e;border-radius:9px;padding:9px 13px;font-size:12.5px;margin-top:10px}
+  .warn b{color:#f3d49a}
+
+  /* activity board rows with persist/lapse tags */
+  .act{border-top:1px solid var(--line);margin-top:14px;padding-top:10px}
+  .actrow{display:flex;gap:10px;align-items:center;padding:6px 2px;font-size:12.5px;color:var(--ink)}
+  .tag{font:600 10px var(--mono);border-radius:4px;padding:2.5px 6px;letter-spacing:.05em}
+  .tag.lay{background:rgba(209,107,128,.2);color:#eda9b8}
+  .tag.persist{background:rgba(63,164,106,.18);color:var(--green)}
+  .tag.lapse{background:var(--sheet-3);color:var(--ink-dim);border:1px dashed var(--ink-dim)}
+  .who{color:var(--ink-dim)}
+
+  /* betlog table */
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{color:var(--ink-dim);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+  td{padding:7px 8px;border-bottom:1px solid var(--line);color:var(--ink)}
+  .result-pop{background:var(--sheet-2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12.5px}
+  .result-pop .pos{color:var(--green);font-weight:700}
+  .settle{display:flex;gap:6px;margin-top:8px}
+  .sbtn{border:none;border-radius:7px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer}
+  .sbtn.won{background:var(--green);color:#fff}.sbtn.lost{background:var(--red);color:#fff}.sbtn.void{background:#7d68a8;color:#fff}
+</style>
+</head>
+<body>
+
+<h1>UI pass mock — 14 Jul notes</h1>
+<div class="note">Black content surfaces on a white page frame (your call, applied app-wide via tokens). Every numbered fix from your notes is visible below. This page IS the theme demo — the white you see around the black panels is the frame.</div>
+
+<h2>Race page — runners scroll (fix #9) · EV colours (#4) · promo selected state (#7) + auto-select (#6)</h2>
+<div class="sheet">
+  <h3>Flemington R7 · 1400m · 16 runners <span style="float:right;font-size:11px;color:var(--ink-dim)">jump 15:32 (in 11m)</span></h3>
+
+  <div class="promo">
+    <button class="pbtn sel">$50 Free Bet ×3</button>
+    <button class="pbtn">Stake-back $50</button>
+    <button class="pbtn">No promo</button>
+  </div>
+  <div class="auto">✓ auto-selected — this account holds only one kind of free bet</div>
+
+  <div class="runners">
+    <div class="rhead"><span>#</span><span>Runner</span><span>Matched</span><span>BF Back</span><span>BF Lay</span><span>Raw EV</span><span>Promo EV</span><span>Soft Odds</span><span>BF Close</span><span>Trend</span></div>
+    <div class="runner"><span class="no">1</span><span>Zeitaku</span><span class="mono">$48k</span><span class="price b">4.60</span><span class="price l">4.80</span><span class="ev neg">−1.9%</span><span class="ev pos">+7.2%</span><input class="soft" value="4.50"><span class="close short">4.35 ▼</span><span class="mono">↘</span></div>
+    <div class="runner"><span class="no">2</span><span>Golden Mile</span><span class="mono">$31k</span><span class="price b">6.00</span><span class="price l">6.40</span><span class="ev neg">−3.0%</span><span class="ev mid">+3.1%</span><input class="soft" value="6.00"><span class="close drift">6.80 ▲</span><span class="mono">↗</span></div>
+    <div class="runner"><span class="no">3</span><span>Pride Of Jenni</span><span class="mono">$19k</span><span class="price b">8.20</span><span class="price l">8.60</span><span class="ev neg">−2.4%</span><span class="ev neg">−0.6%</span><input class="soft" value="8.00"><span class="close flat">8.40 —</span><span class="mono">→</span></div>
+    <div class="runner"><span class="no">4</span><span>Mr Brightside</span><span class="mono">$22k</span><span class="price b">9.00</span><span class="price l">9.40</span><span class="ev mid">+0.8%</span><span class="ev pos">+5.5%</span><input class="soft" value="9.50"><span class="close short">8.60 ▼</span><span class="mono">↘</span></div>
+    <div class="runner"><span class="no">5</span><span>Buffalo River</span><span class="mono">$9k</span><span class="price b">12.0</span><span class="price l">13.0</span><span class="ev neg">−0.8%</span><span class="ev mid">+2.0%</span><input class="soft" value="12.0"><span class="close drift">14.5 ▲</span><span class="mono">↗</span></div>
+    <div class="runner"><span class="no">6</span><span>Cascadian</span><span class="mono">$7k</span><span class="price b">14.5</span><span class="price l">15.5</span><span class="ev mid">+1.9%</span><span class="ev pos">+6.1%</span><input class="soft" value="15.0"><span class="close flat">15.0 —</span><span class="mono">→</span></div>
+    <div class="runner"><span class="no">7</span><span>Attrition</span><span class="mono">$5k</span><span class="price b">18.0</span><span class="price l">19.5</span><span class="ev neg">−4.1%</span><span class="ev neg">−1.2%</span><input class="soft" value="17.0"><span class="close drift">21.0 ▲</span><span class="mono">↗</span></div>
+    <div class="runner"><span class="no">8</span><span>Lunar Flare</span><span class="mono">$4k</span><span class="price b">21.0</span><span class="price l">23.0</span><span class="ev mid">+0.4%</span><span class="ev mid">+4.0%</span><input class="soft" value="23.0"><span class="close short">19.5 ▼</span><span class="mono">↘</span></div>
+    <div class="runner"><span class="no">9</span><span>Star Patrol</span><span class="mono">$3k</span><span class="price b">26.0</span><span class="price l">29.0</span><span class="ev neg">−6.6%</span><span class="ev neg">−2.9%</span><input class="soft" value="24.0"><span class="close flat">27.0 —</span><span class="mono">→</span></div>
+    <div class="runner"><span class="no">10</span><span>Militarize</span><span class="mono">$2k</span><span class="price b">31.0</span><span class="price l">34.0</span><span class="ev neg">−1.2%</span><span class="ev mid">+1.5%</span><input class="soft" value="31.0"><span class="close drift">38.0 ▲</span><span class="mono">↗</span></div>
+    <div class="runner"><span class="no">11</span><span>Land Legend</span><span class="mono">$1.4k</span><span class="price b">41.0</span><span class="price l">46.0</span><span class="ev neg">−8.9%</span><span class="ev neg">−5.1%</span><input class="soft" value="36.0"><span class="close drift">50.0 ▲</span><span class="mono">↗</span></div>
+    <div class="runner"><span class="no">12</span><span>Berkeley Square</span><span class="mono">$900</span><span class="price b">51.0</span><span class="price l">60.0</span><span class="ev neg">−3.3%</span><span class="ev mid">+0.2%</span><input class="soft" value="51.0"><span class="close flat">55.0 —</span><span class="mono">→</span></div>
+    <div class="runner"><span class="no">13</span><span>First Immortal</span><span class="mono">$700</span><span class="price b">61.0</span><span class="price l">75.0</span><span class="ev neg">−5.0%</span><span class="ev neg">−1.8%</span><input class="soft" value="56.0"><span class="close short">56.0 ▼</span><span class="mono">↘</span></div>
+    <div class="runner"><span class="no">14</span><span>Right You Are</span><span class="mono">$500</span><span class="price b">81.0</span><span class="price l">95.0</span><span class="ev neg">−7.7%</span><span class="ev neg">−4.4%</span><input class="soft" value="71.0"><span class="close drift">110 ▲</span><span class="mono">↗</span></div>
+    <div class="runner"><span class="no">15</span><span>Steparty</span><span class="mono">$300</span><span class="price b">101</span><span class="price l">120</span><span class="ev neg">−9.2%</span><span class="ev neg">−6.0%</span><input class="soft" value="91.0"><span class="close flat">105 —</span><span class="mono">→</span></div>
+    <div class="runner"><span class="no">16</span><span>Vow And Declare</span><span class="mono">$200</span><span class="price b">126</span><span class="price l">150</span><span class="ev neg">−11%</span><span class="ev neg">−8.3%</span><input class="soft" value="101"><span class="close drift">160 ▲</span><span class="mono">↗</span></div>
+    <div class="fade"></div>
+  </div>
+  <div class="scrollhint">▾ all 16 runners — list scrolls, never clips · ALL existing columns retained (Actions column omitted from mock for width only — it stays in the build) · NEW: BF Close = Betfair projected BSP, green ▼ shortening / red ▲ drifting vs current</div>
+
+  <div class="warn">⚠ <b>Kate @ TAB already has a bet on this race</b> (BACK #4 Mr Brightside $50 · 12:44)</div>
+
+  <div class="act">
+    <h3 style="font-size:12px;color:var(--ink-dim)">Activity on this race</h3>
+    <div class="actrow"><span class="tag lay">LAY</span><span>#4 Mr Brightside @ 9.40 · $47 matched $0</span><span class="who">Tim @ Betfair</span><span class="tag lapse">LAPSE</span></div>
+    <div class="actrow"><span class="tag lay">LAY</span><span>#1 Zeitaku @ 4.80 · $52 matched $52</span><span class="who">Tim @ Betfair</span><span class="tag persist">PERSIST</span></div>
+    <div class="actrow"><span style="font:600 10px var(--mono);background:rgba(61,109,181,.22);color:#9dc0ee;border-radius:4px;padding:2.5px 6px">BACK</span><span>#4 Mr Brightside $50 free bet</span><span class="who">Kate @ TAB</span><span style="font-size:11px;color:var(--ink-dim)">promo: FB conv</span></div>
+  </div>
+</div>
+
+<h2>BetLog — relevant columns (#2), bet id gone, results in the settle door (#8)</h2>
+<div class="sheet">
+  <table>
+    <tr><th>Placed</th><th>Race</th><th>Runner</th><th>Account</th><th>Book</th><th>Side</th><th>Stake @ odds</th><th>Promo</th><th>State</th></tr>
+    <tr><td>14:22</td><td>Flemington R6</td><td>Amelia's Jewel</td><td>Kate</td><td>TAB</td><td>BACK</td><td class="ev pos" style="background:none">$50 @ 4.40</td><td>$50 FB</td><td>PENDING</td></tr>
+    <tr><td>14:24</td><td>Flemington R6</td><td>Amelia's Jewel</td><td>Tim</td><td>Betfair</td><td>LAY</td><td>$48 @ 4.60</td><td>—</td><td>MATCHED</td></tr>
+    <tr style="background:var(--sheet-3)"><td>13:50</td><td>Caulfield R5</td><td>Skyforger</td><td>Sarah</td><td>Sportsbet</td><td>BACK</td><td>$100 @ 3.20</td><td>stake-back</td><td>SETTLING…</td></tr>
+  </table>
+  <div class="result-pop">
+    <b>Result — Caulfield R5</b> (from capture)&nbsp;&nbsp;
+    <span class="pos">1st #7 Skyforger (SP 3.10)</span> · 2nd #2 Osipenko · 3rd #11 Munhamek &nbsp;<span style="color:var(--ink-dim)">margins 0.8L / 1.5L · Soft 5</span>
+    <div class="settle"><button class="sbtn won">Won</button><button class="sbtn lost">Lost</button><button class="sbtn void">Void</button></div>
+  </div>
+</div>
+
+<h2>Log Past Bet — the theme rule itself (#3)</h2>
+<div class="sheet" style="max-width:560px">
+  <h3>Log Past Bet</h3>
+  <label>Date</label><input class="input" value="2026-07-13">
+  <label>Venue</label>
+  <div class="chiprow"><span class="chip on">Caulfield</span><span class="chip">Randwick</span><span class="chip">Doomben</span><span class="chip">Morphettville</span></div>
+  <label>Race</label>
+  <div class="chiprow"><span class="chip">R1</span><span class="chip">R2</span><span class="chip on">R3</span><span class="chip">R4</span><span class="chip">R5</span></div>
+</div>
+<div class="note" style="margin-top:10px">← black input areas; the page stays white wherever there's no content — this page demonstrates the exact rule.</div>
+
+</body>
+</html>

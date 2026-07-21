@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Race page — clean pass (mock v2)</title>
+<style>
+  /* ============ THE ONE TOKEN SHEET ============
+     Same system the Money page already uses. Promoted app-wide.
+     Every colour below has exactly one job. */
+  :root {
+    --paper: #191914;        /* page ground */
+    --card: #201f19;         /* panels: table, board, top bar */
+    --card2: #262520;        /* raised: chips, table head, inputs */
+    --ink: #f0efe6;          /* primary text */
+    --sub: #b3b0a0;          /* secondary text */
+    --faint: #85826f;        /* labels, meta */
+    --line: #35342b;         /* panel borders */
+    --line-soft: #2a2922;    /* row rules */
+    --navy: #8fb0dd;         /* the action colour + BACK side */
+    --sel: #2c3b52;          /* armed / selected fill */
+    --rose: #d795ab;         /* LAY side (Betfair convention: back blue, lay pink) */
+    --profit: #4dbb6e;       /* won / EV strong — always with a sign or word */
+    --loss: #e57567;         /* lost / negative — always with a sign or word */
+    --amber: #d9b954;        /* needs attention: partial, unpaired, stale */
+    --amber-soft: #322b14;
+    --thoro: #c9a227;        /* race-type tags — always with a T/H/G letter */
+    --harness: #5cc9b8;
+    --greys: #b79ce0;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink); margin: 0;
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 13px; line-height: 1.45; padding: 26px 18px 60px;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; }
+  .mockbar {
+    font-size: 12px; color: var(--amber); background: var(--amber-soft);
+    border-radius: 6px; padding: 6px 12px; margin-bottom: 20px; display: inline-block;
+  }
+  h2 {
+    font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--faint); font-weight: 650; margin: 30px 0 10px;
+  }
+  .note { font-size: 12.5px; color: var(--sub); max-width: 70ch; }
+  .note b { color: var(--ink); }
+
+  /* ============ TOP BAR — label-left grid, one gap unit everywhere ============ */
+  .topbar {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 9px 12px; display: grid; grid-template-columns: 52px 1fr;
+    gap: 7px 10px; align-items: center;
+  }
+  .rowlabel {
+    font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--faint); font-weight: 650; text-align: right;
+  }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: stretch; }
+  .chip {
+    background: var(--card2); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 7px; padding: 4px 12px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0; line-height: 1.25;
+  }
+  .chip small { font-weight: 400; font-size: 10.5px; color: var(--sub); font-family: var(--mono); }
+  .chip.on { background: var(--sel); border-color: var(--navy); }
+  .chip.on small { color: var(--navy); }
+  .chip.dim { opacity: .55; font-weight: 500; }
+  .promoChip { padding: 3px 10px; font-size: 12px; }
+  .modeChip { border-style: dashed; color: var(--sub); font-weight: 500; }
+  .personRow { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .dials { display: flex; gap: 8px; align-items: center; }
+  .dial { display: flex; align-items: center; gap: 5px; font-size: 9.5px; color: var(--faint); text-transform: uppercase; letter-spacing: .05em; }
+  .dial input {
+    background: var(--paper); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 5px; padding: 3px 7px; width: 64px; font-size: 12px; font-family: var(--mono);
+  }
+
+  /* ============ RACE AREA ============ */
+  .racewrap { margin-top: 12px; display: grid; grid-template-columns: 216px 1fr; gap: 12px; align-items: start; }
+  @media (max-width: 780px) { .racewrap { grid-template-columns: 1fr; } }
+
+  /* sidebar */
+  .side { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 12px; }
+  .side .head {
+    padding: 7px 10px; border-bottom: 1px solid var(--line);
+    display: flex; gap: 5px; align-items: center;
+  }
+  .fchip {
+    border: 1px solid var(--line); background: var(--card2); color: var(--faint);
+    border-radius: 6px; font-size: 10.5px; font-weight: 650; padding: 2px 8px; cursor: pointer;
+  }
+  .fchip.on { color: var(--ink); background: var(--sel); border-color: var(--navy); }
+  .side .race {
+    padding: 5px 10px; border-bottom: 1px solid var(--line-soft); cursor: pointer;
+    display: flex; align-items: baseline; gap: 7px;
+  }
+  .side .race:hover { background: var(--card2); }
+  .side .race.on { background: var(--sel); }
+  .typetag { font-family: var(--mono); font-size: 10px; font-weight: 700; width: 12px; flex-shrink: 0; }
+  .typetag.t { color: var(--thoro); }
+  .typetag.g { color: var(--greys); }
+  .typetag.h { color: var(--harness); }
+  .side .race .v { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .side .race .t { font-family: var(--mono); color: var(--sub); }
+  .side .race.soon .t { color: var(--amber); font-weight: 700; }
+
+  /* race panel */
+  .race-panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .race-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  .race-title { font-size: 15px; font-weight: 650; }
+  .race-title .typetag { font-size: 11px; }
+  .race-meta { font-family: var(--mono); font-size: 11px; color: var(--faint); display: flex; gap: 10px; }
+
+  table.odds { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .odds th {
+    background: var(--card2); padding: 4px 8px; text-align: right; font-size: 10px;
+    text-transform: uppercase; letter-spacing: .05em; color: var(--faint); font-weight: 650;
+    border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .odds th.l { text-align: left; }
+  .odds td {
+    padding: 3px 8px; border-bottom: 1px solid var(--line-soft); text-align: right;
+    font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--sub);
+  }
+  .odds td.runner { text-align: left; font-family: inherit; color: var(--ink); font-weight: 550; white-space: nowrap; }
+  .odds td.runner small { color: var(--faint); font-weight: 400; }
+  .odds .back { color: var(--navy); font-weight: 650; }
+  .odds .lay { color: var(--rose); font-weight: 650; }
+  .odds .evStrong { color: var(--profit); font-weight: 700; }
+  .odds .evOk { color: var(--amber); font-weight: 650; }
+  .odds .evThin { color: var(--faint); }
+  .odds .scr { color: var(--faint); text-decoration: line-through; }
+  .zap {
+    background: var(--sel); border: 1px solid var(--navy); color: var(--ink);
+    border-radius: 6px; font-size: 11px; padding: 1px 8px; cursor: pointer; font-weight: 700;
+  }
+  .overround {
+    display: flex; justify-content: space-between; padding: 4px 12px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--faint);
+    background: var(--card2); border-top: 1px solid var(--line);
+  }
+
+  /* toast */
+  .toast {
+    margin-top: 12px; background: var(--card); border: 1px solid var(--line);
+    border-left: 3px solid var(--profit); border-radius: 8px;
+    padding: 7px 12px; font-size: 12.5px; color: var(--sub); display: flex; justify-content: space-between; gap: 10px;
+  }
+  .toast b { color: var(--profit); }
+  .toast .x { color: var(--faint); cursor: pointer; }
+
+  /* ============ ACTIVITY BOARD ============ */
+  .board { margin-top: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 12.5px; }
+  .board .head { padding: 7px 12px; border-bottom: 1px solid var(--line); color: var(--faint); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 650; }
+  .brow { display: flex; gap: 12px; align-items: baseline; padding: 6px 12px; border-bottom: 1px solid var(--line-soft); }
+  .sidetag {
+    font-size: 10px; font-weight: 800; letter-spacing: .06em; border-radius: 4px;
+    padding: 1px 7px; flex-shrink: 0; width: 46px; text-align: center;
+  }
+  .sidetag.back { color: var(--navy); border: 1px solid var(--navy); background: var(--sel); }
+  .sidetag.lay { color: var(--rose); border: 1px solid var(--rose); background: #322028; }
+  .brow .who { min-width: 130px; color: var(--sub); }
+  .brow .sel-name { min-width: 130px; color: var(--ink); }
+  .brow .money { font-family: var(--mono); min-width: 120px; color: var(--sub); }
+  .brow .state { margin-left: auto; font-weight: 700; }
+  .state.won { color: var(--profit); }
+  .state.pending { color: var(--faint); font-weight: 500; }
+  .state.flag { color: var(--amber); }
+
+  .why { border-top: 1px solid var(--line); margin-top: 34px; padding-top: 14px; }
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+  .sw { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--sub); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; }
+  .sw i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mockbar">Design mock v2 — denser runners &amp; race list, race-type filters + colour codes, tighter top bar. Nothing is wired.</div>
+
+  <!-- ============ TOP BAR ============ -->
+  <div class="topbar">
+    <div class="rowlabel">Person</div>
+    <div class="personRow">
+      <span class="chips">
+        <button class="chip on">Kate</button>
+        <button class="chip">Sarie</button>
+        <button class="chip">Tim</button>
+        <button class="chip">Leigh</button>
+      </span>
+      <span class="dials">
+        <label class="dial">stake $<input value="50.00"></label>
+        <label class="dial">min ev %<input value="1.0"></label>
+      </span>
+    </div>
+
+    <div class="rowlabel">Books</div>
+    <div class="chips">
+      <button class="chip on">CrownBet<small>$205.00</small></button>
+      <button class="chip">PointsBet<small>$734.00</small></button>
+      <button class="chip">TABTouch<small>$246.85</small></button>
+      <button class="chip dim">StarSports<small>$0.00</small></button>
+      <button class="chip dim">PickleBet<small>$0.00</small></button>
+    </div>
+
+    <div class="rowlabel">Promo</div>
+    <div class="chips">
+      <button class="chip promoChip on">2nd → Bonus $50</button>
+      <button class="chip promoChip">2nd/3rd → Bonus $50</button>
+      <button class="chip promoChip">2nd → Bonus $25</button>
+      <button class="chip promoChip modeChip">other ▾</button>
+      <button class="chip promoChip modeChip">Free bet</button>
+      <button class="chip promoChip modeChip">No promo</button>
+      <button class="chip promoChip modeChip">+ new</button>
+    </div>
+  </div>
+
+  <!-- ============ RACE AREA ============ -->
+  <div class="racewrap">
+    <div class="side">
+      <div class="head">
+        <button class="fchip on">Thoro</button>
+        <button class="fchip">Harness</button>
+        <button class="fchip on">Greys</button>
+      </div>
+      <div class="race soon"><span class="typetag t">T</span><span class="v">Murray Bdg R4</span><span class="t">2 min</span></div>
+      <div class="race on"><span class="typetag t">T</span><span class="v">Murray Bdg R5</span><span class="t">14:32</span></div>
+      <div class="race"><span class="typetag g">G</span><span class="v">Angle Park R6</span><span class="t">14:38</span></div>
+      <div class="race"><span class="typetag t">T</span><span class="v">Gawler R6</span><span class="t">14:41</span></div>
+      <div class="race"><span class="typetag g">G</span><span class="v">Angle Park R7</span><span class="t">14:49</span></div>
+      <div class="race"><span class="typetag t">T</span><span class="v">Dubbo R2</span><span class="t">14:55</span></div>
+      <div class="race"><span class="typetag t">T</span><span class="v">Murray Bdg R6</span><span class="t">15:07</span></div>
+      <div class="race"><span class="typetag g">G</span><span class="v">Angle Park R8</span><span class="t">15:11</span></div>
+      <div class="race"><span class="typetag t">T</span><span class="v">Gawler R7</span><span class="t">15:16</span></div>
+      <div class="race"><span class="typetag t">T</span><span class="v">Dubbo R3</span><span class="t">15:25</span></div>
+      <div class="race"><span class="typetag t">T</span><span class="v">Murray Bdg R7</span><span class="t">15:37</span></div>
+      <div class="race"><span class="typetag g">G</span><span class="v">Angle Park R9</span><span class="t">15:41</span></div>
+    </div>
+
+    <div>
+      <div class="race-panel">
+        <div class="race-head">
+          <span class="race-title"><span class="typetag t">T</span> Murray Bridge R5 · 1400m</span>
+          <span class="race-meta"><span>jump 14:32</span><span>refreshed 2s</span></span>
+        </div>
+        <table class="odds">
+          <thead>
+            <tr>
+              <th class="l">Runner</th><th>Back</th><th>Lay</th><th>Soft</th><th>EV</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="runner">1. Zousain Star <small>· J Holder</small></td>
+              <td class="back">4.6</td><td class="lay">4.8</td><td>5.00</td>
+              <td class="evStrong">+6.2%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner">2. Dam Impact <small>· K Crowther</small></td>
+              <td class="back">6.2</td><td class="lay">6.4</td><td>7.00</td>
+              <td class="evStrong">+5.4%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner">3. Final Award <small>· T Pannell</small></td>
+              <td class="back">8.0</td><td class="lay">8.4</td><td>8.50</td>
+              <td class="evOk">+2.1%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner">4. Salty Rain <small>· C Jones</small></td>
+              <td class="back">11.0</td><td class="lay">12.0</td><td>11.00</td>
+              <td class="evThin">+0.4%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner scr">5. Bold Star</td>
+              <td class="scr">—</td><td class="scr">—</td><td class="scr">SCR</td>
+              <td class="scr"></td><td></td>
+            </tr>
+            <tr>
+              <td class="runner">6. Midnight Reign <small>· E Boyd</small></td>
+              <td class="back">13.5</td><td class="lay">14.0</td><td>13.00</td>
+              <td class="evThin">−0.8%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner">7. Chapel Lane <small>· S Fawke</small></td>
+              <td class="back">17.0</td><td class="lay">18.5</td><td>19.00</td>
+              <td class="evOk">+1.6%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner">8. Port Vincent <small>· A Livesey</small></td>
+              <td class="back">21.0</td><td class="lay">23.0</td><td>21.00</td>
+              <td class="evThin">−1.2%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner">9. Whistling Duck <small>· B Price</small></td>
+              <td class="back">26.0</td><td class="lay">30.0</td><td>26.00</td>
+              <td class="evThin">−0.4%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+            <tr>
+              <td class="runner">10. Two Pound Tom <small>· J Toeroek</small></td>
+              <td class="back">34.0</td><td class="lay">40.0</td><td>41.00</td>
+              <td class="evOk">+1.9%</td><td><button class="zap">⚡ lay</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="overround">
+          <span>market 102.4% · $48,203 matched</span>
+          <span>proj SP gap −0.3</span>
+        </div>
+      </div>
+
+      <div class="toast">
+        <span><b>✓ Logged</b> — Kate · CrownBet · $50 on Dam Impact @ 7.00 · 2nd → Bonus $50</span>
+        <span class="x">✕</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ACTIVITY BOARD ============ -->
+  <div class="board">
+    <div class="head">This race · 3 bets</div>
+    <div class="brow">
+      <span class="sidetag lay">LAY</span>
+      <span class="who">Betfair</span>
+      <span class="sel-name">Dam Impact</span>
+      <span class="money">$39.68 @ 6.4</span>
+      <span class="state pending">working · $14.38 matched</span>
+    </div>
+    <div class="brow">
+      <span class="sidetag back">BACK</span>
+      <span class="who">Kate · CrownBet</span>
+      <span class="sel-name">Dam Impact</span>
+      <span class="money">$50.00 @ 7.00</span>
+      <span class="state pending">pending</span>
+    </div>
+    <div class="brow">
+      <span class="sidetag lay">LAY</span>
+      <span class="who">Betfair</span>
+      <span class="sel-name">Zousain Star</span>
+      <span class="money">$28.10 @ 4.8</span>
+      <span class="state flag">⚠ unpaired</span>
+    </div>
+  </div>
+
+  <!-- ============ WHY ============ -->
+  <div class="why">
+    <h2>What changed since v1</h2>
+    <p class="note">
+      <b>1 · Denser where it counts.</b> Runner rows tightened so ten runners plus
+      the board fit on a laptop screen; small fields simply take less height (the
+      table only ever grows with the field). The race list now shows twelve races
+      at once, same trick — thinner rows, nothing smaller to read.
+    </p>
+    <p class="note">
+      <b>2 · Race-type filters, thoroughbred by default.</b> The three toggles at
+      the top of the race list switch codes on and off; the app opens with only
+      Thoro on. Each race carries its colour-coded letter —
+      <span style="color:var(--thoro)">T</span>,
+      <span style="color:var(--harness)">H</span>,
+      <span style="color:var(--greys)">G</span> — so with two codes on you can tell
+      them apart at a glance (the letter does the work; colour is the accelerator).
+      The race header repeats the tag so you always know what you're looking at.
+    </p>
+    <p class="note">
+      <b>3 · Top bar on a grid.</b> The three rows now hang off one label column —
+      Person / Books / Promo — with a single spacing unit everywhere, so chips line
+      up instead of drifting. Stake and min-EV dials moved up beside the person row,
+      which saves a whole row of height. Balances stay on the book chips.
+    </p>
+    <div class="swatches">
+      <span class="sw"><i style="background:var(--navy)"></i> back / action</span>
+      <span class="sw"><i style="background:var(--rose)"></i> lay</span>
+      <span class="sw"><i style="background:var(--profit)"></i> won / strong EV</span>
+      <span class="sw"><i style="background:var(--loss)"></i> lost</span>
+      <span class="sw"><i style="background:var(--amber)"></i> needs attention</span>
+      <span class="sw"><i style="background:var(--thoro)"></i> T thoro</span>
+      <span class="sw"><i style="background:var(--harness)"></i> H harness</span>
+      <span class="sw"><i style="background:var(--greys)"></i> G greys</span>
+    </div>
+    <p class="note" style="margin-top:10px">
+      Everything from v1 stands: one warm style across the app, blue = back /
+      pink = lay everywhere, all figures in the same monospace type. If you
+      approve, the build is a re-skin plus the race-list filter — no money paths.
+    </p>
+  </div>
+</div>
+</body>
+</html>

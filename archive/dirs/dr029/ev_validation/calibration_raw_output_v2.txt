@@ -1,0 +1,225 @@
+CROSSCHECK vs recorded TS outputs (tol 0.15): got 19.90/17.01/14.14/11.42 -> PASS
+races total=17060 kept=16889 dropped: price=5 winners!=1=25 field<5=141
+clean-lay races (every runner has usable lay): 16234 of 16889
+mean implied sum: all=0.9950 clean-only=0.9946 fallback-races=1.0042
+R11 fp sanity: fp==1 <-> WINNER agree=136642 disagree=580 (0.423%)
+
+================ TEST 1 — WIN CALIBRATION ================
+
+T1a midpoint-at-off (engine method)  (N=162985, 20 quantile bins)
+  bin   pred%   actual%   N      err(pts)
+   1     0.22    0.17   8149   +0.05
+   2     0.52    0.48   8149   +0.04
+   3     0.93    0.97   8149   -0.04
+   4     1.45    1.37   8150   +0.08
+   5     1.99    1.99   8149   -0.00
+   6     2.63    2.66   8149   -0.04
+   7     3.35    3.45   8149   -0.10
+   8     4.15    4.22   8150   -0.07
+   9     5.00    5.08   8149   -0.08
+  10     5.95    5.80   8149   +0.14
+  11     6.98    7.20   8149   -0.22
+  12     8.15    8.34   8150   -0.20
+  13     9.50    9.85   8149   -0.35
+  14    11.21   10.85   8149   +0.36
+  15    13.23   13.27   8149   -0.04
+  16    15.72   14.99   8150   +0.72
+  17    18.91   19.19   8149   -0.29
+  18    23.02   23.18   8149   -0.16
+  19    29.12   29.45   8149   -0.33
+  20    45.24   44.71   8150   +0.53
+
+T1a midpoint by odds band
+  band       pred%   actual%   N
+  $1   -2     59.33   58.63   2144
+  $2   -4     33.50   33.44   14639
+  $4   -6     20.64   20.94   16662
+  $6   -10    13.17   12.76   24344
+  $10  -20     7.36    7.55   35445
+  $20  -1000   2.10    2.11   69487
+
+T1b BSP  (N=162985, 20 quantile bins)
+  bin   pred%   actual%   N      err(pts)
+   1     0.21    0.12   8149   +0.08 *
+   2     0.52    0.55   8149   -0.04
+   3     0.93    0.76   8149   +0.17
+   4     1.45    1.45   8150   +0.00
+   5     2.01    1.89   8149   +0.12
+   6     2.64    2.72   8149   -0.08
+   7     3.36    3.50   8149   -0.14
+   8     4.16    3.77   8150   +0.39
+   9     5.03    5.42   8149   -0.39
+  10     5.96    5.94   8149   +0.02
+  11     6.97    6.97   8149   +0.00
+  12     8.13    8.12   8150   +0.01
+  13     9.52    9.89   8149   -0.37
+  14    11.15   11.29   8149   -0.14
+  15    13.17   12.95   8149   +0.22
+  16    15.67   14.76   8150   +0.91 *
+  17    18.88   19.32   8149   -0.44
+  18    23.00   23.12   8149   -0.11
+  19    29.20   29.55   8149   -0.35
+  20    45.27   45.15   8150   +0.12
+
+T1c clean-lay races only (no fallback anywhere) by odds band
+  band       pred%   actual%   N
+  $1   -2     59.31   58.72   1996
+  $2   -4     33.48   33.39   14053
+  $4   -6     20.65   20.96   16094
+  $6   -10    13.16   12.76   23549
+  $10  -20     7.36    7.54   34234
+  $20  -1000   2.13    2.14   66019
+
+T1d races containing >=1 no-lay fallback runner by odds band
+  band       pred%   actual%   N
+  $2   -4     33.92   34.64   586
+  $4   -6     20.49   20.42   568
+  $6   -10    13.21   12.83   795
+  $10  -20     7.34    7.76   1211
+  $20  -1000   1.66    1.56   3468
+
+T1e races WITH full finishing order (T2/T3 population) by odds band
+  band       pred%   actual%   N
+  $1   -2     59.33   58.25   1722
+  $2   -4     33.51   33.72   12003
+  $4   -6     20.65   21.04   13647
+  $6   -10    13.16   12.71   20006
+  $10  -20     7.35    7.47   29330
+  $20  -1000   2.10    2.09   57887
+
+T1f races WITHOUT full order (dropped from T2/T3) by odds band
+  band       pred%   actual%   N
+  $1   -2     59.32   60.19   422
+  $2   -4     33.43   32.17   2636
+  $4   -6     20.58   20.46   3015
+  $6   -10    13.18   12.98   4338
+  $10  -20     7.38    7.90   6115
+  $20  -1000   2.14    2.22   11600
+
+ordinal races=13866 of 16889 kept
+R10 place dead-heats in ordinal set: 2nd=44 3rd=47 | races with no fp==2=10
+
+================ TEST 2 — PLACE CALIBRATION ================
+
+T2a P(exactly 2nd), gamma=0.77  (N=134805, 10 quantile bins)
+  bin   pred%   actual%   N      err(pts)
+   1     1.09    0.96   13480  +0.14
+   2     2.64    2.63   13481  +0.01
+   3     4.33    3.99   13480  +0.34 *
+   4     6.15    6.36   13481  -0.22
+   5     8.04    8.26   13480  -0.22
+   6    10.07   10.42   13481  -0.35
+   7    12.47   13.23   13480  -0.77 *
+   8    15.34   15.01   13481  +0.33
+   9    18.81   18.61   13480  +0.20
+  10    23.91   23.63   13481  +0.28
+
+T2b P(exactly 3rd), delta=0.62  (N=134805, 10 quantile bins)
+  bin   pred%   actual%   N      err(pts)
+   1     2.15    1.57   13480  +0.59 *
+   2     4.29    4.04   13481  +0.25
+   3     6.24    6.42   13480  -0.18
+   4     8.00    8.22   13481  -0.21
+   5     9.63    9.84   13480  -0.21
+   6    11.17   11.26   13481  -0.09
+   7    12.61   12.66   13480  -0.05
+   8    13.97   14.34   13481  -0.37
+   9    15.56   15.16   13480  +0.40
+  10    19.23   19.28   13481  -0.05
+
+T2c P(2nd or 3rd)  (N=134805, 10 quantile bins)
+  bin   pred%   actual%   N      err(pts)
+   1     3.26    2.57   13480  +0.70 *
+   2     6.98    6.65   13481  +0.32
+   3    10.65   10.64   13480  +0.01
+   4    14.28   14.44   13481  -0.16
+   5    17.86   18.60   13480  -0.74 *
+   6    21.52   22.06   13481  -0.55
+   7    25.54   26.63   13480  -1.10 *
+   8    29.83   29.52   13481  +0.31
+   9    34.22   34.03   13480  +0.19
+  10    41.59   40.76   13481  +0.83 *
+
+T2d P(2nd-4th), 4000-race sample  (N=38987, 10 quantile bins)
+  bin   pred%   actual%   N      err(pts)
+   1     6.98    4.54   3898   +2.43 *
+   2    13.34   12.31   3899   +1.03 *
+   3    18.95   19.26   3899   -0.31
+   4    24.05   23.45   3898   +0.60
+   5    28.73   28.96   3899   -0.22
+   6    33.30   35.83   3899   -2.53 *
+   7    37.85   38.51   3898   -0.66
+   8    42.10   42.88   3899   -0.78
+   9    46.65   47.11   3899   -0.46
+  10    55.84   55.09   3899   +0.75
+
+T2e refit (LOW-POWER — flat surface; constrains loosely, does not 'confirm'):
+  gamma fitted=0.770 (cur 0.77) logloss cur=0.30283 fit=0.30283
+  delta fitted=0.600 (cur 0.62) logloss cur=0.31397 fit=0.31398
+  eps   fitted=0.55 (cur 0.48) logloss cur=0.32303 fit=0.32273 (1000-race sample)
+  joint engine pair (0.77,0.62) delta-logloss=0.31397 vs fitted pair=0.31398
+
+================ TEST 3 — INSURANCE EV BACKTEST ($2-$10) ================
+NOTE: internal-consistency check — bets priced at Betfair-fair midpoint;
+real book shading is NOT modelled. Not an achievable historical return.
+
+  T3a all $2-$10, FB at 60.0%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +11.32   +10.53  45656   0.99
+  FB_23      +20.35   +19.42  45656   0.98
+  CASH_2nd   +18.53   +17.73  45656   0.99
+  NOPROMO     +0.52    -0.27  45656   1.01
+
+  T3a all $2-$10, FB at 65.0%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +12.22   +11.43  45656   0.99
+  FB_23      +22.00   +21.06  45656   0.97
+  CASH_2nd   +18.53   +17.73  45656   0.99
+  NOPROMO     +0.52    -0.27  45656   1.01
+
+  T3a all $2-$10, FB at 70.0%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +13.12   +12.33  45656   0.99
+  FB_23      +23.65   +22.70  45656   0.97
+  CASH_2nd   +18.53   +17.73  45656   0.99
+  NOPROMO     +0.52    -0.27  45656   1.01
+
+  T3a all $2-$10, FB at 74.8%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +13.99   +13.19  45656   0.99
+  FB_23      +25.24   +24.28  45656   0.97
+  CASH_2nd   +18.53   +17.73  45656   0.99
+  NOPROMO     +0.52    -0.27  45656   1.01
+
+  T3b band $2-$4, FB at 65%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +15.22   +15.72  12003   1.26
+  FB_23      +25.16   +25.00  12003   1.20
+  CASH_2nd   +23.15   +23.56  12003   1.24
+  NOPROMO     +0.47    +1.16  12003   1.33
+
+  T3b band $4-$6, FB at 65%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +12.77   +14.54  13648   1.67
+  FB_23      +23.02   +24.46  13648   1.63
+  CASH_2nd   +19.35   +21.12  13648   1.66
+  NOPROMO     +0.57    +2.33  13648   1.71
+
+  T3b band $6-$10, FB at 65%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +10.05    +6.73  20006   1.80
+  FB_23      +19.41   +16.37  20006   1.78
+  CASH_2nd   +15.19   +11.92  20006   1.80
+  NOPROMO     +0.52    -2.90  20006   1.82
+
+  T3c clean-lay races only (no fallback anywhere), $2-$10, FB 65%:
+  promo      predEV%  realEV%   N       SE
+  FB_2nd     +12.22   +11.37  44075   1.01
+  FB_23      +22.00   +21.00  44075   0.99
+  CASH_2nd   +18.51   +17.65  44075   1.00
+  NOPROMO     +0.54    -0.29  44075   1.03
+
+================ TEST 4 — LIVE FEED vs BSP ================
+races=7978 runners=73713 | midpoint-vs-BSP prob diff: mean=3.21 median=1.13 p90=8.38 p99=28.74 pts
+
+DONE
