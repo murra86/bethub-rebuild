@@ -1,0 +1,230 @@
+# FILING — folder reorganisation (S247, Tue 21 Jul 2026)
+
+Root was ~200 loose files; closed arcs now live under archive/<topic>/,
+the Router/SIM gateway project under router-sim/. ACTIVE + standing docs
+stay at root. If an older doc or memory references a root path that no
+longer exists, look in the matching archive folder below or grep archive/.
+Nothing was deleted or renamed — moves only, filenames unchanged.
+
+## Where things went
+
+### archive/b2-doors/
+- b2_item8_float_correction.md
+- b2_money_doors_design_note.md
+
+### archive/b6-cutover/
+- b6_fb_conversion_day_prep.md
+- b6_gonogo_panel_pack.md
+- b6_panel_pm.md
+- b6_panel_skeptic.md
+- b6_panel_synthesis.md
+- b6_panel_validation.md
+- b6_proving_window_guide.md
+- b6_proving_window_log.md
+- b6_scope.md
+- b6_seeding_pack.md
+- b6_small_builds_brief.md
+- b6_small_builds_report.md
+- cutover_readiness_map.md
+- ev_derivation_paper.md
+- ev_validation_commission.md
+- ev_validation_findings.md
+
+### archive/dirs/
+- agent_review
+- dr029
+- interface_triage
+- orchestration_pack
+
+### archive/misc-closed/
+- audit_landscape.md
+- bet_day_notes_s242.md
+- fb_cross_account_draw_fix_brief.md
+- fb_cross_account_fix_report.md
+- honest_money_reads_build_brief.md
+- honest_money_reads_build_report.md
+- log_past_bet_liveproof_brief.md
+- log_past_bet_liveproof_report.md
+- money_movement_door_brief.md
+- money_movement_door_report.md
+- money_read_truncation_review_report.md
+- s242_s243_feedback_workplan.md
+- session_operations_proposal.md
+
+### archive/mocks/
+- app_pages_clean_mock.html
+- burst_flow_mock.html
+- money_page_mock.html
+- promo_assignment_model_mock.html
+- race_page_clean_mock.html
+- race_watcher_execute_bar_mock.html
+- ui_pass_jul14_mock.html
+- ui_pass3_betlog_row_mock.html
+- vps_data_flow_map.html
+
+### archive/placings/
+- placings_backfill_brief.md
+- placings_backfill_deficit_verification_report.md
+- placings_backfill_report.md
+- placings_deficit_fragment_floor_brief.md
+- placings_deficit_fragment_floor_report.md
+- placings_empty_runners_contention_fix_brief.md
+- placings_empty_runners_contention_fix_report.md
+- placings_empty_runners_diagnosis_brief.md
+- placings_empty_runners_diagnosis_report.md
+- placings_landing_diagnosis_brief.md
+- placings_landing_diagnosis_report.md
+- placings_landing_fix_brief.md
+- placings_landing_fix_report.md
+- placings_recovery_rootcause_review.md
+- placings_throughput_fix_brief.md
+- placings_throughput_fix_report.md
+- placings_trickle_brief.md
+- placings_trickle_fix_brief.md
+- placings_trickle_fix_report.md
+- placings_trickle_report.md
+- race_date_semantics_brief.md
+- race_date_semantics_report.md
+- recovery_run_brief.md
+- recovery_run_report.md
+
+### archive/settlement-b3/
+- b3_governance_close.md
+- b3_high1_fix_commission.md
+- b3_high1_fix_report.md
+- b3_lay_settlement_fix_build_brief.md
+- b3_lay_settlement_fix_design.md
+- b3_lay_settlement_fix_findings.md
+- b3_lay_settlement_fix_report.md
+- b3_lay_settlement_investigation_report.md
+- b3_liveproof_result.md
+- b3_match_reconciliation_fix_brief.md
+- b3_match_reconciliation_investigation_brief.md
+- b3_r2_hardening_commission.md
+- b3_r2_hardening_report.md
+- b3_verification_commission.md
+- b3_verification_report.md
+- flive2_lapse_measurement_report.md
+- flive2_lapsed_bucket_fix_report.md
+- promo_crossthread_500_fix_report.md
+- settlement_correctness_fix_design.md
+- settlement_correctness_fix_report.md
+- settlement_correctness_investigation.md
+- settlement_liveproof_plan.md
+- settlement_pending_sweep_nullfix_brief.md
+- settlement_pending_sweep_nullfix_report.md
+- settlement_readpath_batched_fix_brief.md
+- settlement_readpath_batched_fix_report.md
+- settlement_readpath_reconciliation_report.md
+- settlement_readpath_reconciliation_review_brief.md
+- settlement_settled_signal_fix_brief.md
+- settlement_settled_signal_fix_report.md
+- settlement_winnerless_hold_hardening_brief.md
+- settlement_winnerless_hold_hardening_report.md
+- settlement_worker_build_brief.md
+- settlement_worker_build_report.md
+- settlement_worker_code_goahead.md
+- settlement_worker_diligence_investigation_brief.md
+- settlement_worker_diligence_investigation_report.md
+- settlement_worker_diligence_scope.md
+- settlement_worker_readback.md
+- stream_read_buffer_overflow_fix_report.md
+
+### archive/ui-passes/
+- app_clean_pass_report.md
+- burst_flow_build_report.md
+- cash_lay_stake_prefill_fix_brief.md
+- cash_lay_stake_prefill_fix_report.md
+- race_page_rework_brief.md
+- race_page_rework_report.md
+- ui_pass_jul14_build_brief.md
+- ui_pass_jul14_design_note.md
+- ui_pass_jul16_build_report.md
+- ui_pass3_build_brief.md
+- ui_pass3_report.md
+
+### archive/vps-hardening/
+- b5_tunnel_hardening_report.md
+- b7_piece1_durable_logs_report.md
+- b7_piece2_fault_banner_report.md
+- b7_piece3_review_pull_report.md
+- launcher_capture_provisioning_brief.md
+- launcher_capture_provisioning_investigation_report.md
+- vps_client_api_rewrite_brief.md
+- vps_client_api_rewrite_report.md
+- vps_date_endpoint_brief.md
+- vps_date_endpoint_report.md
+- vps_endpoint_enrichment_brief.md
+- vps_endpoint_enrichment_report.md
+- vps_hardening_acceptance_report.md
+- vps_hardening_brief.md
+- vps_hardening_day3_deploy_report.md
+- vps_hardening_review_round1.md
+- vps_hardening_review_round2.md
+- vps_supply_review_brief.md
+- vps_supply_review.md
+- w7c_companion_build_report.md
+- workflow_integration_audit_brief.md
+- workflow_integration_audit.md
+
+### router-sim/
+- pi-config-backup
+- router_sim_proxy_gateway_brief.md
+- router_sim_proxy_gateway_hub_bringup.md
+- router_sim_proxy_gateway_phase1_guide.md
+- router_sim_proxy_gateway_REVIEW.md
+- router_sim_proxy_gateway_status.md
+- router_sim_proxy_gateway_verification_checklist.md
+
+## Kept at root (active/standing as of S247)
+
+- architecture.md
+- b2_build_brief.md
+- b2_build_report.md
+- betfair_recon_fix_brief.md
+- betfair_void_retrue_design_note.md
+- BETHUB_DATA_REFERENCE.md
+- current_state.md
+- cycle_demotion_design_note.md
+- cycle_linking_backfill_map.json
+- cycle_linking_backfill_record.md
+- data_foundation_structure.md
+- data_sources.md
+- decisions.md
+- external_api_resources.md
+- fb_face_single_source_fix_brief.md
+- fb_lay_take_sp_analysis.md
+- FILING.md
+- gen_racing_api_catalogue.py
+- governance.md
+- openapi.json
+- operator_workflow_map.md
+- priority_flags_s241.md
+- project_context.md
+- race_watcher_design_note.md
+- race_watcher_phase1_build_brief.md
+- race_watcher_phase1_report.md
+- race_watcher_research_report.md
+- racing_api_field_catalogue.md
+- README.md
+- s247_downtime_review_record.md
+- standing_instructions.md
+- tab_api_scoping_brief.md
+- tab_book_driven_fill_report.md
+- tab_live_refresh_build2_brief.md
+- tab_live_refresh_build2_report.md
+- tab_soft_odds_build1_brief.md
+- tab_soft_odds_build1_report.md
+- tab_spike_result_s245.md
+- tab_transport_hardening_brief.md
+- tab_watcher_feedback_s245.md
+- take_sp_brief_review_round1.md
+- take_sp_build_brief.md
+- ux_lead_standing_instruction_proposal.md
+- v3_build_picture.md
+- v3_data_requirements.md
+- v3_data_reset_runbook.md
+- vision.md
+- vps_data_map.md
+- work_in_progress.md
+- worklist.md
