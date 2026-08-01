@@ -1,173 +1,147 @@
-**Last updated:** 2026-07-01 14:44 ACST (Session 212 close)
+**Last updated:** 2026-08-01 evening ACST (Session 263 OPEN — post-race-day
+cleanup; S260 deploy verified this session).
 
-**Timezone:** DR-021 standard applies — Adelaide anchors, no
-overrides active.
+**Timezone:** DR-021 standard applies — Adelaide anchors, no overrides active.
 
 ---
 
 ## Where we are
 
-**S212 closed the git-drift gap, triaged the throughput fix, and
-locked + (via Code) executed the empty-runners diagnosis — which
-reframes the placings gate from pacing to DB contention.**
+**v3 in steady daily operation; money records proven to the cent; capture
+race-identity ENFORCED and the historical twin backlog now CLEARED; the
+S260 capture-resilience release is DEPLOYED and verified.** v3 main
+`dd7daec` (pushed; dist rebuilt — live at next app open). Capture VPS runs
+branch `s260-resilience` @ `cb4e026` (deployed unattended 04:27 ACST
+1 Aug, all Saturday-morning checks passed). Both repos backed up on GitHub.
 
-- **Git baseline restored.** `c7f71ab` put Sessions 198–211 (46 files —
-  governance docs, briefs, reports, session records) under version
-  control after ~13 sessions of untracked drift; `.close_out_backups/`
-  + `skills/*.zip` gitignored. The runner's "brief hash mismatch"
-  open-flag was a FALSE alarm (git-blob SHA-1 `3f34…` vs the recorded
-  sha256 `8880f78c…` — identical content, verified twice). Stale
-  `.close_out_backups/` prompts + the `SESSION_9001` test fixtures were
-  operator-deleted.
-- **Throughput fix triaged — PARTIAL success.** Pacing corrected
-  (~3.15 req/sec clean, zero empty-200s); **ghost-row tripwire CLEAN
-  (fault B not biting)**; ~892 placings recovered (deficit 41,879 →
-  40,987); nightly timer moved to **05:30 ACST** (answers the dated
-  1-Jul timer-shift check). Surfaced the **empty-runners degradation
-  mode** as the real remaining gate.
-- **Empty-runners diagnosed — NOT pacing; it's DB write-contention.**
-  The diagnosis brief (`placings_empty_runners_diagnosis_brief.md`,
-  99 lines, sha `6bae8914`) was locked and Code executed it
-  out-of-session (~13:10–13:55). FINDING: a fetch-only client is immune
-  at ~9.8 req/sec (≈2× the 5/sec ceiling); the mode is triggered by the
-  `sync_day` **WRITE path contending with the live collector on the
-  shared `capture.db`** (throwaway-DB write immune; artificial latency
-  immune) — intermittent, resets ~2s of write-idle. No pacing config
-  defeats it; retry-defeatability unverifiable. Resolved to §5.3
-  **branch 3 (no behavioural change, instrumentation only).** The
-  follow-up is now an **architecture / operational-contention
-  question**, not a rate-tier / provider one. **Report present,
-  un-triaged — S213's first action.**
-
-**Prior anchor (S210):** cash-modal back-stake blank fix SHIPPED,
-committed `e2638fa`. Detail in `sessions/SESSION_210.md`.
+- **Race identity — FIXED PERMANENTLY, and the backlog is now DONE.**
+  Enforcement at all three layers since S259 (DR-036). The historical
+  repair completed overnight 1 Aug under the new FK indexes: **5,316
+  markets merged in 695s (~7.6/s), orphans zero, zero db-lock errors**.
+  679 markets remain in scope, all deliberately-refused classes (540
+  identity-gate + 139 settled-count audits) = worklist 0m's population.
+  Safety timers re-armed nightly: twin repair 05:05 ACST, gap-aware
+  collector restart 04:25 ACST. One proof outstanding: rehydration on
+  the first in-window restart (tonight 18:55 UTC) — Sunday reads it.
+- **Capture resilience — deployed; core objectives adversarially
+  verified; three post-deploy defects found (S263 review), one fixed
+  live.** Root cause was the missing runner_id FK index (11.7M-row
+  scans = the 7.5s lock holds), not lock policy. Rehydration works
+  (exercised live 21×; formal proof at tonight's single 04:25 ACST
+  restart). The review found: (1) a deploy-script stamp bug caused a
+  20-restart storm + 93-min capture blank right after the deploy —
+  **live stamp file fixed 1 Aug eve, storm cannot recur tonight**;
+  script code fix queued Sunday; (2) ONE post-deploy RACING ALERT
+  (playup frozen from 08:54 UTC, then invisible to liveness once it
+  left the candidate set — watch tomorrow's AU card; blind-spot fix
+  queued); (3) Ubuntu unattended-upgrades force-restarted the
+  collector mid-race-day (~2m17s, Doomben R8 pre-jump ticks lost) —
+  OS-upgrade policy is an operator decision, queued.
+- **Lay matching (0t-A) — SHIPPED S260, LIVE-PROVEN 31 Jul**: first real
+  pairing fired in 1.43s (the control had never fired in production;
+  root cause was lay-before-back ordering). Replay: 61/61 lays link,
+  zero wrong. Remaining: the 34-row historical repair (script not built;
+  `lay_matching_brief.md` §3; app quiet + backup first) — takes cycle
+  tracking 74.2% → ~99%.
+- **Money truth — audits S260: P&L arithmetic ZERO errors** (332 settled
+  bets recomputed to the cent; commission exact across 54 markets); FB
+  ledger cross-foots exactly; integrity 81% of bets / 74.2% of cycles
+  fully coherent (the gap is almost entirely the lay-linking class
+  above). P&L since 17 Jul: **+$2,273 as of S258**; 1 Aug settlements
+  pending the Bet365 bonus-cash decision.
+- **International Phase 1 — BUILT + 4× reviewed, staged for Sunday.**
+  Capture `f2fa921` (498 tests) + v3 glue already shipped. The race rail
+  is pinned to AU (`BETHUB_RACING_COUNTRIES=AU` in `BetHub.command`) —
+  **delete that line when the capture side deploys.** Then verification
+  day, then the one-row GB flip.
+- **Race day 1 Aug (S262) — operator verdict: successful.** First
+  "bet-earlier" strategy day (segment 1 Aug in any timing/EV analysis —
+  `strategy_days.md`). Tim-TAB promo mis-pick fixed via the sanctioned
+  correction (third instance → worklist 0x "change promo" button). Race
+  day UX batch queued as 0y / 0z / 1a. Morning sweep's first Saturday
+  ran (formal §4 acceptance report still owed).
+- **promo-pilot (satellite, informal S261)** — standalone TAB promo-EV
+  page at `~/Desktop/Projects/promo-pilot`, reads BetHub read-only,
+  parity-proven engine; morning review issued operator rules; TAB→EV
+  live-proven 07:45 (14/14 races). NOTE (found S263): the BET NOW
+  strip was REMOVED in code 1 Aug 08:02 (backup
+  `page.py.bak-20260801-betnow-strip`) in favour of a per-race hot
+  count that suppresses itself once the race jumps — this FIXED the
+  morning review's "BET NOW survives the jump" defect; change was
+  unrecorded at the time. Operator day-use verdict pending.
+- **Analytical standing:** promo-EV indicator VALIDATED (S253); scope
+  discipline stands — simple per-runner promo-EV, no rankings, free
+  bets/market-edge out. model.db needs a re-extract before parked
+  research resumes (race ids pre-date the twin merges).
 
 ## What's next
 
-**S213 first action (CONFIRMED with operator — AUTO, no gate) — triage
-`placings_empty_runners_diagnosis_report.md`.** Read against the locked
-brief's §7/§8/§9; digest the DB-write-contention headline; confirm the
-instrumentation-only edit stayed in scope + the ghost tripwire; then
-route the contention question and **take stock with the operator on
-whether placings recovery stays worth chasing** — the pacing/provider
-rabbit hole is closed by the finding. Report is present, so no hold
-expected.
+**S263 remainder (operator-directed at S262 close):** feedback batch
+walk-through + full worklist review together. Carry-in decisions:
+Bet365 bonus-cash uplift % / cap (5 winners, $599.50 profit waiting);
+4th/5th cashback promo template (offered, not yet built); Mango deploy
+(port-forward + AdsPower profile + F19, pending since S258).
 
-**Contention routing to weigh at triage:** accept intermittent
-write-degradation as a fact of the shared DB (trickle regardless);
-serialise the backfill burn against the live collector's write windows;
-or a larger change to the capture.db write path. All operator-triage
-territory — none a pacing brief.
+**Sunday 2 Aug queue:** rehydration check (single restart expected
+tonight after the stamp fix) → International Phase 1 deploy (delete
+the AU pin after) → 34-row lay repair (backup first) → 0w SIM-gateway
+hardening (alerting first) → deploy-script + restart-guard code fixes
+(0u tail) → morning-sweep §4 report → 0m mini-brief → playup check on
+the AU card. Then 0t-B cycle accounting when sequenced.
 
-**Then, in order:**
-1. **Settlement-worker brief** (IOU + manual-match-to-lay) — next build
-   item; money-path, diligence-first before Code.
-2. **Promo-seed** → **W16 cutover.**
-
-**Parallel / not gating:** Data Foundation harvest (§A.4 → §C/§D/§E).
-
-**Parked (revisit-triggered):** full-backlog burn (downstream of the
-contention resolution); fault-B / `race_date` identity (tripwire clean,
-no forcing event); DR-034 stance-4 fragment-collapse; Cowork sub-agent
-review → pre-W16 go/no-go.
-
-## Required reads for Session 213
+## Required reads for Session 264
 
 In order:
 1. `current_state.md` (this file).
 2. `standing_instructions.md` — in full per Cat 2.
-3. `project_context.md` — orientation primer.
-4. `sessions/SESSION_212.md` — the S212 record.
-
-Reference-only — read on demand:
-- `placings_empty_runners_diagnosis_report.md` — the report S213 triages.
-- `placings_empty_runners_diagnosis_brief.md` — the locked contract it's triaged against.
-- `placings_throughput_fix_report.md` — the burn that surfaced the mode (ghost-tripwire baseline).
+3. `sessions/SESSION_262.md` (race day) + `SESSION_260.md` postscript
+   (deploy verification).
+4. `worklist.md` — statuses reconciled 1 Aug.
 
 ## Pending operator-side actions
 
-**Between S212 → S213:**
-- **GitHub off-machine backup of bethub-rebuild + bethub-v3** — `c7f71ab`
-  (governance repo) and `e2638fa` (app repo) are LOCAL-only until an
-  off-machine push runs; pending operator login.
-- **Manage any live unmatched lays (S164)** — real exposure.
-- **v2:** running; jump-start-only to retirement.
+- Bet365: rate CONFIRMED (25% cash on winnings, balance-verified
+  $859.38); credits BANKED 1 Aug 23:07 via the tool's own auto door —
+  which computed 4 of 5 a touch high under the hardcoded TAB
+  whole-dollar-ceiling rounding rule (NOT operator typing; and
+  return_pct=0.25 was already stored, EV already right). **Tool
+  overstates Bet365 by $2.12** until the 1b correction lands.
+  **Worklist 1b SHIPPED END-TO-END** (`d3583cf` + `bdadb8f` +
+  `2daa17a`; 3+ adversarial reviews; correction RUN 2 Aug 06:15,
+  $859.38 exact): rounding is a per-template term; the credit box
+  computes the bonus; cash credits undoable in-app; **auto-bank on
+  Won live at restart** (operator approved all recommendations —
+  Burst Review auto-lane + undo as review path); corrections keep
+  the original economic date; the BetLog strip now shows "bonus cash
+  + all-in" so it reconciles with the Accounts page; the manual
+  settle door no longer wipes dead-heat facts. Remaining: operator
+  restart, live smoke on today's first bonus win, 0t-B
+  cycle-complete number.
+- ~~3 money events 16:21–16:24~~ **CONFIRMED by operator S263**
+  (Kate withdrawals + profit share = intended end-of-day banking);
+  money check re-run clean after.
+- Which of the restored race-day live-proof batch items (worklist
+  item 5) did 1 Aug actually cover? (panel checks / first reassign /
+  TAB eyeball / Take-SP Stage 0.)
+- OS-upgrade policy on the capture box: unattended-upgrades restarted
+  the collector mid-race-day — recommend pinning service restarts to
+  the 04:00–06:00 maintenance window (Sunday build if agreed).
+- Mango proxy hookup at the friend's house (then cross-button F19).
+- Promo-pilot day-use verdict (keep / change / park) — incl. blessing
+  the 1 Aug BET NOW → hot-count change.
 
-**Done this session (fold when docs next touched):** stale
-`.close_out_backups/` prompts + `SESSION_9001` fixtures deleted;
-Racing-API rate tier (5 req/sec, no daily quota) confirmed — fold into
-`BETHUB_DATA_REFERENCE.md` §G.
+## Open items (accepted-as-minor, revisit only if they bite)
 
-**Carried (parking-lot):** the `by-market` results route follow-up; the
-settled-vs-pending-both-populated ordering edge; VPS git-hygiene debt
-(`racing-data-capture` broadly dirty); the stray `['DB_PATH` file on the
-VPS (inert); the 34.8% start-less discovery-shell rows; `venue_normalised`
-drift; the other four `vps_client` surfaces; DST near-midnight caveat;
-persisting the Racing-API race id (DR-034 stance-5); terminal-migration
-(W16); deploy-before-settle / IOU free-bet credit (settlement-worker);
-hedge-link on manual entry; bet-mutation-log viewer; BetLog promo-events
-delete-check; streaming hardening (F1/F3/F4/F5); 200-market
-over-subscription; audit-sink durability (F8) + place-then-commit (F11);
-partial free-bet draw-down; in-app catalogue-management UI; shared
-canonical account-ref type (post-cutover, DR-030); tunnel
-auto-start/health-check; the Racing.tsx cash-branch lint debt (~117–118);
-the blank cash-box inline-prompt parity.
-
-## Open items
-
-Pointer-only — full detail in `sessions/SESSION_212.md`.
-
-**New / changed in S212:**
-- **Empty-runners = DB write-contention** — S213 triages the report →
-  routes the architecture/contention question. Pacing/provider framing
-  retired.
-- **sha256-not-git-blob** — the open-ritual drift-check should compute
-  `shasum -a 256`, not `git hash-object` (the false-alarm source).
-  Advice recorded; future standing-instruction candidate.
-
-**Closed in S212:**
-- Git 13-session uncommitted drift — `c7f71ab`. ✅
-- Stale `.close_out_backups/` prompts + `SESSION_9001` fixtures —
-  operator-deleted. ✅
-- Brief "hash mismatch" — diagnosed benign (git-blob vs sha256). ✅
-- Dated 1-Jul timer-shift check — timer at 05:30 ACST. ✅
-- Throughput-fix triage — partial success (pacing fixed, tripwire clean,
-  empty-runners surfaced). ✅
-
-**Carried to S213:**
-- Settlement-worker brief (next build item).
-- Promo-seed; W16 cutover scoping.
-- Data Foundation arc (parallel, not gating).
-- Full-backlog burn + fault-B ghost fix — gated on the empty-runners
-  contention resolution.
-- Cowork sub-agent review → pre-W16 go/no-go.
-
-**Carry-forward sensitivity flags:**
-- **Bet-safety — CLEAN** (read-only racing/analytical; no v3 / settlement
-  / money path).
-- **capture.db reads read-only** (`mode=ro`, never copy); **v2 never
-  modified**; **VPS repo dirty** — surgical no-git discipline on VPS
-  Code work.
-- **The write-path contention finding** means burns intermittently
-  degrade — don't mistake a contention wall for a data or code fault.
-
-## Active governing decision records
-
-- **DR-021** (timestamp anchoring, Adelaide local) — every open + close.
-- **DR-019** (derived state on read).
-- **DR-022** (book / account / account-at-book vocab).
-- **DR-025** (hedge-state classification / ops-log audit trail).
-- **DR-026** (at-log market snapshot — narrow cross-DB durability exception).
-- **DR-027 / DR-028** (two-database architecture + single integration boundary).
-- **DR-029** (data-layer fit-for-purpose) — closed (S78); amended S191.
-- **DR-030** (v3 repo layout / module boundaries).
-- **DR-031** (v3 tech stack; SQLite WAL; uv/httpx).
-- **DR-032** (Betfair canonical reference layer) — amended S180; a
-  Betfair market is required at logging time.
-- **DR-033** (data-source roles) — placings analytical, settlement
-  Betfair-only. **This session's work is analytical side.**
-- **DR-034** (canonical race-identity model) — LOCKED S206; live-proven
-  S209. Betfair WIN market = the spine. **Fault-B / ghost territory.**
-- **DB read discipline** (`mode=ro`, never copy, `start_process` Python).
-
-Full DR list in `decisions.md`.
+- Sarie-Ladbrokes free-bet credits: ALL SIX (the 5×$30 split + a 6th
+  $30 triggered 1 Aug) are now fully deployed — zero live, expiry
+  loose end moot (corrected S263; the $10 goodwill credit separately
+  expired at the book 1 Aug, recorded honestly). The 0v split/undo
+  build itself remains queued.
+- Fill-odds click: released cells blank a few seconds until the feed
+  re-seeds (cosmetic; 0i added the release path).
+- First transport-block on a live TAB session stalls the refresher for
+  the hunt duration (inline path carries the feed meanwhile).
+- Stored `matched_price` is float (REAL) — Decimal hygiene is separate,
+  larger work; and 0z(d) will store the true matched average.
+- "Kensington Park" (Whangarei NZ) would alias to randwick if a book
+  ever emits that spelling — watch item; no book does today.

@@ -263,7 +263,32 @@ out of this doc's scope to design, noted so they're not lost):
 
 ---
 
-*Operator workflow map v1. Scope A (insurance + free-bet
+## 7. Fixing a wrong-account bet (S254 build — the standing answer)
+
+A bet logged on the wrong person happens on frantic days. Three layers,
+in the order you meet them:
+
+1. **The morning check tells you.** The daily money check's LEDGER
+   COHERENCE SWEEPS flag any bet/bonus/account mismatch the day it
+   happens (they would have caught both real incidents same-day).
+2. **Clean moves: the BetLog button.** Open the bet → "Reassign
+   account…" → pick the right person (same bookie) → reason → confirm.
+   The panel shows exactly what money moves first. Settled bets fine.
+   Reversible by moving it back. Fully audited.
+3. **Bets with live bonus money attached: the guided correction tool.**
+   The button refuses these and says so. Run
+   `uv run python -m ops.correct_promo_chain plan --bet <QUALIFIER bet id>
+   --target <correct pairing>` (the qualifier = the bet that EARNED the
+   promo; handed a spend bet, the tool names the qualifier for you).
+   If it needs a spare credit named, it lists the candidates with ids
+   (`credits --pairing <id>` shows them any time; `list` shows
+   unfinished corrections). It plans first (nothing written), confirms
+   in plain language, survives interruption (`resume`), and only ever
+   APPENDS corrections — history is never rewritten.
+   Shapes it refuses go to the review runbook:
+   `bet_reassignment_door_plan.md` §3e.
+
+*Operator workflow map v1 + §7 (S254). Scope A (insurance + free-bet
 conversion). Mapped and operator-validated Session 185. Extend
 with the remaining strategy workflows in their own mapping
 sessions.*

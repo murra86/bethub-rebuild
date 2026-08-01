@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Money Moves — Quick Reference</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", sans-serif; margin: 24px auto; max-width: 720px; color: #1a1a1a; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .rule { background: #103c2d; color: #fff; border-radius: 10px; padding: 12px 16px; font-size: 16px; font-weight: 600; margin: 14px 0 20px; }
+  .rule span { color: #7fe0b0; }
+  svg { width: 100%; height: auto; display: block; margin-bottom: 6px; }
+  .keyidea { font-size: 14px; color: #444; margin: 0 0 22px; text-align: center; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #777; padding: 6px 8px; border-bottom: 2px solid #ddd; }
+  td { padding: 9px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .tap { display: inline-block; background: #eef4ff; border: 1px solid #b9d0f5; border-radius: 999px; padding: 2px 10px; margin: 1px 2px; font-size: 13px; white-space: nowrap; }
+  .tap.warn { background: #fff4e5; border-color: #f0c98a; }
+  .n1 { color: #0a7a43; font-weight: 700; white-space: nowrap; }
+  .n2 { color: #b25e00; font-weight: 700; white-space: nowrap; }
+  .never { margin-top: 18px; background: #fdeeee; border: 1px solid #f0bcbc; border-radius: 10px; padding: 10px 14px; font-size: 14px; }
+  @media print { body { margin: 0; } }
+</style>
+</head>
+<body>
+
+<h1>Money moves — quick reference</h1>
+<div class="rule">Golden rule: the <span>Bankroll row</span> in the tool = the <span>bankroll bank app</span>, every day, to the cent.</div>
+
+<!-- Key idea: hub and spoke -->
+<svg viewBox="0 0 720 240" role="img" aria-label="Money map">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8aa"/>
+    </marker>
+  </defs>
+  <!-- personal -->
+  <rect x="20" y="90" width="130" height="60" rx="10" fill="#f2f2f2" stroke="#ccc"/>
+  <text x="85" y="115" text-anchor="middle" font-size="14" fill="#666">Personal</text>
+  <text x="85" y="133" text-anchor="middle" font-size="12" fill="#999">outside the operation</text>
+
+  <!-- bankroll hub -->
+  <rect x="240" y="80" width="180" height="80" rx="14" fill="#103c2d"/>
+  <text x="330" y="112" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">BANKROLL</text>
+  <text x="330" y="134" text-anchor="middle" font-size="12" fill="#7fe0b0">homebase — all roads lead here</text>
+
+  <!-- your books -->
+  <rect x="530" y="20" width="170" height="54" rx="10" fill="#eef4ff" stroke="#b9d0f5"/>
+  <text x="615" y="43" text-anchor="middle" font-size="14" fill="#234">Your books</text>
+  <text x="615" y="60" text-anchor="middle" font-size="12" fill="#789">TAB, Betfair…</text>
+
+  <!-- intermediaries -->
+  <rect x="530" y="166" width="170" height="54" rx="10" fill="#fff4e5" stroke="#f0c98a"/>
+  <text x="615" y="189" text-anchor="middle" font-size="14" fill="#543">Sarie / Kate / Leigh</text>
+  <text x="615" y="206" text-anchor="middle" font-size="12" fill="#a87">their floats → their books</text>
+
+  <!-- arrows -->
+  <line x1="152" y1="120" x2="236" y2="120" stroke="#8aa" stroke-width="2.5" marker-end="url(#a)" marker-start="url(#a)"/>
+  <text x="194" y="108" text-anchor="middle" font-size="11.5" fill="#667">rare</text>
+
+  <line x1="424" y1="96" x2="526" y2="56" stroke="#0a7a43" stroke-width="2.5" marker-end="url(#a)" marker-start="url(#a)"/>
+  <text x="475" y="60" text-anchor="middle" font-size="11.5" fill="#0a7a43" font-weight="600">1 tap</text>
+
+  <line x1="424" y1="144" x2="526" y2="184" stroke="#b25e00" stroke-width="2.5" marker-end="url(#a)" marker-start="url(#a)"/>
+  <text x="475" y="186" text-anchor="middle" font-size="11.5" fill="#b25e00" font-weight="600">2 taps (for now)</text>
+</svg>
+<p class="keyidea">One hop to <b>your</b> books. Two hops via the <b>helpers</b> — so two taps, until the transfer door lands.</p>
+
+<table>
+  <tr><th>Real-world move</th><th>Taps in the tool</th><th></th></tr>
+  <tr>
+    <td>Personal money in <i>(e.g. the $3,000)</i></td>
+    <td><span class="tap">Bankroll → Top-up float</span></td><td class="n1">1 tap</td>
+  </tr>
+  <tr>
+    <td>Take profit home</td>
+    <td><span class="tap">Bankroll → Return float</span></td><td class="n1">1 tap</td>
+  </tr>
+  <tr>
+    <td>Bankroll → <b>your</b> book</td>
+    <td><span class="tap">Book → Deposit, “Tim’s float”</span></td><td class="n1">1 tap</td>
+  </tr>
+  <tr>
+    <td><b>Your</b> book → bankroll <i>(always withdraw to the bankroll account)</i></td>
+    <td><span class="tap">Book → Withdraw</span></td><td class="n1">1 tap</td>
+  </tr>
+  <tr>
+    <td>Bankroll → Sarie → her book <i>(her float empty)</i></td>
+    <td><span class="tap">Bankroll → Return float</span> then <span class="tap warn">Her book → Deposit, “fresh bank money”</span></td><td class="n2">2 taps</td>
+  </tr>
+  <tr>
+    <td>Her held cash → home to bankroll</td>
+    <td><span class="tap warn">Her float → Return float</span> then <span class="tap">Bankroll → Top-up float</span></td><td class="n2">2 taps</td>
+  </tr>
+</table>
+
+<div class="never"><b>Never:</b> a bare one-tap deposit into a helper’s book when their float is empty — it hides the money leaving your bankroll. &nbsp;<b>Mis-booked?</b> Money movements ledger → Reverse → redo.</div>
+
+</body>
+</html>

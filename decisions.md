@@ -1407,3 +1407,102 @@ executed under its own briefs. Bet-safe: analytical/governance only.
 
 **Date:** 2026-06-30 (Session 206 — locked from the §B draft after the
 backfill cross-check).
+
+## DR-035: VPS hardening precedes the data reset — build order locked
+
+**Decision:** The VPS hardening build (`vps_hardening_brief.md` v3, W1–W9,
+operator-approved S238 2026-07-13) executes FIRST; the capture data reset
+follows it. Forward-only remedies in that brief (racing-code stamping,
+unrecoverable outage/greyhound history, mis-filed harness rows left in
+place) are acceptable ONLY under this order: the reset starts the store
+clean on hardened, three-code, identity-disciplined capture.
+
+**Also locked here:** the S237 "operator names missing dog bets for
+scripted logging" valve is superseded going forward (retained solely for
+the 9–11 Jul dead window); DR-032 §6's "low-tier greyhound" out-of-scope
+sentence is deliberately shrunk by W7 (greyhound capture) — this line is
+the append-only amendment.
+
+**Cross-references:** `vps_hardening_brief.md` (v3) · review records
+`vps_hardening_review_round1.md` / `round2.md` · `vps_data_map.md` ·
+DR-032, DR-033, DR-034.
+
+**Date:** 2026-07-13 (Session 238 — locked at operator approval of the
+hardening brief).
+
+## DR-036: Race identity ENFORCED — DR-034's target end-state executed (0l)
+
+**Why:** DR-034 defined the Betfair WIN market id as the race's canonical
+identity and named its target end-state ("collapse fragments under the
+market id at read time and enforce identity at write time") without
+commissioning the build. S258's Randwick day proved the cost of waiting:
+a blank TAB column all day (read-side single-fragment pick landed on the
+unstamped fragment) and capture data loss (two collector trackers over
+one race; final snapshots orphaned, BSP pass 0 rows, 16-of-8 settlement).
+Worklist 0l commissioned the permanent fix; S259 built it after three
+adversarial design reviews (3× SAFE WITH FIXES, all integrated —
+`twin_row_fix_brief.md` §8).
+
+**Locked stance:**
+1. **Read-time collapse is live** (`api/market_resolution.py`): both
+   soft-odds routes and results-by-market union runners across all
+   fragments of a market — under the horse-identity guard. No route may
+   bridge runner data across fragments without robust-name agreement
+   (RC-2); identity unproven ⇒ omit (blank over wrong price, fail-CLOSED
+   on thin evidence — deliberately stricter than the capture-side S255
+   fail-open guard).
+2. **Write-time enforcement is live** (`storage/race_resolve.py`): any
+   writer holding a WIN market id resolves to the existing row carrying
+   it BEFORE the natural key; post-adoption writes go by row id,
+   fill-if-null, identity columns immutable. The collector and the
+   identity sweep share ONE twin-pick implementation. One live tracker
+   per WIN market; a refused twin registration merges its book ids into
+   the survivor.
+3. **Historical repair by merge, never pick-and-drop** —
+   `storage/twin_merge.py`: identity-gated, fill-if-null, full pre-image
+   + child-move journal (`race_row_merges`, same transaction), FK ON,
+   terminal fence (no market younger than 6h from its latest scheduled
+   start is ever touched — dates cannot fence date twins). The identity
+   sweep self-heals new twins (14-day window) with the same core.
+4. **Completeness ordering amendment:** for canonical-row choice the
+   §B.7 ordering is amended to rank stamped selections ABOVE raw runner
+   count (raw count rewards trial-contaminated fragments; surfaced by a
+   red test). Read-side pick_primary keeps the routes' shipped ordering
+   unchanged.
+5. **Venue naming:** collector venue source is the catalogue
+   `event.venue` (sweep-identical); `normalise_venue` gains the
+   track-within-venue class (kensington → randwick) and the surface
+   suffixes (synthetic/poly/polytrack). The surgical-fix-7 "no edits to
+   race_matcher" fence (archive/dirs/dr029/2_1_race_data/
+   surgical_fix_7_design_brief.md:228 — a per-brief constraint, not a
+   DR) is superseded by the 0l commission.
+6. **Same-code valve mint:** under market-id-first resolution, a
+   same-code natural-key collision holding a DIFFERENT market id now
+   mints a `venue|code`-suffixed row (new market = new race) instead of
+   coalescing; the data-reset migration strips same-code suffixes too.
+7. DR-035's reserves stand: NO unique index on the market id and NO code
+   dimension in the natural key until the data reset. Identity gate
+   refusals (fragments whose runner names don't overlap — mis-stamped
+   market ids, e.g. the two Wagga greyhound markets 1.260468539/69) go
+   to a review list, never merged by guess.
+
+**What this means concretely:** the destructive half (donor-row deletion
+after merge) ran/runs UNATTENDED under the 0l commission, protected by:
+verified pre-repair backup (`capture.db.bak-s259-pre-twinrepair-
+20260729-122248`), dress rehearsal on a copy, recent-window canary before
+history, per-market transactions with in-transaction journal, orphan-scan
+exit gates, and a 04:30 Adelaide deadline abort (resumes next quiet
+night until the twin census reads zero).
+
+**Tradeoffs:** merge canonicalisation can retire a race row id that an
+external extract held (model.db re-extract required before that parked
+research resumes); gate-refused markets stay split until a human looks.
+
+**Scope:** capture repo only; v3 untouched (its client-side collapse is
+merge-tolerant, verified in review).
+
+**Cross-references:** `twin_row_fix_brief.md` (design + 3 review
+verdicts) · `twin_row_fix_report.md` · `sessions/SESSION_259.md` ·
+capture `6566641` · DR-032, DR-034, DR-035.
+
+**Date:** 2026-07-30 (Session 259).

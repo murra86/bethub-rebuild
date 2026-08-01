@@ -1,0 +1,452 @@
+race_id|race_date|venue_normalised|race_number|finish_position|n|horses
+47573|2026-03-05|grafton|1|1|2|Commedia / Superstitious
+47573|2026-03-05|grafton|1|2|2|Moonlight Diva / Amaya's Secret
+47573|2026-03-05|grafton|1|3|2|Exo Murano / Diamondsaremio
+47573|2026-03-05|grafton|1|4|2|Ivantheinvincible / Aureate
+47573|2026-03-05|grafton|1|5|2|Sneaky Bid / Homeland
+47573|2026-03-05|grafton|1|6|2|Why Wait / Onigiri
+47573|2026-03-05|grafton|1|7|2|Frictional Force / Sir Havachat
+47573|2026-03-05|grafton|1|8|2|Mawsons Expedition / Reds King
+47574|2026-03-05|grafton|2|1|2|Weownachevy / Coastal Cowboy
+47574|2026-03-05|grafton|2|2|2|Subsiding / Kiss'n Dance
+47574|2026-03-05|grafton|2|3|2|Culminating / Bassett's Choice
+47574|2026-03-05|grafton|2|4|3|Ashkirk / Prestige Reign / Pacific Reel
+47574|2026-03-05|grafton|2|5|2|Boom Boom Bowie / Easy Trapezee
+47574|2026-03-05|grafton|2|6|2|Savanna Golden Boy / Prestige Serial
+47574|2026-03-05|grafton|2|7|2|Wulfhere / Bee Sun
+47575|2026-03-05|grafton|3|1|2|Swift Charm / Always A Rainbow
+47575|2026-03-05|grafton|3|2|2|Next Pay Run / Dual Mastery
+47575|2026-03-05|grafton|3|3|2|Elegant Force / Cantarito
+47575|2026-03-05|grafton|3|4|2|Set To Prophet / Turpin's Torment
+47575|2026-03-05|grafton|3|5|2|Prestige Ice / Some Girls
+47575|2026-03-05|grafton|3|6|2|Eccasdash / Righteous Brother
+47575|2026-03-05|grafton|3|7|3|Da Silva Gold / Moonlight Diva / Shark Park
+47595|2026-03-05|townsville|1|1|2|Elie Joe / Better Blitzem
+47595|2026-03-05|townsville|1|2|2|Tarong / Felipity
+47596|2026-03-05|townsville|2|1|2|Molongle Surprise / Mr Sugar Daddy
+47596|2026-03-05|townsville|2|2|2|Gossip Torque / Stellar Legend
+47596|2026-03-05|townsville|2|3|2|Demon Award / Kammerzell House
+47596|2026-03-05|townsville|2|4|2|John Joseph / Shadyvale Al
+47596|2026-03-05|townsville|2|5|3|Machine Head / Medal / Coventry Lane
+47596|2026-03-05|townsville|2|6|2|Joe's Giggle / I Swim I Win
+47597|2026-03-05|townsville|3|1|2|Nottington Prince / Standard Gladiator
+47597|2026-03-05|townsville|3|2|2|She's A Beauty / Boom Bunny
+47597|2026-03-05|townsville|3|3|2|Valadore / Small Town Hussler
+47597|2026-03-05|townsville|3|4|2|Divine Soul / Amber Affair
+47597|2026-03-05|townsville|3|5|2|Royal Edition / Moonya Lad
+47597|2026-03-05|townsville|3|6|2|Ask Me Edi / Miss The Music
+47597|2026-03-05|townsville|3|7|2|Nicco Nota Fighter / Sheza Barbarossa
+47597|2026-03-05|townsville|3|8|2|Boomious / Time Power
+59828|2026-03-06|dubbo|1|1|2|Blazing Courage / Dunedin
+59828|2026-03-06|dubbo|1|2|2|Italian Made / Will to Excel
+59828|2026-03-06|dubbo|1|3|2|Comby / Final Impact
+59828|2026-03-06|dubbo|1|4|2|Voskamp / Testing The Cugat
+59828|2026-03-06|dubbo|1|5|2|Lodes Of Gold / Doppio
+59829|2026-03-06|dubbo|2|1|2|Plenitude / Claudio
+59829|2026-03-06|dubbo|2|2|2|Star Intrigue / Mr Gunna Do
+59829|2026-03-06|dubbo|2|3|2|Still Excited / Fortians
+59829|2026-03-06|dubbo|2|4|2|Blue Guitar / Zoysia
+59829|2026-03-06|dubbo|2|5|2|Sibeila / Allusive Intent
+59829|2026-03-06|dubbo|2|6|2|Mr Invincible / Majestic Roca
+59829|2026-03-06|dubbo|2|7|2|Rapidly / Megaphone Miss
+76326|2026-03-07|flemington|2|1|2|Verdoux / M'lady Rose
+76326|2026-03-07|flemington|2|2|2|She's An Artist / Cisco
+76326|2026-03-07|flemington|2|3|2|Press Down / Storm Leopard
+76326|2026-03-07|flemington|2|4|2|Codigo / Haaracaine
+76327|2026-03-07|flemington|3|1|2|Medicinal / He's A Hustler
+76327|2026-03-07|flemington|3|2|2|Jadzia / Pro Aussie
+76327|2026-03-07|flemington|3|3|2|Scintillation / All Too Hard/Devil Moon/2022
+76327|2026-03-07|flemington|3|4|2|Rebel Tuesday / Simply Gold
+76330|2026-03-07|flemington|6|1|2|Grinzinger Heart / Purple Streak
+76330|2026-03-07|flemington|6|2|2|Zambales / Photograph
+76330|2026-03-07|flemington|6|3|2|Expensive Taste / Istriano
+76330|2026-03-07|flemington|6|4|2|Diameter / Miewa
+76330|2026-03-07|flemington|6|5|2|Dr Hook / Tipsy Gypsy
+76330|2026-03-07|flemington|6|6|2|Hydrobomb / North Dakota
+76332|2026-03-07|flemington|8|1|2|Ahha Ahha / Bordeaux
+76332|2026-03-07|flemington|8|2|2|Damask Rose / Levens Hall
+76332|2026-03-07|flemington|8|3|2|Sea What I See / Farnan/Enood/2023
+76332|2026-03-07|flemington|8|4|2|Philia / Ghaziyah
+76332|2026-03-07|flemington|8|5|2|Too Darn Discreet / Celestial Honor
+76332|2026-03-07|flemington|8|6|2|Benagil / Armory (IRE)/Cape City Flyer (NZ)/2023
+76333|2026-03-07|flemington|9|1|2|Caballus / Massalia
+76333|2026-03-07|flemington|9|2|2|Gallant Son / Brutal Tempo
+76333|2026-03-07|flemington|9|3|2|Angel Capital / Tolpuddle
+76333|2026-03-07|flemington|9|4|2|Sepals / Profile
+76333|2026-03-07|flemington|9|5|2|Tentyris / Sir Dinadan
+76333|2026-03-07|flemington|9|11|2|Wodeton / War Machine
+76416|2026-03-07|corowa|1|1|2|Leila Belle / Jarbardar
+76416|2026-03-07|corowa|1|2|2|Inner Thoughts / No Ordinary Show
+76416|2026-03-07|corowa|1|3|2|Hydrating / Miss Hard Copy
+76416|2026-03-07|corowa|1|4|2|Borata's Girl / Wayne's Dream
+76416|2026-03-07|corowa|1|5|2|Roscomain Bill / Commanding Shadow
+76416|2026-03-07|corowa|1|6|2|Theladylovescash / Blue Cattle Dog
+76416|2026-03-07|corowa|1|7|2|Choc Chip / Belgium Lad
+76416|2026-03-07|corowa|1|8|2|Notafoni / Oaklands Orchid
+76416|2026-03-07|corowa|1|9|2|Gold Dust Woman / Phenomenorm
+76417|2026-03-07|corowa|2|1|2|Mr Crafty / Fair Master
+76417|2026-03-07|corowa|2|2|2|Megaflash / Oubaitori
+76417|2026-03-07|corowa|2|3|2|Imposing Tallulah / Carry On Lizzy
+76417|2026-03-07|corowa|2|4|2|Sizzleist / Okay Zoomer
+76417|2026-03-07|corowa|2|5|2|Ossified / Ginno's Halo
+76417|2026-03-07|corowa|2|6|2|Veloce / Mangoplah
+76417|2026-03-07|corowa|2|7|2|Overloaded / Cavascot
+76417|2026-03-07|corowa|2|8|2|Twice As Quick / Rubyregis
+76417|2026-03-07|corowa|2|9|3|Maham / The Buncha / Edika
+76418|2026-03-07|corowa|3|1|2|One Hard Lady / Tesoro Mio
+76418|2026-03-07|corowa|3|2|2|Flying Season / Melodee Rose
+76418|2026-03-07|corowa|3|3|2|Sister Shay / Penrose
+76418|2026-03-07|corowa|3|4|2|Second Guess / Needawinna
+76418|2026-03-07|corowa|3|5|2|Capital Win / Boudica Warrior
+76418|2026-03-07|corowa|3|6|2|Zethus / Impending Love
+76418|2026-03-07|corowa|3|7|2|High Country Star / Majestic Maremma
+76418|2026-03-07|corowa|3|8|2|Hulm / Tallingas Indirose
+76581|2026-03-07|gunnedah|1|1|2|Somerton Smart / Satin Dragon
+76581|2026-03-07|gunnedah|1|2|2|Big Lon / Erniegy
+76581|2026-03-07|gunnedah|1|3|2|Almost Maybe / Envisioned
+76581|2026-03-07|gunnedah|1|4|2|Spicy Margherita / Sorutal
+76581|2026-03-07|gunnedah|1|5|2|Life Statement / Emerald Invasion
+98043|2026-03-08|albany|1|1|2|Deadly And Fast / Bondi Express
+98043|2026-03-08|albany|1|3|2|Dolce Maschino / Hundred Yards
+98043|2026-03-08|albany|1|5|2|Lady Vigara / I Love Lucy A Lot
+98043|2026-03-08|albany|1|6|2|Halatorion / Arafisio
+98043|2026-03-08|albany|1|7|2|Blue Cheyenne / Crombie
+98043|2026-03-08|albany|1|8|2|He's Captivating / Mystacheeno
+98043|2026-03-08|albany|1|9|2|Shooting Spirit / Hero
+98043|2026-03-08|albany|1|10|2|Huhtamaki / Social Aspect
+98144|2026-03-08|muswellbrook|6|7|2|Cool Storm / Ritzsun
+121902|2026-03-09|cowra|1|1|3|Wonder Step / Italus / Nafanua
+121902|2026-03-09|cowra|1|2|2|Brogans Creek / Erion
+121902|2026-03-09|cowra|1|3|2|Zealands Princess / Kneel Down
+121902|2026-03-09|cowra|1|4|2|Kirk / Deluce
+121902|2026-03-09|cowra|1|5|2|Graceful Annie / Magic Iris
+121964|2026-03-09|coffs harbour|1|1|2|Kissavos / Headstream
+121964|2026-03-09|coffs harbour|1|2|3|Alexandra Parade / Gaelic Reward / Chistota
+121964|2026-03-09|coffs harbour|1|3|2|Unloading / Namara
+121964|2026-03-09|coffs harbour|1|4|3|Call Da Vinci / Crowie's Shout / Artie's Magic
+121964|2026-03-09|coffs harbour|1|5|2|Count De Monnaie / Vega Sicilia
+161962|2026-03-12|pinjarra scarpside|5|3|2|Rare Honor / Rock Silver
+161986|2026-03-12|beaudesert|3|5|2|Supersonic Man / Maybe
+161996|2026-03-12|pakenham|6|1|2|Stung / Belcony
+171443|2026-03-14|gosford|6|3|2|Clifton Springs / Silencio Porfavor
+179235|2026-03-15|grafton|1|1|2|Why Wait / Moonlight Diva
+179235|2026-03-15|grafton|1|2|2|Weownachevy / Port Kembla
+179235|2026-03-15|grafton|1|3|2|Wild Monarch / Lagavulin
+179235|2026-03-15|grafton|1|4|2|Ashkirk / Fierce Fire
+179235|2026-03-15|grafton|1|5|2|Sweet Enchantress / Halloween Holly
+179235|2026-03-15|grafton|1|6|2|Prestige Blue / Prestige Special
+179235|2026-03-15|grafton|1|7|2|Ravaged / Run To The Hills
+179235|2026-03-15|grafton|1|9999|2|Prestige Gundy / Prestige Pak
+179236|2026-03-15|grafton|2|1|2|Vermeer / Without Parallel
+179236|2026-03-15|grafton|2|2|2|Redadel / Vivika
+179236|2026-03-15|grafton|2|3|2|Mr Plume / Another Cashie
+179236|2026-03-15|grafton|2|4|2|Dipierdomenico / Don't Tellyafather
+179236|2026-03-15|grafton|2|5|2|Libby / Prestige Gundy
+179236|2026-03-15|grafton|2|6|2|Shillong / Maurraqa
+179236|2026-03-15|grafton|2|7|2|Nature Boy / Snow Falcon
+179236|2026-03-15|grafton|2|8|2|Sir Zino / Prestige Pak
+179283|2026-03-15|townsville|2|1|2|Nottington Prince / Novaya
+183716|2026-03-16|port macquarie|1|1|2|Rockbarton Spear / Crowie's Shout
+183716|2026-03-16|port macquarie|1|2|2|Longchamp Lad / Gold Card
+183716|2026-03-16|port macquarie|1|3|2|Sasqua / Cerano Magic
+183716|2026-03-16|port macquarie|1|4|2|Carmine / Ms Hubble
+183716|2026-03-16|port macquarie|1|5|2|Wan Lost / Calido Magic
+183716|2026-03-16|port macquarie|1|6|2|Raining Luck / Dividing
+185992|2026-03-17|moree|1|1|2|Artie Vainqueur / Purple Esprit
+185992|2026-03-17|moree|1|2|2|Parissident / More Cash
+185992|2026-03-17|moree|1|3|2|Not So Wrong / Got An Inspiration
+188753|2026-03-18|doomben|1|1|2|Koolibah / Great Aspirations
+188753|2026-03-18|doomben|1|2|2|Crypto Magic / Northern Decree
+188753|2026-03-18|doomben|1|3|2|Promises Made / Exceed Speed
+188753|2026-03-18|doomben|1|4|2|Amelioration / Lucky Girl
+188753|2026-03-18|doomben|1|5|2|Big Tech / Rising Pacific
+188753|2026-03-18|doomben|1|6|2|Isla Delilah / Golden Decade
+188753|2026-03-18|doomben|1|7|2|Classic Shiraz / Mahagoni
+188754|2026-03-18|doomben|2|1|2|Saint Aldwyn / Arisphere
+188754|2026-03-18|doomben|2|2|2|Woodrow / En Pointe
+188754|2026-03-18|doomben|2|3|2|Kadesky / Kronenbourg
+188754|2026-03-18|doomben|2|4|2|Bomb Perignon / Cavalry Man
+188754|2026-03-18|doomben|2|5|2|Reconciliate / Thinkhardandfast
+188754|2026-03-18|doomben|2|6|2|The Aviator / True Amor
+188754|2026-03-18|doomben|2|7|2|Under Arrest / Tenzing
+188754|2026-03-18|doomben|2|8|2|Violaceous / November Air
+188755|2026-03-18|doomben|3|1|2|Eclair Awesome / Olivoni
+188755|2026-03-18|doomben|3|2|2|Wild Gypsy / Langan
+188755|2026-03-18|doomben|3|3|2|Laridae / Hot Debate
+188755|2026-03-18|doomben|3|4|2|Carravilla / Bye Bye Castle
+188755|2026-03-18|doomben|3|5|2|Kerkorian / Tempting Conza
+188756|2026-03-18|doomben|4|1|2|Hell To Pay / Brumal
+188756|2026-03-18|doomben|4|2|2|Zaher / I Am That Girl
+188756|2026-03-18|doomben|4|3|2|Notes / Worththeadmission
+188756|2026-03-18|doomben|4|4|2|Tophet / Star Of The Bar
+188756|2026-03-18|doomben|4|5|2|Ninjitzou / Tagliatelle
+188757|2026-03-18|doomben|5|1|2|Illegal Justice / Lady Milan
+188757|2026-03-18|doomben|5|2|2|Don't Doubt Missy / Zoubuca Shots
+188757|2026-03-18|doomben|5|3|2|Flashmaster / Chantilly
+188757|2026-03-18|doomben|5|4|2|Geitz / Suzano
+188757|2026-03-18|doomben|5|5|2|Western Lights / Summation
+188757|2026-03-18|doomben|5|6|2|Our Mate Locky / Miles High
+188757|2026-03-18|doomben|5|7|2|Amalfi Boy / Lady Soprano
+188757|2026-03-18|doomben|5|8|2|Fidardo / Where All On
+188758|2026-03-18|doomben|6|1|2|Divine Source / Cardonette
+188758|2026-03-18|doomben|6|2|2|Maragical / Yoweri
+188758|2026-03-18|doomben|6|3|2|Cordina / Sikka
+188758|2026-03-18|doomben|6|4|2|Music Fever / Prince Pier
+188758|2026-03-18|doomben|6|5|2|Fortuneer / Evening Delle
+188758|2026-03-18|doomben|6|6|2|Jukebox In Siberia / Bodhran
+188758|2026-03-18|doomben|6|7|2|Lunar Eight / Pacquiao
+188758|2026-03-18|doomben|6|8|2|Monazel / The Batavia
+188759|2026-03-18|doomben|7|1|2|Alpha Bravo / La Bella Boom
+188759|2026-03-18|doomben|7|2|2|The Bear / Texas
+188759|2026-03-18|doomben|7|3|2|Grammar Lad / He's Tru Blue
+188759|2026-03-18|doomben|7|4|2|Andi Don't Care / Subpoena Colada
+188759|2026-03-18|doomben|7|5|2|Joy A Plenty / Boozie Miss
+188759|2026-03-18|doomben|7|6|2|Marunouchi / I Say I Say
+188759|2026-03-18|doomben|7|7|2|Ave Cantare / Hurkle Durkle
+188760|2026-03-18|doomben|8|1|2|Artful Girl / Capital Heart
+188760|2026-03-18|doomben|8|2|2|Galway Flyer / Guac On
+188760|2026-03-18|doomben|8|3|2|Champagne Rouge / Phenom
+188760|2026-03-18|doomben|8|4|2|Arizona Dreaming / Araletta
+188760|2026-03-18|doomben|8|5|2|Delrico / Daggers
+188760|2026-03-18|doomben|8|6|2|Guarded Optimist / Captain Eagle
+188760|2026-03-18|doomben|8|7|2|Tenbury Wells / Puff 'N' Harry
+188760|2026-03-18|doomben|8|8|2|Baccarat Rouge / Shalaa Jet
+192450|2026-03-19|albany|1|1|2|Traded My Shoes / Little Silver
+192450|2026-03-19|albany|1|2|2|Heaps True Aye / Odinaka
+192450|2026-03-19|albany|1|3|2|Watershed Wisdom / Daytona Pete
+192450|2026-03-19|albany|1|4|2|West Coast Warrior / Acoustic Bubbles
+192450|2026-03-19|albany|1|5|2|Sassyassa / Box Of Ginger
+192450|2026-03-19|albany|1|6|2|Miss Banoffee / Lady Vigara
+192450|2026-03-19|albany|1|7|2|Le Beau / Ravin' Ava
+192450|2026-03-19|albany|1|8|2|River Beauty / Blue Cheyenne
+192450|2026-03-19|albany|1|9|2|Twilight God / Halatorion
+192459|2026-03-19|pakenham|3|4|2|Heavy Is The Head / Kokeshi
+195130|2026-03-20|scone|3|1|2|The Extreme Cat / Point Basse
+202045|2026-03-21|eagle farm|5|3|2|The Enchanter / Zoufani
+202113|2026-03-21|warren|1|1|2|Still Excited / Beauchamp
+202113|2026-03-21|warren|1|2|2|Strassman / Moon Zone
+202113|2026-03-21|warren|1|3|2|Kingdom Heart / Yakamoz
+202113|2026-03-21|warren|1|4|2|Jimmy's Choice / The Drafter
+202113|2026-03-21|warren|1|5|2|Smokin' Genie / Mr Severino
+202113|2026-03-21|warren|1|6|2|Silent Drama / Lessons From Leo
+202113|2026-03-21|warren|1|7|2|Lollylicious / Slippery Cod
+214242|2026-03-22|bairnsdale|5|7|2|Lord Paramount / Listening Is Doing
+214283|2026-03-22|orange|1|1|2|Allusive Intent / Sibeila
+214283|2026-03-22|orange|1|2|2|Oubaitori / Polens
+214283|2026-03-22|orange|1|3|2|Kneel Down / Avignon
+214283|2026-03-22|orange|1|4|2|Nightwalker / There She Goes
+214283|2026-03-22|orange|1|5|2|Fortians / Knights Templar
+214284|2026-03-22|orange|2|1|2|The Biv / Kelilah
+214284|2026-03-22|orange|2|2|2|Ivory Frost / Race To Arms
+214284|2026-03-22|orange|2|3|2|Milk Foam / Mountain Top
+214284|2026-03-22|orange|2|4|2|Just Joan / A Boy Named Soo
+214284|2026-03-22|orange|2|5|2|Red Light Rachel / Talihina Sky
+214289|2026-03-22|orange|7|4|2|Dark Thinker / Egyptologist
+220794|2026-03-23|ballina|1|1|2|Sol Filia / Our Sparky
+220794|2026-03-23|ballina|1|2|2|Risk For Reward / Washik
+220794|2026-03-23|ballina|1|3|2|Righteous Brother / Brave Chap
+220794|2026-03-23|ballina|1|4|2|Uncle Darby'sdream / Rephrase
+220794|2026-03-23|ballina|1|5|2|Mulled / Rowdie Blue
+226877|2026-03-24|port macquarie|1|1|2|Farnciful / Auzstar
+226877|2026-03-24|port macquarie|1|2|2|Kissavos / Prince Rupert
+226877|2026-03-24|port macquarie|1|3|2|Cerano Magic / Angels Cloud
+226877|2026-03-24|port macquarie|1|4|2|Hellavalegacy / Prince Of Wants
+233357|2026-03-25|canberra|1|1|2|Pombia / Piratess
+233357|2026-03-25|canberra|1|2|2|Over The Limit / Sunset Time
+233357|2026-03-25|canberra|1|3|2|The Way Ahead / Masked Vision
+233357|2026-03-25|canberra|1|4|2|Tutto Finito / Zee Sort
+233357|2026-03-25|canberra|1|5|2|Show Rhythm / Still The Moon
+233357|2026-03-25|canberra|1|6|2|Dancer's Delight / Clyde Mountain
+233357|2026-03-25|canberra|1|7|2|Get Litt / Parker's Paradise
+233357|2026-03-25|canberra|1|8|2|Petomai / Iconic Prestige
+233358|2026-03-25|canberra|2|1|2|Into The Fire / Slay Queen
+233358|2026-03-25|canberra|2|2|2|Written By Lucy / One More Bout
+233358|2026-03-25|canberra|2|3|2|Tango On / First Assault
+233358|2026-03-25|canberra|2|4|2|Baby Daisy / Encampment
+233358|2026-03-25|canberra|2|5|2|Isagura / Arcana Imperii
+233358|2026-03-25|canberra|2|6|2|Bedda Mia / That A Boy
+233358|2026-03-25|canberra|2|7|2|Liubov / Red Rocks Beach
+233358|2026-03-25|canberra|2|8|2|Jacob Joe / Zippy Lion
+233358|2026-03-25|canberra|2|9|2|Yael's Delight / Burn Sugar Burn
+233358|2026-03-25|canberra|2|10|2|Prophet Time / Manzobeel
+233359|2026-03-25|canberra|3|1|2|Uber In / Laurel Hill
+233359|2026-03-25|canberra|3|2|2|Samaka / Vermicella
+233359|2026-03-25|canberra|3|3|2|Kirwans Bridge / Minks Written
+233359|2026-03-25|canberra|3|4|2|Rebel Blaze / Hip Hip Ole
+233359|2026-03-25|canberra|3|5|2|Whymsical Spirit / Aleutian
+233359|2026-03-25|canberra|3|6|2|Brume De Soliel / Fred Astern
+233359|2026-03-25|canberra|3|7|2|Setta Icon / Bide Your Time
+233361|2026-03-25|canberra|5|5|2|Cyclone Rupert / Champions League
+240099|2026-03-26|albany|1|1|2|Bit Tired Actually / Smooth Chino
+240099|2026-03-26|albany|1|2|2|Cosmic Gem / Rope Them In
+240099|2026-03-26|albany|1|3|2|Tasman Jewel / Mister Raffles
+240099|2026-03-26|albany|1|4|2|God'll Getya / He's A Lot Hot
+240099|2026-03-26|albany|1|5|2|Mystacheeno / We Love Charlie
+240099|2026-03-26|albany|1|6|2|Ginger Fizz / Chantel
+240099|2026-03-26|albany|1|7|2|Hope To Admire / Astonisher
+240121|2026-03-26|ipswich|1|1|2|Brumal / Da Snoop Dog
+240121|2026-03-26|ipswich|1|2|2|Spirit Of Torque / Wexford Miss
+240121|2026-03-26|ipswich|1|3|2|Ander's Dream / Step On Fire
+240121|2026-03-26|ipswich|1|4|2|Zou Zou Kapadokia / Down Under Stunnah
+240122|2026-03-26|ipswich|2|1|2|Duke Of Albemarle / Worthy Stunnah
+240122|2026-03-26|ipswich|2|2|2|Olivoni / Red Cape
+240122|2026-03-26|ipswich|2|3|2|Langan / Red Hot Magic
+240122|2026-03-26|ipswich|2|4|2|I Am That Girl / Tales Of Valour
+240122|2026-03-26|ipswich|2|5|2|Power Hit / Jasmintina
+253655|2026-03-28|doomben|5|5|2|That's Molly / Artful Girl
+253659|2026-03-28|doomben|9|4|2|Blue Spinel / Dominant Darcy
+286401|2026-03-30|grafton|1|1|2|Ivantheinvincible / Sword Of Legacy
+286401|2026-03-30|grafton|1|2|2|Xtravagant Gift / Too Hot To Torque
+286401|2026-03-30|grafton|1|3|2|Foxy Artist / Auric Star
+286401|2026-03-30|grafton|1|4|2|Commedia / Dandeelion Wishes
+286401|2026-03-30|grafton|1|5|2|Lolita / Miss Madigan
+286401|2026-03-30|grafton|1|6|2|Moonspell / Zee Fire
+286401|2026-03-30|grafton|1|7|2|Exo Murano / Deep Stealth
+286401|2026-03-30|grafton|1|8|2|Taga Smile / Rupestris
+286401|2026-03-30|grafton|1|9|2|Musumeci / Anderlyn
+286401|2026-03-30|grafton|1|10|2|Sajjetti / Halloween Holly
+286402|2026-03-30|grafton|2|1|2|Xtreme / Geegee Jet By
+286402|2026-03-30|grafton|2|2|2|Referees / Under Twenty Two
+286402|2026-03-30|grafton|2|3|2|Casino Collection / Boys Night Out
+286402|2026-03-30|grafton|2|4|2|Prestige Ice / Alleze
+286402|2026-03-30|grafton|2|5|2|Highwire Girl / Belvedere Boys
+286402|2026-03-30|grafton|2|6|2|Mini Angel / The Astronomer
+286402|2026-03-30|grafton|2|7|2|Midwest Princess / Cranky Harry
+286443|2026-03-30|sapphire coast|1|3|2|Wolf Island / Casino Shaw
+308438|2026-03-31|townsville|1|1|2|San Juan / Northernontap
+308438|2026-03-31|townsville|1|2|2|Ready And Betta / Mission House
+308438|2026-03-31|townsville|1|3|2|Stellar Legend / Foneeleven
+308438|2026-03-31|townsville|1|4|2|King Canute / Nolan
+308438|2026-03-31|townsville|1|5|2|Goncalo / Shockstar
+308439|2026-03-31|townsville|2|1|2|Tambo's Sister / Mr Metrics
+308439|2026-03-31|townsville|2|2|2|Ask Me Edi / Look At Rosa
+308439|2026-03-31|townsville|2|3|2|Sixty Nine Grange / First Man
+308439|2026-03-31|townsville|2|4|2|Scarlena / Bigcat
+308439|2026-03-31|townsville|2|5|2|Golden Glaze / Livewire Lass
+308440|2026-03-31|townsville|3|1|2|She's A Beauty / Hot Cocoa
+308440|2026-03-31|townsville|3|2|2|Shadyvale Al / We Us 'N' Co
+308440|2026-03-31|townsville|3|3|2|Amber Affair / Take A Dive
+308440|2026-03-31|townsville|3|4|2|Arancia / Small Town Hussler
+308440|2026-03-31|townsville|3|5|2|Oscar Booie / Davis Junior
+308440|2026-03-31|townsville|3|6|2|Princess Shanghai / Bonnie Miss Lottie
+373840|2026-04-03|cranbourne|1|1|2|Morris Brown / Strike First
+373840|2026-04-03|cranbourne|1|2|2|Bulletproof Kid / Sacre Bleu
+373840|2026-04-03|cranbourne|1|3|2|Ooh Ah Listah / Autumn Diamonds
+373840|2026-04-03|cranbourne|1|5|2|Lambro Mach / Downtherabbithole
+373840|2026-04-03|cranbourne|1|6|2|Martyr / La Divina
+373840|2026-04-03|cranbourne|1|7|2|Isolation / Ive Got The Power
+373840|2026-04-03|cranbourne|1|8|2|Telern Lofty / Princess Vonlozzi
+373840|2026-04-03|cranbourne|1|9|2|Platinum Jive / Pasifae
+373841|2026-04-03|cranbourne|2|1|2|Calabasas / On Broadway
+373841|2026-04-03|cranbourne|2|2|2|Scar / This Time Girl
+373841|2026-04-03|cranbourne|2|3|2|Right Of Reply / Didn't Miss Many
+373841|2026-04-03|cranbourne|2|4|2|Hillwinsome / Villa Seventynine
+373842|2026-04-03|cranbourne|3|1|2|Mikispur / Mr Crafty
+373842|2026-04-03|cranbourne|3|2|2|Magic Mike / Dun Gracefully
+373842|2026-04-03|cranbourne|3|3|2|The Villain / Gathers No Stone
+373842|2026-04-03|cranbourne|3|4|2|Evileye / Nikephoros
+373842|2026-04-03|cranbourne|3|5|2|Ollies Medal / Stormriser
+373842|2026-04-03|cranbourne|3|6|2|Just Incredible / Assertive Sway
+373842|2026-04-03|cranbourne|3|7|2|Ima Charma / Don't Tell Harry
+373843|2026-04-03|cranbourne|4|1|2|Covered In Gold / Written Story
+373843|2026-04-03|cranbourne|4|2|2|Clives Girl / Blue Light Disco
+373843|2026-04-03|cranbourne|4|3|2|Roylance / Jet Thunder
+373843|2026-04-03|cranbourne|4|5|2|Just Pedro / Gottaluvsport
+373843|2026-04-03|cranbourne|4|6|2|Blazin Heaven / Rough Enuff
+373844|2026-04-03|cranbourne|5|2|2|Lazenby / Logam
+373844|2026-04-03|cranbourne|5|3|2|Normans Girl / Flamingo Flyer
+373844|2026-04-03|cranbourne|5|6|2|Elleegant Lane / Zousouth
+373845|2026-04-03|cranbourne|6|1|2|Mista Walker / Lim's Bighorn
+373845|2026-04-03|cranbourne|6|2|2|Nuclear Attitude / Brandjam
+373845|2026-04-03|cranbourne|6|3|2|Zipping Volstead / Maldini
+373845|2026-04-03|cranbourne|6|6|2|Milly Meter / Capper Thirtynine
+373845|2026-04-03|cranbourne|6|8|2|Jays All That / Ti Tree Lad
+373846|2026-04-03|cranbourne|7|1|2|Time After Time / Billund
+373846|2026-04-03|cranbourne|7|2|2|Delta Starz / Hotspur Reale
+373846|2026-04-03|cranbourne|7|3|2|Sir Candy Cloud / Electric Star
+373846|2026-04-03|cranbourne|7|4|2|Blissfull Lilly / Lil Orlov
+373846|2026-04-03|cranbourne|7|6|2|Reason To Laugh / Supido's Choice
+373847|2026-04-03|cranbourne|8|2|2|Soft Landing / Stellar Mofeed
+373847|2026-04-03|cranbourne|8|3|2|Million Dollar Mav / Nerola
+373847|2026-04-03|cranbourne|8|4|2|Our Pinup Girl / Bohemian Angel
+373847|2026-04-03|cranbourne|8|5|2|Looking From Above / Divine Empress
+374026|2026-04-03|ballarat|4|2|2|Le Troisir / Desert Anthem
+374114|2026-04-03|canberra|1|1|2|Showtime Maggie / Encampment
+374114|2026-04-03|canberra|1|2|2|Needawinna / Burn Sugar Burn
+374114|2026-04-03|canberra|1|3|2|Into The Fire / Roy Kelton
+374114|2026-04-03|canberra|1|4|2|Isagura / Pure Octane
+374114|2026-04-03|canberra|1|5|2|Vinari / Her Name Is Lola
+374114|2026-04-03|canberra|1|10|2|Fire Your Guns / Call Me Artie
+374115|2026-04-03|canberra|2|1|2|Justifiably / Beer Baron
+374115|2026-04-03|canberra|2|2|2|Taytay Bay / Pink Lamborghini
+374115|2026-04-03|canberra|2|3|3|Brundee Tom / Kermandie River / Still The Moon
+374115|2026-04-03|canberra|2|5|2|Party It Down / Dupli Kate
+374115|2026-04-03|canberra|2|6|2|Doc March / Destructive Diva
+374119|2026-04-03|canberra|6|4|2|Aerostern Bro / Strike A Pose
+391946|2026-04-04|clare|1|103|3|See Ya Later Baby / So Country / Augusta Rock
+391947|2026-04-04|clare|2|103|3|Bandicoot / Woodstock / Now East
+392051|2026-04-04|dongara|5|10|2|Truevinsky / Miff Muffered Moof
+392149|2026-04-04|oakbank|2|5|2|Trevidi / Fine Ace
+392235|2026-04-04|moruya|1|1|2|Hunter One / Dolzino
+392235|2026-04-04|moruya|1|2|2|Silverwater Kid / Rained Out
+392235|2026-04-04|moruya|1|3|2|Reveillon / Peruno
+392235|2026-04-04|moruya|1|4|2|Cool As Ted / River Mersey
+392235|2026-04-04|moruya|1|5|2|Fields Unite / Empty Pockets
+392235|2026-04-04|moruya|1|6|2|Prairie Legend / Shaun The Sheik
+392235|2026-04-04|moruya|1|7|2|Hellcat / Kilteel
+416146|2026-04-05|mudgee|1|1|2|Disco Prince / Mi Piace
+416146|2026-04-05|mudgee|1|2|3|Coyote / Infinite Vixon / Inyun
+416146|2026-04-05|mudgee|1|4|2|Tokyo Queen / River Of Raine
+416181|2026-04-05|albany|1|1|2|Cosmic Gem / Anaconda Jones
+416181|2026-04-05|albany|1|2|2|Thor's Angel / Dundeemicky
+416181|2026-04-05|albany|1|3|2|Hundred Yards / Peigi
+416181|2026-04-05|albany|1|4|2|Alaskan Nugget / No Comebacks
+416181|2026-04-05|albany|1|5|2|Blue Lupin / Menomonee Brave
+416181|2026-04-05|albany|1|6|2|Tasman Jewel / Crashed And Burned
+416181|2026-04-05|albany|1|7|2|God'll Getya / Asuriito
+416181|2026-04-05|albany|1|8|2|Swanny Dee Please / Ravin' Ava
+416181|2026-04-05|albany|1|9|2|Crombie / Dolce Maschino
+438695|2026-04-06|ipswich|6|11|2|Michifuku / Shirley Pearly
+438710|2026-04-06|muswellbrook|1|1|2|Whittello Sun / Couples Retreat
+438710|2026-04-06|muswellbrook|1|2|2|Fined For Speeding / Magurtz
+438710|2026-04-06|muswellbrook|1|3|2|Kermitisapet / Artie's Magic
+438710|2026-04-06|muswellbrook|1|4|2|Lobbyist / Blue Poles
+438710|2026-04-06|muswellbrook|1|5|2|Millicent Daisy / Waku Waku
+438710|2026-04-06|muswellbrook|1|6|2|Varazze / Justbeyourself
+438710|2026-04-06|muswellbrook|1|7|2|Monumental / Supairo
+438710|2026-04-06|muswellbrook|1|8|2|Droplets / Atomic Bomber
+459229|2026-04-07|grafton|1|1|2|Spectorious / House Of Cards
+459229|2026-04-07|grafton|1|2|2|Dare To Love / Evil Lover
+459229|2026-04-07|grafton|1|3|2|Kissavos / Mystic Wave
+459229|2026-04-07|grafton|1|4|2|Sneaky Bid / Mulled
+459229|2026-04-07|grafton|1|5|2|Comme Ci Comme Ca / Hey Kalumba
+459229|2026-04-07|grafton|1|6|2|Virginia Breezes / Colosseum Sun
+502249|2026-04-09|gosford|1|2|2|Rita's Pearl / Pharoah Queen
+502255|2026-04-09|gosford|7|7|2|Great Heights / Newy
+502256|2026-04-09|gosford|8|5|2|Are Ee Que / Viipuri
+502257|2026-04-09|geraldton|1|1|2|Flaming Ronda / Royal Riviera
+502257|2026-04-09|geraldton|1|2|2|Sneaky Session / What About Moi
+502257|2026-04-09|geraldton|1|3|2|Diamas / Violent
+502257|2026-04-09|geraldton|1|4|2|Mahoney's Machine / Wild Gossip
+502257|2026-04-09|geraldton|1|5|2|Triple Ar / Icy Spirits
+502257|2026-04-09|geraldton|1|6|2|Boutique Session / Pull The Trigger
+502257|2026-04-09|geraldton|1|7|2|Dixie Princess / One Shot Wonder
+502426|2026-04-09|taree|1|1|2|Course Of Action / Vantorix
+502426|2026-04-09|taree|1|2|2|Varazze / Telegraph
+502426|2026-04-09|taree|1|3|2|Kitsilano / Bomarea
+502426|2026-04-09|taree|1|4|2|Zorko / Where's The Fire
+502426|2026-04-09|taree|1|5|2|Markwell Melody / Brazen Brando
+502426|2026-04-09|taree|1|6|2|Ms Hubble / Prince Of Wants
+502426|2026-04-09|taree|1|7|2|Moon Treaty / Mess Around
+502426|2026-04-09|taree|1|8|2|Whatsthetimemrwolf / Nett's Girl
+502426|2026-04-09|taree|1|9|2|Ellofaby / Maggie Rose
+502427|2026-04-09|taree|2|1|2|Cutting Edge / Steffiewah
+502427|2026-04-09|taree|2|2|2|Zedari / Home Siren
+502427|2026-04-09|taree|2|3|2|Send A Telegram / Ventata
+502427|2026-04-09|taree|2|4|2|Sheila's Fanta Sea / Saturn Rising
+502427|2026-04-09|taree|2|5|2|Mr Trackside / Hillbilly Hippie
+502427|2026-04-09|taree|2|6|2|Grassburn / Three Red Chooks
+502427|2026-04-09|taree|2|7|2|Pride Of Lanka / Fearless Warrior
+526487|2026-04-10|wellington|7|6|2|Invincible Salex / The Git Up
+526487|2026-04-10|wellington|7|8|2|There She Goes / Swedish Glitter
+534806|2026-04-11|caulfield|6|6|2|Ferivia / Jazz Affair

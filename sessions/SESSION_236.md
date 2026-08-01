@@ -1,0 +1,55 @@
+# SESSION 236 — FIRST LIVE DAY ON THE REWORKED RACE PAGE became a same-day build marathon: greyhound race-list fix live-proven, the FB conversion cycle proven end-to-end, the MONEY SURFACE built whole (movement door ×5 kinds, reversals, floats, P&L dashboard with a two-ledger self-check), plus a stack of operator-driven UX rounds — 13 commits, suites 1441/170
+
+**Opened:** 2026-07-09 11:11 ACST (cold manual open — S235's close never wrote the S236 prompt or launched the runner; drift caught at open, recovered by operator's manual "Open session 236").
+**Closed:** 2026-07-09 18:21 ACST, Adelaide-anchored per DR-021.
+**Tool routing:** single Claude Code session end-to-end (governance + build in one, operator-directed live) — a deviation from the usual Chat/Code split, driven by the live day's cadence; the mock→approve→build loop inside it worked well.
+**Bet-safety:** live racing day — operator placed real bets and real lays throughout; Claude made NO bets and NO Betfair placements; all Claude DB writes were operator-directed ledger entries (deposit $325, float openings ×4, `is_self` reference fix) through existing adapters, each verified on the live read path after write. Workers ON all day (live mode).
+**Governing DRs:** DR-021 (Adelaide anchors), DR-019 (derive-on-read — the whole money surface derives; nothing stores derived state), DR-022 (vocabulary), DR-027/028 (untouched), DR-030 (thin routers — `cash_flow.py` router composes existing adapters/derivations only).
+
+---
+
+## Anchor
+- Open `2026-07-09 11:11 ACST`; close `2026-07-09 18:21 ACST` (one calendar day, ~7h — split triggers long since fired; close kept complete-but-lean).
+
+## Pre-flight / drift found at open
+S235's close was PARTIAL: `current_state.md` + `SESSION_235.md` landed (11:05), but no SESSION_236 opening prompt was written, the stale S235 prompt sat in `.close_out_backups/`, the runner never launched, and `v3_build_picture.md` missed its update. Content handoff survived via `current_state.md`; this close repairs all four.
+
+## Session shape
+Three arcs braided: (1) the S235 rework's **live-proof day** — the operator bet through the new UI all day, feeding back live; (2) an operator-requested **money/accounting build arc** (visibility → movement door → structural rework → P&L dashboard), run mock-first with a brief (`money_movement_door_brief.md` v2, refined against §A.5/W14 on operator direction) and report; (3) rolling **UX rounds** ending in a standing instruction to lead on UX and a locked burst-flow redesign for S237.
+
+## What was delivered (bethub-v3 `51b62f7` → `7885535`, 13 commits, all pushed; suites 1418→**1441** backend / 160→**170** frontend)
+
+1. **Top bar compacted** (`8195687`) — stacked person/book, four fixed primary promo buttons (catalogue-resolved, recency-preferred) + other-promo dropdown.
+2. **Greyhound race-list 503 fixed + live-proven** (`9b82fa3`) — combined T,G day blew Betfair's catalogue data-weight cap (live repro: T=38 ✓, G=157 ✓, T,G ✗); the client now fetches one code per request and merges. Regression-pinned.
+3. **FB conversion cycle proven end-to-end live** — Sarie's $50: back logged (after a flow gap, see UX arc), lay auto-settled WON, inventory drew to $0. Blue Toes partial fill investigated: money was right all along (bet row reconciled; the stale figure was the leg row — the known S227 S1 residual, still cosmetic).
+4. **Fill-state visibility** (`7880be2`, `7303a62`) — BetLog Unmatched/Partial chips + 10s polling while pending; lay toast names persists-vs-lapses (persistence rides onPlaced meta).
+5. **Balances read side** (`16de45a`) — consolidated per-person/book screen (later superseded by 7).
+6. **Money-movement door** (`efdbf0d`, brief §-complete, report `money_movement_door_report.md`) — `POST /v1/cash-flow/movements` (deposit/withdrawal/funding/remittance), holdings read with `float_seeded`, movement card with before→after preview, registration→opening-deposit hand-off (`?deposit=`). **Live-proven same hour** by the operator ($800 w/d, $670 mis-entry self-netted, $557.02 w/d, $1,652 remittance). **occurred_at UTC bug found live (500), fixed, re-proven** (`1ab3885`): the ledger's Adelaide-only guard rejected the card's UTC "when"; router now normalises; ValidationErrors map to 422.
+7. **Structural rework on operator feedback** (`c23a33c`): **reversal door** (linked opposite-event, append-only — no deletes; originals lock after reversal), **profit_share** as fifth kind (float-reducing per §A.5), movements ledger listing, **net-flow read** (bank-boundary view). Then (`f3906ea`, `358fcc8`, part of `06583f8`) the **Money page** rebuilt to the approved mock: P&L hero derived TWO independent ways with a visible self-check (the **S236 identity, live-verified: cash view −$3.30 ≡ bets view −$3.30 to the cent**; pinned end-to-end in tests), four tiles (operation cash, moved-to-bank *neutral — capital not profit*, at-risk incl. lay liability, bonus in hand), ranked person cards with chips + doors, folded reversible ledger, dark full-bleed, thousands formatting.
+8. **Ledger data ops (operator-directed, scripted through existing doors):** Kate CrownBet deposit $325 (event `f2e1c5e0`; surfaced the −$150 no-opening-event class); float openings — Kate $325 (nets to $0 post-deposit), Tim/Sarie/Leigh $0 ("no pending money with holders"); all `unseeded` flags cleared; `accounts.is_self=1` set for Tim (display-only flag, was never set).
+9. **UX rounds** (`06583f8`, `def4451`, `7885535`): dismissible race-page toast; **Lost on insurance bets asks "triggered?" inline** (Yes=settle+credit / No=plain lost — replaces the composed button); EV colours **green ≥5%, amber 1–5%**, muted <1%; top-bar person/book either-order with pairing-persistence; **BetLog account/book edit** (two dropdowns, pending soft-book only; server refuses Betfair bets, settled bets, promo-attached bets, each with plain wording; audited BET_EDITED).
+10. **Burst-flow redesign LOCKED for S237** (`bethub-rebuild/burst_flow_mock.html`, operator: "Looks good, build as auto-action"): selection stack (person/book/promo quick-button rows; books activity-ordered but frozen for the day; balances on book chips) + **single-pass ⚡ lay→back** (modal becomes the back-log card, preselected context, skip keeps never-blocked). Also: Money-page mock `money_page_mock.html` retained.
+11. **422-on-edit investigated (second auto-action, resolved in-session):** bet-26eeb320 move failed because the RUNNING backend (started 17:17) predates the 17:55 feature — `extra="forbid"` rejected the new field. No code defect; works after restart. S237 folds in: surface FastAPI list-shaped 422 details as plain text in BetLog.
+
+## Findings / calls of note
+- **P&L identity** (new, load-bearing): `books+floats + remitted + profit_shares − funded − openings/corrections ≡ Σ settled bet pnl + promo cash − pending committed`. Two independent derivations power the dashboard self-check (green tick / amber with the exact difference). Green tick ≠ matches-the-bookies — that stays the daily money check's job.
+- **Process foul, repeated:** `npm run build` doubles as the frontend type-gate AND the served-dist rebuild, so the S232 "app down before dist rebuild" rule was breached ~4× (flagged each time; ~100ms window; no observed harm). **Needs a standing-rule refinement** — routed to S237 triage.
+- **Deviation:** governance + build ran in ONE session/tool (operator-directed live cadence). Worked, but burned a huge window; not the standing pattern.
+- **New standing instruction captured (in Claude memory; fold into `standing_instructions.md` at S237):** operator wants Claude to *lead on UX* — consult UX materials, propose better flows, mock-first via local HTML (artifact links don't work for him), plain-language rationale.
+- StarSports mis-entry history: operator self-netted before reversals existed; balances exact, story-lines cosmetic; optional cleanup via Reverse now possible.
+- Residuals opened: movements idempotency (R1, S235-F3 class), holdings fan-out (R2), movement edit = reverse+re-enter (R3), datetime-local timezone note (R4); profit-share reversal leaves the lifetime counter (named).
+
+## Standing-instruction adherence
+DR-021 anchors ✅. Cat 1 inventory-first triage of the rework report at open ✅; brevity strained during rapid rounds (operator kept pace, no drift flag). Cat 2 first-action gate: S237 auto-action operator-confirmed verbatim ✅; S235 close-gap repaired here ✅. Cat 3 empirical verification: every fix live-repro'd before/after (greyhounds, occurred_at, 422); live-DB writes verified on read-path after write ✅; dist-rule breach flagged, not silent ✅. Cat 4 live-integration honesty: money door classified implemented-not-live in its report, then live-proven same day and RE-classified ✅; S223 one-pass honoured (race-list per-code sweep; movement-kind class built whole) ✅. Cat 5 software calls made-not-punted throughout; operator calls (P&L semantics, bank-tile meaning, profit-share scope, sports-bet P&L question) surfaced as operator territory ✅. S227 git autonomy: 13 descriptive commits, green tree each, pushed, no DB/secrets ✅.
+
+## Open items out (closed this session)
+Greyhound race list; FB back-log gap (interim route + S237 single-pass design); partial-fill visibility; consolidated balances; deposits/withdrawals/floats/profit-share recording; movement reversal; Kate@CrownBet negative float; float seeding (all four holders); catalogue-management UI (superseded call, S236 open); "API 503" label class (already closed S235, held).
+
+## Open items in (new)
+S237 build (burst-flow redesign, auto); 422-detail plain-wording polish; dist-gate rule refinement; standing-instructions UX addition + KB re-upload; sports-bets-on-Betfair accounting (PARKED — decision needed: in or out of P&L; then free-text Log Past Bet mode or correction door); movement residuals R1–R4; S1 leg staleness (pre-existing).
+
+## Session close state
+bethub-v3 HEAD `7885535` = origin/main, tree clean, dist current with HEAD. **Running app (17:17) predates the last four commits — next launch picks up everything** (bet-move endpoint, split dropdowns, EV amber, toast dismiss). Store: live day's bets + cash-flow ledger (14 events) all settled/reconciled; money check identity green (−$3.30). Rebuild root: this record; `money_movement_door_brief.md` v2 + report; two mocks; `current_state.md` + `v3_build_picture.md` updated at this close; stale S235 prompt swept.
+
+## Forward routing (operator-confirmed verbatim: "build as auto-action with open runner")
+**S237 FIRST ACTION — AUTO:** build the burst-flow redesign per `burst_flow_mock.html` §1+§2 (selection stack replacing top-bar dropdowns; single-pass ⚡ lay→back with preselected context and skip). Fold in: plain-wording for list-shaped 422 details in BetLog (the resolved bet-26eeb320 class). Fences as always: no placement/settlement/credit-maths edits — `place_lay` untouched, the back-log composes the EXISTING log-bet door; `npm run build` as frontend gate; commit+push green only. Then: operator triage on next open; sports-bet accounting decision when the operator wants it.

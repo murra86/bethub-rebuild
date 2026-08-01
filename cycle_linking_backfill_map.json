@@ -1,0 +1,162 @@
+{
+ "bet-8246cc19-c8d8-5872-952a-b6ad236674e4": {
+  "old": "e3d97556-cc80-45ea-b83f-a5ecb3b607ca",
+  "new": "77999881-dc35-4072-b555-9f7b7a9dc695",
+  "why": "fb-to-qualifier (promo spine, effective deploy)"
+ },
+ "bet-d5f61a99-a464-5bb9-96e2-969637d31700": {
+  "old": "f33c0702-b1b4-4fec-94f7-333177a33fac",
+  "new": "87957d21-2de2-44e0-98f2-3c78264f08b7",
+  "why": "fb-to-qualifier (promo spine, effective deploy)"
+ },
+ "bet-2f31b4d0-1559-5eca-af53-9c7f10072eb3": {
+  "old": "6b4fcec0-4338-45ad-ab6c-51b4fd5a9b31",
+  "new": "82881bcb-5c84-4147-8fc8-3a110fe85944",
+  "why": "fb-to-qualifier (promo spine, effective deploy)"
+ },
+ "bet-55ea1272-0c90-4fcd-a680-0f6a2807c206": {
+  "old": "cycle-2397a3e4-358a-4e48-a926-6fdec3f154d1",
+  "new": "0a60077d-5bd9-4f22-b953-c6921e194d2a",
+  "why": "timestamp-nearest among same-runner candidates"
+ },
+ "bet-ab9eb700-b393-4b59-97ba-fba23428967f": {
+  "old": "cycle-8f1c6f53-79ac-46dc-afe3-23091e6c2731",
+  "new": "065ef2f8-a690-49f6-9132-cc32a7517dfc",
+  "why": "unique market+selection match"
+ },
+ "bet-eab34f4b-017a-4727-a6ec-98b21df722e4": {
+  "old": "cycle-dc8a340a-b28a-4e1b-a8f0-1b1b057dac24",
+  "new": "f8b2044c-81e6-41ba-b8b5-50a8ced6d70c",
+  "why": "timestamp-nearest among same-runner candidates"
+ },
+ "bet-60ce7b90-b37b-47f7-ba3b-afb4b3538ceb": {
+  "old": "cycle-c06c519a-da8f-4a67-bf0a-62418df0fdfc",
+  "new": "87957d21-2de2-44e0-98f2-3c78264f08b7",
+  "why": "unique market+selection match"
+ },
+ "bet-ae0f6109-ab0d-4ae3-8593-1726dabdd734": {
+  "old": "cycle-61e68e36-b13c-4df0-a199-f1a2d9b9be02",
+  "new": "033108e0-f67d-4202-a0ae-9168dda8aaf8",
+  "why": "unique market+selection match"
+ },
+ "bet-0785fdde-6b4d-49ce-aed8-ca0c0e889ff2": {
+  "old": "cycle-17873078-9908-40e9-8cb0-d7ed5911e4fc",
+  "new": "ad3f8c4b-b1b7-4ad5-837e-c02bd8d53c27",
+  "why": "unique market+selection match"
+ },
+ "bet-69054a3f-ef57-4f85-862f-f660edeae8f0": {
+  "old": "cycle-93d2c69c-84c7-4707-bf83-4a8fbdfea956",
+  "new": "02f6668f-9f0a-4f75-9177-c32fe8d09a49",
+  "why": "unique market+selection match"
+ },
+ "bet-b8ef7dd5-ca92-4e4c-ac1b-1f0d122c346b": {
+  "old": "cycle-7971911f-c476-412c-84d1-1676ea38f528",
+  "new": "dec07c5c-0fbb-4a04-9004-c8f36b48a712",
+  "why": "timestamp-nearest among same-runner candidates"
+ },
+ "bet-ffb57f4c-543c-4fd4-81f6-880ab5fb45b9": {
+  "old": "cycle-89bcaa05-8d22-4f8f-992f-37903c0c3eb7",
+  "new": "9c94a4df-a593-478f-9479-382d805ffe93",
+  "why": "timestamp-nearest among same-runner candidates"
+ },
+ "bet-3555f3f3-983a-4072-a0dd-9b993705bfec": {
+  "old": "cycle-9ae8a9b1-804d-4be8-9681-0bfad2d340ab",
+  "new": "46c954d8-d038-4f16-9c2e-665fcc07f725",
+  "why": "unique market+selection match"
+ },
+ "bet-bb73a52d-6a92-4cdb-95a2-f7ae72b8ff77": {
+  "old": "cycle-fbb4cbe2-d5c3-499f-af98-740397635976",
+  "new": "cycle-ca383a94-60ca-4ef5-a5e3-aeea38eb3f50",
+  "why": "unique market+selection match"
+ },
+ "bet-b6cf9839-30cf-4266-bee8-052dfee23319": {
+  "old": "cycle-e6a0db7c-0778-4684-910f-9ac6cd6693c1",
+  "new": "6110f55a-ab02-4c1f-9725-f1986b224581",
+  "why": "unique market+selection match"
+ },
+ "bet-663d9bc9-a9a2-4210-8f27-8fa8ca53692e": {
+  "old": "cycle-579b88e4-0c3f-4162-8830-b77a5e79caf8",
+  "new": "c3b50951-3167-4139-a600-cf78c96249e8",
+  "why": "unique market+selection match"
+ },
+ "bet-f3ae3c64-5a30-44bc-b06e-6c744f77e540": {
+  "old": "cycle-6b096a86-1b68-48db-8a04-9c157ccfce19",
+  "new": "a6d39333-aa6b-4490-8cb0-f5bbf64557d6",
+  "why": "unique market+selection match"
+ },
+ "bet-81da88d2-abec-4571-b200-081696a184ec": {
+  "old": "cycle-8f7ee725-edbe-4092-88aa-29350d2834bc",
+  "new": "c2f24ab5-48b5-41ff-a4ae-33f1bd153211",
+  "why": "unique market+selection match"
+ },
+ "bet-a472e950-753d-4c8c-851d-980ffe063266": {
+  "old": "cycle-62d1b531-09e8-4808-9916-652746cd70f3",
+  "new": "03aff731-94c9-48c8-aba0-a76f330869d5",
+  "why": "unique market+selection match"
+ },
+ "bet-da751758-1c7a-4d1b-a29f-b1eb30e8a6eb": {
+  "old": "cycle-4584d822-f5db-4e29-8a00-85bdefc16d93",
+  "new": "87e26d77-c8d9-451e-88bb-9fc56094505f",
+  "why": "unique market+selection match"
+ },
+ "bet-e1b932ad-3205-4447-9f8e-44c449b78d99": {
+  "old": "cycle-d9e30503-0c71-4cfa-9200-b5365c975724",
+  "new": "56082591-1897-466b-a38f-2e5c51943a86",
+  "why": "timestamp-nearest among same-runner candidates"
+ },
+ "bet-86c45969-579e-41b9-bdb0-31572bac10cc": {
+  "old": "cycle-2b3bd79c-5657-4c7e-b7aa-a378d2ca2102",
+  "new": "0040c769-33b7-4cfb-a9ff-a81c8bb3861c",
+  "why": "unique market+selection match"
+ },
+ "bet-95aea003-858b-43c5-a72f-b9a11ce99b96": {
+  "old": "cycle-e10c1bcd-5a49-4212-a3e3-134b220ca1d2",
+  "new": "b77c6674-b86d-45d3-9a23-ad37a3ddd232",
+  "why": "timestamp-nearest among same-runner candidates"
+ },
+ "bet-73157ea8-5e81-4afa-b16e-d160d3d11c60": {
+  "old": "cycle-62f8c257-edf9-484d-bca6-fde5a38d2887",
+  "new": "6475e199-d736-47d9-ba44-2316f7d0f7aa",
+  "why": "unique market+selection match"
+ },
+ "bet-0693dc92-3a16-46f4-950e-4082d617088b": {
+  "old": "cycle-b5d37856-5bd4-4272-ac21-2167cf873e5e",
+  "new": "77999881-dc35-4072-b555-9f7b7a9dc695",
+  "why": "unique market+selection match"
+ },
+ "bet-f5b39b32-1785-4b50-bb03-fcdfc2b85096": {
+  "old": "cycle-086264db-a8fb-48a6-852f-00c53af32ea5",
+  "new": "d848dea5-5ad9-42e3-b77e-b370134662cb",
+  "why": "unique market+selection match"
+ },
+ "bet-a09a312d-ae20-4dad-8619-b2be03beefa7": {
+  "old": "cycle-f9cf6114-3e84-4027-b560-bff65ed84afd",
+  "new": "15dee66c-e500-4b22-afc9-4dcc155678e1",
+  "why": "unique market+selection match"
+ },
+ "bet-b80c6f9c-3644-400a-8b3c-6e9d1b1c5d6b": {
+  "old": "cycle-f9949470-0281-4ce5-b064-db2d2a643094",
+  "new": "87957d21-2de2-44e0-98f2-3c78264f08b7",
+  "why": "unique market+selection match"
+ },
+ "bet-31753434-eff0-4b2c-b652-62012d675a2c": {
+  "old": "cycle-f4d27651-edb8-419e-9f3c-04b5a4add591",
+  "new": "82881bcb-5c84-4147-8fc8-3a110fe85944",
+  "why": "unique market+selection match"
+ },
+ "bet-35dcf95d-e23e-47b8-81fd-681d03395533": {
+  "old": "cycle-270d73cc-7783-4487-8651-c09c48c2b8cb",
+  "new": "408baadd-009f-4235-90e8-9f2cde39ac2a",
+  "why": "unique market+selection match"
+ },
+ "bet-006acdcb-8ad4-496e-82af-2bf498339034": {
+  "old": "cycle-e375ca92-721a-4aa5-8e2a-924c077f6b62",
+  "new": "c78b17ae-c0f9-4250-9bdf-f35b89d73ab5",
+  "why": "unique market+selection match"
+ },
+ "bet-2a78ed58-9023-4d13-98cc-3ca45560d7cf": {
+  "old": "cycle-c060990e-61c0-4b06-9b32-6062d651f8b9",
+  "new": "d152275b-aebf-45ce-8c35-ceca9ec8063c",
+  "why": "unique market+selection match"
+ }
+}

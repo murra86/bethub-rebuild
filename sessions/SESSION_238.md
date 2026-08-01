@@ -1,0 +1,40 @@
+# SESSION 238 — the "no Caulfield races" question became the VPS hardening programme: alert emails now watched by Claude with auto-fix authority, the brief survived two adversarial review rounds, the operator said GO, and Days 0–2A are built; plus a 12-item UI pass approved from bet-session notes
+
+**Opened:** 2026-07-12 (morning, "Open session 238").
+**Closed:** 2026-07-14 (afternoon, operator restarting the Mac; multi-day session per Cat 2).
+**Numbering note:** a parallel operator-commissioned session on 14 Jul produced the Strategy-4 research memory under "S239"; some 14-Jul docs in this root (UI pass) carry S239 labels. Same working period.
+**Bet-safety:** NO bets, NO placements, NO money-path edits. All VPS work is capture-side (analytical line). The pending W7c/UI builds are store/read/display only, fenced in their briefs. bethub-v3 repo untouched this session (HEAD unchanged since S237).
+
+---
+
+## Arc 1 — session open: the "walled sweep" that wasn't, and Caulfield
+S238's flagged first action found the overnight sweep walled again — diagnosis proved it had run four hours BEFORE S237's final code landed (2s-per-date timing = no pacing). The 13 Jul sweep was the first true test: **PASSED — 33,526 of the 38,761 deficit recovered in one night**; residual ~5,235 is the known unrecoverable floor. Then the operator's real-world report — "no Caulfield races in Log Past Bet" — was root-caused as STRUCTURAL: races only become loggable if the collector saw their Betfair market live pre-jump; outage-window races are permanently unrecoverable (Betfair delists closed markets). Operator elected to skip logging those (data reset planned) and demanded it be fixed for good.
+
+## Arc 2 — the alarm that never reached anyone + Claude on the mailbox
+Investigation found 115 alert emails sent to an unwatched hotmail address with a 14h staleness blind spot and no self-recovery. Key discovery: alerts are sent FROM the operator's gmail (SMTP) → they sit in gmail Sent → **Claude can watch them with zero infrastructure change**. Operator granted standing authority: monitor alerts + fix capture-side automatically (restart services, clear garbage space, re-run paced syncs; never money paths, never captured data; report everything). Standing in memory; ran every ~2h all session, clean.
+
+## Arc 3 — the brief and its two adversarial review rounds (operator-requested)
+`vps_hardening_brief.md` v1 → **round 1 (3 lenses)**: v1 would NOT have closed the gap — cross-code identity collision could stamp DOG market ids onto HORSE races (live db proof: Mount Gambier dog meeting already merged into horse rows), and Betfair's silent 200-market cap would have dropped the evening card; pre-mortem found the money-account Betfair password in a world-readable file behind password-SSH (~1,900 attempts/day) and NO off-box copy of anything. → v2 → **round 2 (closure audit 22/30 + fresh attack + buildability)**: password-auth flip as written would silently not take effect (cloud-init first-match), only ONE ssh key existed, the "9 PM sync cron" to be folded had NEVER run (broken since March), drills as written destroyed real races. → **v3, review-stable**: W1–W9 + W7c gating companion + Strategy-4 place-id plumbing (operator-directed), 13 live-drill acceptance items, honest 3.5–4.5 build days / 5–7 calendar. Records: `vps_hardening_review_round1.md` / `round2.md`. Supporting docs: `vps_data_map.md` (two-Betfair-lines architecture) + `vps_data_flow_map.html` (operator illustration). **DR-035 appended: harden → reset order locked.**
+
+## Arc 4 — operator approved ("lets go") → build Days 0–2A executed
+- **Day 0 (13–14 Jul):** VPS code committed (first since 4 Mar, 26 dirty files incl. every S237 fix) + private GitHub `murra86/racing-data-capture`; **password SSH OFF** (behaviour-proven: key works, password refused), recovery key installed + in operator's password manager, Hostinger console verified, fail2ban on, credentials file locked, secrets inventory updated; all 3 dead cron landmines deleted.
+- **Day 1 (14 Jul):** alerts → gmail (delivery proven to INBOX); liveness rewritten — found+fixed a pre-existing bug that left the watchdog BLIND most of the AU racing day (timestamp format), staleness 14h→60min with a market-bearing grace that root-caused the historic morning cry-wolf (jump-out mornings have no Betfair markets — proven live when the first tightened run fired once, harmlessly, before refinement); disk/bookmaker/backfill checks + self-heal (auto-restart, capped, recovery notices) + no access hints in any email. 19 unit tests. Off-box backup live: nightly 08:47 Mac pull (freshness-guarded, never deletes), first 4.4GB pull + **restore drill PASSED** (integrity ok, 97,541 races Mac-side); `RESTORE_VPS.md`.
+- **Day 2A (14 Jul):** **identity sweep BUILT** (`7e67a5f`+`6dda0af`): every AU race — all three codes, WIN+PLACE — stamped loggable before the jump, independent of collector uptime; shared runner-name discipline (collector refactored on, inert till restart); timer staged NOT enabled. Test suite (28 green) surfaced the pre-reset schema wall (same date+venue+number can't hold two codes) → collision valve built (code-suffixed internal key, audit-logged, reset strips). Real-world: after tomorrow's deploy, Caulfield-class loss is impossible going forward.
+
+## Arc 5 — UI pass from the operator's bet-session notes (parallel, approved same day)
+Notes discussed → mock-first loop (`ui_pass_jul14_mock.html`, 3 revisions) → **brief APPROVED, 12 items** (`ui_pass_jul14_build_brief.md`): runner-list scroll bug (top), ~10 runners visible priority, promo selected-state bug, black-content/white-frame theme, EV colour bands, BetLog relevant columns, duplicate-account burst warning (operator-locked short text), FB auto-select (promo bar additive-only), persist/lapse read tags, results in the settle door, **BF Close column** (projected BSP — plumbing found already complete end-to-end, never rendered), live FB-conversion % at the edited lay price (65% threshold banding), quick-lay modal cleanup (toggle alignment bug + permanent explainer box → conditional warning). **Deferred, named:** settled-bet edit loosening (dedicated session), Betfair order edits, **SP-based FB hedging** (two-shape design sketch in the design note — Take-SP sized at projected SP first, jump-time worker later).
+**Cat-1 correction logged as standing feedback:** reports must be real-world consequences only — mechanisms stay in files (`feedback_real_world_language.md`).
+
+## Standing-instruction adherence
+Cat 3 empirical verification carried both review rounds (every claim tested against the live box; four v1→v3 premises overturned by evidence). Cat 5 make-the-call with operator calls surfaced at the right altitude (approval, backup target, reset order, W9 pre-flights). S227 git autonomy extended to the VPS repo. Money fences intact throughout. Cat 1 violated once (jargon build report) → corrected + memorialised.
+
+## Close state
+- **VPS:** healthy, all-clear; suites 28+19 green; repo = Mac clone = GitHub at `6dda0af`, trees clean. Sweep timer staged, NOT enabled; collector still on pre-W7b behaviour until Day-3 restart. Rollback copies in /root/. Off-box backup + launchd live.
+- **bethub-v3:** untouched; UI-pass + W7c briefs approved and queued.
+- **This session's runners died with the session (operator restart).** Full re-creation schedule = memory item 8 (`bethub_s238_sweep_and_caulfield.md`).
+
+## Forward routing — S240+ (AUTO at next session open)
+1. Re-create the runner schedule from memory item 8; **run any missed slot immediately** (Day-2 stint B — W7 collector coding + W5 formalisation — was scheduled 16:03 14 Jul and is likely missed).
+2. Then the standing session-open checks (vps_health + gmail alert sweep).
+3. Deploy morning must stay pre-racing; drills only after the sweep has stamped the day (brief §3 preamble is binding).
+4. Operator moments outstanding: KB re-uploads after W5 formalisation; app-down windows for the two dist swaps; presence for supervised drills; theme glance-check after the UI swap.
