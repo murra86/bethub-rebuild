@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settle up from results — Burst Review lane mock (1a Phase 2, S265)</title>
+<style>
+  :root {
+    --paper:#111417; --card:#1a1e23; --card2:#23282e;
+    --ink:#e8e6e1; --sub:#9aa3ad; --faint:#7c8590;
+    --line:#2e343b; --line-soft:#262c33;
+    --navy:#3d6db5; --rose:#d16b80;
+    --profit:#3fa46a; --profit-soft:#1a2b21;
+    --loss:#d95757; --loss-soft:#331d1d;
+    --amber:#d9a13b; --amber-soft:#32290f;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  body { background:#fafafa; margin:0; padding:24px; font:13px/1.45 -apple-system,system-ui,sans-serif; color:#222; }
+  .note { max-width:860px; margin:0 auto 14px; color:#555; }
+  .note h1 { font-size:16px; margin:0 0 6px; }
+  .sheet { max-width:860px; margin:0 auto; background:var(--paper); border-radius:12px; padding:14px; color:var(--ink); }
+  .lane { border:1px solid var(--line); border-radius:8px; background:var(--card); overflow:hidden; margin-bottom:14px; }
+  .laneHead { display:flex; justify-content:space-between; align-items:baseline; padding:8px 12px; border-bottom:1px solid var(--line); }
+  .laneTitle { text-transform:uppercase; font-size:10px; letter-spacing:.06em; font-weight:650; color:var(--faint); }
+  .bfNote { font-size:11px; color:var(--faint); }
+  .race { border-bottom:1px solid var(--line-soft); }
+  .race:last-child { border-bottom:none; }
+  .raceHead { padding:7px 12px 2px; }
+  .raceName { font-weight:650; font-size:12px; }
+  .strip { font-size:11px; color:var(--sub); font-family:var(--mono); }
+  .strip .dh { color:var(--amber); }
+  .bet { display:grid; grid-template-columns: 1fr max-content max-content max-content; gap:10px; align-items:center; padding:5px 12px; font-size:12px; }
+  .bet .who { color:var(--sub); }
+  .bet .who b { color:var(--ink); font-weight:600; }
+  .money { font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--sub); }
+  .chip { border-radius:999px; padding:2px 10px; font-size:11px; font-weight:650; border:1px solid transparent; }
+  .won  { background:var(--profit-soft); color:var(--profit); }
+  .lost { background:var(--loss-soft); color:var(--loss); }
+  .void { background:var(--card2); color:var(--sub); border-color:var(--line); }
+  .hand { background:var(--amber-soft); color:var(--amber); }
+  .bank { background:var(--profit-soft); color:var(--profit); border:1px solid var(--profit); cursor:pointer; }
+  .check { background:var(--amber-soft); color:var(--amber); }
+  .delta { font-family:var(--mono); font-size:11px; }
+  .delta.up { color:var(--profit); } .delta.down { color:var(--loss); } .delta.zero { color:var(--faint); }
+  .laneFoot { display:flex; justify-content:space-between; align-items:center; padding:9px 12px; border-top:1px solid var(--line); background:var(--card2); }
+  .footSummary { font-size:12px; color:var(--sub); }
+  .settleAll { background:var(--navy); border:none; color:#fff; font-weight:650; font-size:12px; border-radius:7px; padding:7px 16px; cursor:pointer; }
+  .modal { max-width:430px; margin:0 auto; border:1px solid var(--line); border-radius:10px; background:var(--card); padding:14px; }
+  .modal h2 { font-size:13px; margin:0 0 8px; }
+  .modal ul { list-style:none; margin:0 0 10px; padding:0; font-size:12px; }
+  .modal li { display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px solid var(--line-soft); }
+  .modal li:last-child { border-bottom:none; }
+  .modalFoot { display:flex; gap:8px; justify-content:flex-end; }
+  .btnGhost { background:transparent; border:1px solid var(--line); color:var(--sub); border-radius:7px; padding:6px 14px; font-size:12px; cursor:pointer; }
+  .caption { font-size:11px; color:var(--faint); padding:4px 12px 8px; }
+  .mockTag { display:inline-block; background:var(--amber-soft); color:var(--amber); border-radius:4px; font-size:10px; padding:1px 6px; margin-left:8px; vertical-align:middle; }
+</style>
+</head>
+<body>
+
+<div class="note">
+  <h1>Burst Review — “Settle up from results” lane (mock for approval)</h1>
+  <p>This lane appears at the top of Burst Review once races have results.
+  Bets are grouped by race, each with a proposed outcome. Nothing settles
+  until you tap — one tap opens the preview card (bottom of this page),
+  confirm runs the settles one by one exactly as your manual taps do today,
+  and every won bonus bet banks its own credit as it settles. Rows the tool
+  won’t propose (no result yet, conflicting rows) are flagged for hand
+  settling — flagged, never blocked.</p>
+</div>
+
+<div class="sheet">
+  <div class="lane">
+    <div class="laneHead">
+      <span class="laneTitle">Settle up from results <span class="mockTag">MOCK</span></span>
+      <span class="bfNote">2 Betfair bets settling automatically</span>
+    </div>
+
+    <div class="race">
+      <div class="raceHead">
+        <div class="raceName">Flemington R7 <span class="strip">— 1st Arkansaw Kid (SP 4.80) · 2nd Zoumon · 3rd Miss Roseiano · 4th Grand Pierro — Good 4</span></div>
+      </div>
+      <div class="bet">
+        <span class="who"><b>Tim</b> · Sportsbet — Arkansaw Kid, $50.00 @ 5.00 <i>(bonus back)</i></span>
+        <span class="money">$50 @ 5.00</span>
+        <span class="chip won">Won — banks its bonus</span>
+        <span class="delta up">+$200.00</span>
+      </div>
+      <div class="bet">
+        <span class="who"><b>Kate</b> · TAB — Zoumon, $25.00 @ 6.50</span>
+        <span class="money">$25 @ 6.50</span>
+        <span class="chip lost">Lost</span>
+        <span class="delta down">−$25.00</span>
+      </div>
+      <div class="bet">
+        <span class="who"><b>Kate</b> · Ladbrokes — Zoumon, $30.00 @ 6.00 <i>(2nd/3rd insurance)</i></span>
+        <span class="money">$30 @ 6.00</span>
+        <span class="chip bank">Settle lost + bank $30.00</span>
+        <span class="delta zero">−$30.00 + FB</span>
+      </div>
+    </div>
+
+    <div class="race">
+      <div class="raceHead">
+        <div class="raceName">Morphettville R5 <span class="strip">— 1st Inside Job (SP 3.42) · 2nd Bravo · 3rd Charlie · 4th Delta (field 14)</span></div>
+      </div>
+      <div class="bet">
+        <span class="who"><b>Sarie</b> · BetRight — Delta, $20.00 @ 12.00 <i>(4th/5th cashback, 14+ field)</i></span>
+        <span class="money">$20 @ 12.00</span>
+        <span class="chip bank">Settle lost + bank $20.00</span>
+        <span class="delta zero">−$20.00 + FB</span>
+      </div>
+      <div class="bet">
+        <span class="who"><b>Tim</b> · TAB — Echo, $15.00 @ 21.00 <i>(3rd insurance — field dropped 15 → 13 after scratchings)</i></span>
+        <span class="money">$15 @ 21.00</span>
+        <span class="chip check">Lost — check book (field 13 &lt; 14)</span>
+        <span class="delta down">−$15.00</span>
+      </div>
+    </div>
+
+    <div class="race">
+      <div class="raceHead">
+        <div class="raceName">Gawler R2 <span class="strip"><span class="dh">conflicting result rows</span> — two rows show a winner</span></div>
+      </div>
+      <div class="bet">
+        <span class="who"><b>Kate</b> · Bet365 — Sky Dancer, $40.00 @ 4.20</span>
+        <span class="money">$40 @ 4.20</span>
+        <span class="chip hand">Hand settle</span>
+        <span class="delta zero">—</span>
+      </div>
+    </div>
+
+    <div class="race">
+      <div class="raceHead">
+        <div class="raceName">Murray Bridge R6 <span class="strip">— no result yet (jumped 4 min ago)</span></div>
+      </div>
+      <div class="bet">
+        <span class="who"><b>Tim</b> · Sportsbet — Noble Prince, $35.00 @ 3.80</span>
+        <span class="money">$35 @ 3.80</span>
+        <span class="chip hand">Waiting on result</span>
+        <span class="delta zero">—</span>
+      </div>
+    </div>
+
+    <div class="caption">Hand-settle rows stay out of the one-tap. Each settled
+    bet is audited individually; a won bonus bet banks its credit through the
+    same path as today. A race voided after a bet is settled stays a manual
+    correction.</div>
+
+    <div class="laneFoot">
+      <span class="footSummary">5 proposals ready · 2 hand-settle · net of proposals <span class="delta up">+$105.00</span> + 2 credits owed</span>
+      <button class="settleAll">Settle all proposed…</button>
+    </div>
+  </div>
+
+  <div class="modal">
+    <h2>Settle 5 bets: 1 Won · 3 Lost · 1 Void</h2>
+    <ul>
+      <li><span>Tim · Sportsbet — Arkansaw Kid</span><span class="delta up">Won +$200.00 (banks bonus)</span></li>
+      <li><span>Kate · TAB — Zoumon</span><span class="delta down">Lost −$25.00</span></li>
+      <li><span>Kate · Ladbrokes — Zoumon</span><span class="delta zero">Lost −$30.00, then bank $30.00</span></li>
+      <li><span>Sarie · BetRight — Delta</span><span class="delta zero">Lost −$20.00, then bank $20.00</span></li>
+      <li><span>Tim · PlayUp — Scratched Runner</span><span class="delta zero">Void $0.00</span></li>
+    </ul>
+    <div class="modalFoot">
+      <button class="btnGhost">Back</button>
+      <button class="settleAll">Confirm — settle one by one</button>
+    </div>
+  </div>
+</div>
+
+<div class="note" style="margin-top:14px">
+  <p><b>Questions for you:</b> (1) Is grouped-by-race the right reading order,
+  or would you rather one flat list sorted by race time? (2) The “Settle lost +
+  bank $X” rows do both actions in one tap — happy with that, or should
+  banking stay a separate tap? (3) Anything missing on a row you’d want at a
+  glance (e.g. free-bet vs cash marker, promo name)?</p>
+</div>
+
+</body>
+</html>
