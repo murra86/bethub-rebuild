@@ -6,3 +6,6 @@
 # packaged skill exports (build artefacts)
 skills/*.zip
 .claude/worktrees/
+
+# GitHub 100MB hard limit — kept local-only
+archive/dirs/dr029/2_1_race_data/api_probe_data/race_2_thoroughbred_Newcastle_4_betfair.jsonl
