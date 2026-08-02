@@ -1077,3 +1077,20 @@ breaker, no cb hit); real burns remain rare).
    play state re-derives (re-opens) instantly on rejection. Stricter
    reading declined (double-listing noise, no incremental catchment).
    REVISIT TRIGGER: books that routinely dispute or slow-walk credits.
+
+## Small follow-ons from the S265 walk-through (3 Aug, none blocking)
+
+- **Bet365 rail SHIPPED in code** (`v3 TopBar`): arming Bet365 shows
+  "Bonus 25% → Cash" as the primary; LIVE at the next app-closed dist
+  rebuild + restart.
+- **Credit visibility on the qualifier card:** BetLog's bet card shows
+  the promo name but not the BANKED credit amount — the operator
+  couldn't see the $25-vs-$31.50 correction from the card (proof was
+  indirect: the deployed FB stake + zero leftover FB). Small addition:
+  a "banked credit $X" line on bets with a triggered credit. Fits
+  naturally with 1a Phase 3 surfaces.
+- **FB conversion blank on a hedged, converted FB back:** the Velocity
+  Miranda FB back (won +$137.50, lay −$119.72, face $25) shows
+  "FB conversion —" where 71.1% is derivable from its own cycle.
+  Scope: when does realised_conversion_rate populate; likely a
+  compute-at-read gap for the paired-lay shape.
