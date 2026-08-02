@@ -420,3 +420,65 @@ DB), `bethub-v3/ui/web/src/routes/Racing.tsx` (queries, merge, banner),
 `tab_lag_review_s257.md`, `tab_live_refresh_build2_{brief,report}.md`,
 `morning_odds_sweep_brief.md` (pool separation), capture git history to
 `origin/master` @ `9d86480`.*
+
+---
+
+## S264 ADVERSARIAL REVIEW — AMENDMENTS (NORMATIVE; the build must honor these)
+
+Review (S264, 2 Aug): every mechanism claim in §1 was attacked and
+CONFIRMED against code (45s linger, 0.25s wake quantum vs 1s UI tick,
+LRU-no-precedence claims, promo-pilot 10s/T-30 contention, silent
+registry denial, volume framework, §6 git state). Zero-added-TAB-volume
+is structurally guaranteed by the unchanged claim floor. Verdict:
+AMEND-FIRST — build-ready once the following are honored.
+
+**A1 (HIGH — corrects a false claim in §4 and the operator note).**
+The plan says evicted/denied promo-pilot races "ride their slower
+background copy". FALSE: `promo-pilot/app.py:198` has NO fallback —
+inside T-30 it calls `live_soft_odds` only, and `bethub_client.py`
+returns None on 503. Under §2.4 eviction an affected pilot race goes
+completely dark (no TAB odds, no EV) in exactly its near-jump window.
+RESOLUTION: §3's "Do not edit that repo in this build" is RESCINDED for
+ONE line — the build includes the pilot fallback
+`self.client.live_soft_odds(mid) or self.client.soft_odds(mid)` at
+`app.py:198`. The §4 bullet and the "flag for awareness" note are
+corrected to: the pilot row rides the background feed (up to ~5 min
+old) while your screen holds the fast lane.
+
+**A2 (MEDIUM — definition gap in §2.2).** "Focused fetch due" MUST be
+false while a focused build is in flight (`_last_fetch_start` is
+stamped at fetch START, so a slow hunt-and-pin would otherwise starve
+both pools for its whole duration while they sit idle). Use the §2.5
+latch state for the in-flight test; additionally bound consecutive
+focus-denials per pool.
+
+**A3 (LOW-MED).** `market_id` on `_claim_pool` becomes an optional
+keyword arg — `tests/test_live_soft_odds_route.py:570–572` calls it
+positionally. §5's "existing tests unmodified" is narrowed to "existing
+tests pass unmodified except where a signature makes that impossible";
+the claim-floor tests themselves stay untouched.
+
+**A4 (LOW).** Fast-retire must NOT apply to the currently- or
+most-recently-focused refresher before its focus TTL (20s) expires —
+covers the operator switching to a bookie window mid-bet (>10s away,
+`refetchIntervalInBackground: false` stops polls). Accepted residual:
+~2–4s cold gap on window refocus via the default `refetchOnWindowFocus`
+flagged request (was: instant warm cache).
+
+**A5 (LOW).** Two open race pages both send `priority=selected`; size-1
+latest-wins focus flaps ~1s and degrades to today's fair sharing (not
+worse). Accepted as-is; one plan-behavior test asserts no starvation
+with two alternating focused markets.
+
+**A6 (wording).** §2.6 "retries are tunnel reads, NOT TAB fetches" is
+corrected: a retry reaching the route with a free pool DOES trigger a
+real claim-gated TAB fetch (that is the point); volume stays bounded by
+the floor. Also §2.6 must note all capture 503s (`live_pools_hot`,
+`live_tab_unavailable`, VPS down) reach the frontend as one identical
+503 (`CaptureApiUnavailableError` → `VPS_UNREACHABLE`), so the retry
+burst also fires during real outages — bounded by the cap of 3.
+
+**A7 (note for future diagnosis).** The live feed is gated on
+`selectedBookIsTab` (`Racing.tsx:285–289, 339`): priority-on-select
+does nothing when a non-TAB book is armed. A future "still stale"
+sighting with another book armed is NOT a 0y failure.
