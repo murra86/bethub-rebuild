@@ -1016,3 +1016,6 @@ breaker, no cb hit); real burns remain rare).
    SHIP NOTE for operator: the verb now REFUSES voided bets on every
    arm (deliberate plan §2c change) — the refusal message names the
    undo route to use instead. Cross-kind CLI use is now cleared.
+7. D3 (plan §9.4): GO — operator agreed 2 Aug. book_correction ledger
+   adjustments join the headline P&L (split by reason from
+   day_0_opening, which stays excluded). Build commissioned S264.
