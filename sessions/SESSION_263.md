@@ -72,11 +72,13 @@ original economic dates. 3+ adversarial reviews across the arc.
 
 ## HANDOFF — in flight at session close (next session does these FIRST)
 
-1. **Phase 1 deploy loop** (VPS `s263-deploy-loop`, survives this
-   session): check `/home/racing/racing-data-capture/logs/deploy_phase1_attempts.log`
-   for `ALL DONE` / `gave up` / `FAILED MID-FLIGHT`. If gave up →
-   re-arm (`systemd-run --unit=s263-deploy-loop2 --collect
-   /home/racing/deploy_phase1_loop.sh`) targeting the pre-AU-racing gap.
+1. **Phase 1 deploy loop**: the FIRST loop gave up at 01:16 UTC (36
+   attempts — the overseas tail never gapped); RE-ARMED at close as
+   **`s263-deploy-loop2`** (active, fresh 3h budget covering the
+   pre-AU-racing gap ~11:10–11:45 ACST). Check
+   `/home/racing/racing-data-capture/logs/deploy_phase1_attempts.log`
+   for `ALL DONE` / `gave up` / `FAILED MID-FLIGHT`; re-arm again with
+   a new unit name if needed (`/home/racing/deploy_phase1_loop.sh`).
    AFTER landing: push racing-data-capture master (local holds
    `86a16b1` liveness fix, push-held for the sha pin) + fast-forward
    the VPS checkout; then Gate B SQL over the day (brief §7 of
