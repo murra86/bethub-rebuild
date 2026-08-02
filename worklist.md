@@ -1040,3 +1040,32 @@ breaker, no cb hit); real burns remain rare).
    simulated-failure both arms; 3proxy PIDs unchanged throughout.
    Backups *.bak-20260802-socketpin. 0w ENGINEERING COMPLETE —
    remaining: (d) operator bookmark only.
+
+## S265 OPERATOR DECISIONS (3 Aug)
+
+1. SETTLE-UP LANE MOCK APPROVED (mock v2.1,
+   `settle_up_lane_mock_s265.html`): chronological races, one aligned
+   grid per bet row, compact promo labels, badge vocabulary confirmed
+   (Won / Lost / Void / Settle-lost-+-bank green-red; Lost—check-book /
+   Hand settle / Waiting-on-result amber holds; Betfair bets excluded
+   with one header line). Operator: "go with this for now" — expect
+   race-day feedback as a v2 pass. 1a Phase 2 is BUILDABLE.
+2. PROMO AUDIT FOLLOW-UPS (all five decided):
+   (a) 'Ins 2nd Winnings FB $100' ARCHIVED — winnings-based promo the
+       stake-based engine cannot compute; rebuild only if it returns.
+   (b) BetRight small-field variant DECLINED — "no more promos with
+       BetRight, won't likely use it again". Do not re-raise.
+   (c) FB EXPIRY TRACKING DECLINED — "will introduce more complexity
+       and I try to use them within 24 hours". Removed from the list;
+       do not re-raise. fb_expiry_days stays NULL everywhere.
+   (d) 'Ins $25 Cash 2nd' ARCHIVED — the mis-pick trap; unhide if a
+       real cash-2nd promo appears.
+   (e) 'Bonus Winnings (Cash)' RENAMED 'Bet365 Bonus Winnings (Cash)'
+       — cents rounding is Bet365's rule; never pick for TAB.
+   Implementation: soft-archive flag shipped end-to-end (v3 `1fefeb5`);
+   archived templates leave all pickers client-side, stay on the
+   catalogue payload for historical resolution. Live data updated in
+   the same sitting (archive ×2 + rename, notes stamped).
+3. Context for (2): S265 promo-catalogue integrity audit (sub-agent,
+   3 Aug) — all 89 live credits recompute to the cent; every historical
+   defect properly superseded; findings were forward-risk only.
