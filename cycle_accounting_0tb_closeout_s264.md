@@ -64,7 +64,13 @@ stated as ZERO DEFECTS — the percentage alone is never the criterion
   headline. Skipped in the build because the decision list never
   carried it — confirmed the right call by the post-impl review.
 - R7 ratify (provisional credits close plays — shipped D4-lockstep
-  deviation): fold into the next operator decision batch.
+  deviation): **RATIFIED S265 (3 Aug), risk weighed on live data** —
+  zero under-review credits in the whole history (109 finalised /
+  7 rejected), the state is burst-lane-visible while it exists, and
+  read-time derivation re-opens the play the moment a credit is
+  rejected. Revisit trigger recorded: if promo style shifts to books
+  that routinely dispute/slow-walk credits (under-review becomes
+  common), reconsider the stricter reading.
 - C8 future-flag caveat is now RESOLVED in principle: the assign-cycle
   button writes the audited move (R2 fix), so an underivable pairing
   has a sanctioned confirmation path.

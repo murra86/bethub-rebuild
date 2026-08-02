@@ -1069,3 +1069,11 @@ breaker, no cb hit); real burns remain rare).
 3. Context for (2): S265 promo-catalogue integrity audit (sub-agent,
    3 Aug) — all 89 live credits recompute to the cent; every historical
    defect properly superseded; findings were forward-risk only.
+
+4. R7 RATIFIED (cycle accounting review rec 7): "provisional credits
+   close plays" stands as shipped. Weighed S265 on live data — the
+   under-review state has never occurred (109 finalised / 7 rejected,
+   0 provisional ever), is burst-lane-visible while it exists, and
+   play state re-derives (re-opens) instantly on rejection. Stricter
+   reading declined (double-listing noise, no incremental catchment).
+   REVISIT TRIGGER: books that routinely dispute or slow-walk credits.
