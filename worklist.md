@@ -1027,3 +1027,8 @@ breaker, no cb hit); real burns remain rare).
    qualifier-lost plays with credit under review.
 10. 0w(d): operator will add the "which account am I" IP bookmark to
    each AdsPower profile themselves next time at the machine.
+   D3 DONE S264 (`0b664c8`, suite 2208): one shared predicate; strip
+   pnl_all_in + Balances hero both include book_correction; the
+   two-ledger self-check identity holds by construction (live: exactly
+   −$0.01, headline $3,865.92, self-check difference 0.00);
+   day_0_opening stays excluded.
