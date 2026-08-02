@@ -1001,3 +1001,8 @@ breaker, no cb hit); real burns remain rare).
 4. SETTLE-ASSIST SHAPE (1a): one-tap-with-per-bet-preview CONFIRMED
    (operator: "happy with your recommendation"). Full-auto stays
    stageable later per the 1b part-c pattern.
+5. TAKE-SP MANUAL OVERRIDE NOTE (operator, 2 Aug ~13:15): one pending
+   free-bet cycle's lay was deliberately re-marked PERSIST (away from
+   the new Take-SP/MARKET_ON_CLOSE default) by the operator in-tool.
+   When it settles: the persisting order is INTENTIONAL, not a defect;
+   do not count it against the Take-SP first-live-SP-fill watch item.
