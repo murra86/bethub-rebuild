@@ -1,0 +1,120 @@
+# SESSION 263 — Sat 1 Aug (eve) → Sun 2 Aug 2026 (marathon; closed on context limit)
+
+Operator verdict trajectory: records cleanup → 3 adversarial reviews →
+1b end-to-end → full Sunday work programme under standing autonomy.
+Closed mid-flight with a live handoff (§HANDOFF below) — the next
+session picks up there FIRST.
+
+## Arc 1 — records reconciliation + the three reviews (Sat eve)
+Mixed-up S262 close-out untangled: SESSION_260 filed + postscript,
+SESSION_261 stub, worklist statuses reconciled, current_state refreshed.
+Operator-directed adversarial reviews then corrected the record:
+S260 deploy = core VERIFIED / "healthy since" refuted (20-restart storm
+from a root-owned stamp + UTC-vs-Adelaide bug — live-fixed same night;
+storm defused); twin backlog CONFIRMED cleared (679 = exactly the
+refused classes); context gaps closed (stale credits claim, unrecorded
+promo-pilot BET NOW→hot-count change, 4 dropped live-proof items
+restored, 3 Kate money events operator-confirmed).
+
+## Arc 2 — 1b Bet365 bonus, end-to-end (Sat night → Sun dawn)
+Root cause: credit door hardcoded TAB whole-dollar-ceiling rounding →
+$2.12 over-credit. Shipped `d3583cf` (per-template `credit_rounding`,
+computing credit box + drift confirm, cash undo door, reclass-fence
+rejected-skip, `ops.correct_credit_amount`), correction RUN 06:15
+(backup kept; $859.38 exact vs app). Then `bdadb8f` P&L reconciliation
+→ operator decision BONUS CASH IS CASH (`caa8ac9`, one P&L figure).
+Then part (c) `2daa17a`: auto-bank on Won (shared gate, source=system,
+Burst auto-lane; standing manual-credits decision REVERSED by
+operator) + dead-heat settle-wipe bug found+fixed + corrections keep
+original economic dates. 3+ adversarial reviews across the arc.
+
+## Arc 3 — Sunday programme (operator: proceed all, sub-agents, return only for decisions)
+- Rehydration PROVEN (1 restart, 32 races re-tracked); permanent fixes
+  `9d86480` (ownership-proof stamp; 'activating' guards), suite 558.
+- Phase 1 deploy: branches reconciled (master = resilience + Phase 1 +
+  fixes), gap-seeking loop armed on VPS (`s263-deploy-loop`,
+  `/home/racing/deploy_phase1_loop.sh`, --expect-sha 9d86480).
+- 34-hedge repair: proposal → operator review (Sir Myka verified
+  P&L-indifferent; both FBs 13.0, lays 43.10@14.0) → verb
+  `ops/repair_lay_cycles.py` (`b84456d`) → rehearsed byte-identical →
+  pre-live review GO (102/102 ids) → APPLIED 09:52 with backup
+  `bethub.db.pre-layrepair-20260802-095251`. RESULT: 0 unpaired lays,
+  306 cycles, money check CYCLE PAIRING WATCH (0). 100% past+future.
+- Take-SP DEFAULT shipped `8432c36` (operator superseded the S246
+  staged plan; 5 paths → MARKET_ON_CLOSE; new `bsp_market` gate;
+  review SAFE-AS-SHIPPED — lay conversion is LIABILITY-PRESERVING;
+  watch: first live SP fill + a settled-oversize micro-test owed).
+- PlayUp: NEVER froze (didn't board Toowoomba — product shape);
+  liveness "left the card early" check built `86a16b1` (PUSH-HELD
+  behind the deploy sha pin).
+- Pi alerting LIVE end-to-end (test email delivered; forced-command
+  SSH design) + route-loss detection; lanes untouched. 0w (a)+(b) done.
+- Write-ups: morning-sweep §4 = PARTIALLY MET, operator ACCEPTED
+  (sweep signed off; book-rotation tune = micro-item);
+  0m mini-brief (673/679 adjacent-day labels; frozen set).
+- Retention: backups verified, ~5GB VPS reclaimed, governance repo
+  baselined `3b0ca92` (sessions 213–262 first commit). NO offsite copy
+  yet — operator approved a private mirror, needs their one-click repo
+  creation (no API token on this machine).
+- Money-check dials `23ba696`: no-hedge flags persist-until-answered;
+  GOODWILL CREDITS section (first run surfaced the $10 Sarie expiry).
+- No-hedge acknowledge `17dad49` + both declarations seeded.
+- OS-update pinning DONE on VPS (needrestart list-only; apt timers →
+  04:15/04:45 ACST).
+- 4th/5th template CREATED (insurance [4,5], cash, cap $100,
+  position_min_field {4:14,5:14}).
+- Plans written + adversarially reviewed (amendments NORMATIVE, in
+  each file): cycle accounting 0t-B, credit split/undo 0v, verb
+  hardening 0s.
+- ALL operator decisions locked (worklist "S263 OPERATOR DECISIONS"
+  section): cut line (0m+0v trail), cycle-accounting shapes, sweep
+  accepted, dials built, template built, mirror approved-pending-click.
+
+## HANDOFF — in flight at session close (next session does these FIRST)
+
+1. **Phase 1 deploy loop** (VPS `s263-deploy-loop`, survives this
+   session): check `/home/racing/racing-data-capture/logs/deploy_phase1_attempts.log`
+   for `ALL DONE` / `gave up` / `FAILED MID-FLIGHT`. If gave up →
+   re-arm (`systemd-run --unit=s263-deploy-loop2 --collect
+   /home/racing/deploy_phase1_loop.sh`) targeting the pre-AU-racing gap.
+   AFTER landing: push racing-data-capture master (local holds
+   `86a16b1` liveness fix, push-held for the sha pin) + fast-forward
+   the VPS checkout; then Gate B SQL over the day (brief §7 of
+   `international_phase1_brief.md`); GB flip
+   (`UPDATE jurisdiction_config SET enabled=1 WHERE country='GB'`)
+   only after Gate B holds; THEN delete the
+   `BETHUB_RACING_COUNTRIES=AU` line in `BetHub.command`; Gate C with
+   one real GB promo bet.
+2. **Agent: cycle accounting phases 1–3** (was building on v3 main;
+   killed at close — check `git -C bethub-v3 log` for its per-phase
+   commits; final report tail at
+   `/private/tmp/claude-501/-Users-tim/3ee65060-eb72-4ce4-8c56-8ab62bab91d2/tasks/a36f5dd3075262a84.output`
+   — tail-read ONLY, it's a huge JSONL). Verify state → resume/finish
+   phases 1–3 per `cycle_accounting_plan_s263.md` + NORMATIVE
+   amendments → adversarial review → phases 4–6 (incl. the 4-date
+   re-true) → post-impl review.
+3. **Agent: race-day batch 0x+0z** (isolated WORKTREE at
+   `~/Desktop/Projects/bethub-rebuild/.claude/worktrees/agent-af8d1019b9e3a43c8`
+   — a v3 worktree despite the odd location; also `git -C bethub-v3
+   worktree list`; report tail `.../tasks/af8d1019b9e3a43c8.output`). Verify → finish if partial →
+   review → merge → dist at app-closed → post-impl review.
+4. **Plans**: 0y LANDED before close —
+   `tab_refresh_on_select_plan_s263.md` (headline: staleness = a
+   handover queue, not a missing refresh — the previous race's
+   refresher lingers 45s and the PROMO-PILOT polls the same live lane,
+   first ran on exactly the complaint day; design = priority-on-select
+   with zero added TAB volume; ZERO operator decisions) → needs its
+   adversarial review, builds post-deploy. 1a
+   (`results_log_plan_s263.md`) may not have been written (agent
+   killed at close — tail `.../tasks/a3eaba75c73dc2c44.output`;
+   re-run planning if the file is absent).
+   Then adversarial reviews → the ONE possible operator question (1a
+   settle-assist shape ONLY if one-tap-preview can't preserve the
+   soft-books-stay-operator-settled standing rule) → build (0y builds
+   only after the deploy settles).
+5. **Take-SP follow-ups**: settled-oversize micro-test; eyeball the
+   first 1–2 live SP fills next race day.
+6. **Operator's one click**: create private repo
+   `murra86/bethub-rebuild` → add remote + push (mirror approved).
+7. Week plan stands: finish v3 this week (cut line locked: 0m + 0v
+   trail); then analytics + account care.

@@ -295,8 +295,8 @@ acceptance number must be windowless or drift older than a window hides):
 
 - **Flags inform, never block** (standing friction rule): no placement,
   settle, or credit path ever consults cycle coherence to refuse. The two
-  hard interlocks that already exist (assign-cycle door's one-lay fence;
-  the linker's L3 fence) are unchanged — they are write-side contract
+  hard interlocks that already exist (the assign-cycle control's one-lay
+  fence; the linker's L3 fence) are unchanged — they are write-side contract
   checks, not this invariant.
 - Defect lines follow the CYCLE PAIRING WATCH pattern: capped at 5 with an
   "…and N older" count; any **real-money shape** (C5/C7) prints uncapped,
@@ -508,3 +508,43 @@ sign-off with none of them answered.**
 *Plan produced read-only: one file written (this one); no code, no data, no
 config touched. DB reads were short `mode=ro`/`-readonly` queries against
 the closed app's store.*
+
+## Adversarial planning review (S263) — SAFE WITH FIXES; amendments NORMATIVE
+
+Core verified sound (FB membership genuinely re-derivable from deploy
+payloads; the pre-repair replay is a real falsifiability anchor;
+flags never block; the decision list is clean; Phase-3 cost trivial;
+"135-line noise" fear refuted — 0 open cycles under §1.3 today).
+1. F1 HIGH — lay correctness must RE-DERIVE via the forward-linker
+   rule (anchor lay placed_at, ≤30s, order-consistent bijection);
+   same-market/selection membership alone cannot fail on a
+   cross-paired Sir Myka. Ambiguous cases print "coherent —
+   operator-confirmed", never silently pass.
+2. F2 HIGH — the four 2-Aug replacement credits carry occurred_at =
+   correction time (they PREDATE the occurred_at fix — known one-off,
+   recorded S263), so the strip books $114.88 to 2 Aug while cycle
+   close-dates would book it to 1 Aug: correct §0's delta table; NEW
+   OPERATOR DECISION — gated 4-row re-true of those dates vs accept
+   the one-day boundary quirk; and specify whether attributed credit
+   occurred_at joins the §1.4 close-date max.
+3. F3 MED — the closed-cycle exemplar is wrong-class (the Sarie $10 is
+   goodwill, never deployed, roots NO cycle): restate Option A on a
+   triggered credit; state goodwill invisibility explicitly and get
+   operator sign-off (also the review's sharpest Q3 — does the daily
+   check need a goodwill-in-hand/expired line?).
+4. F4 MED — total taxonomy: add an UNCLASSIFIED-composition defect
+   class counted AGAINST 100%, seeded red.
+5. F5 MED — one supersession walk only (state derivation calls the
+   inventory walk); pull D4 ahead of Phase 4.
+6. F6 LOW-MED — pre-explain 74.2%→90.0% (same defects, different
+   denominator convention) in the audit output.
+7. F7 LOW — re-derive all counts/anchors at build time (8 not 10
+   cross-date cycles; several line cites moved).
+8. F8 — TIMING-RESOLVED: the two no-hedge acknowledgements DO exist
+   (73d8cc66/fcc6d6ed, recorded 08:06 2 Aug; the review read raced
+   the build). Surviving piece: the close-out cross-lists settled
+   unhedged FBs against the ack table.
+9. F9 LOW — one footer line reconciling cycle cards vs the window
+   strip on the toggle view.
+Builder's three pre-Phase-1 questions recorded in the review (ambiguous
+-pairing accounting; replacement-credit dates; goodwill visibility).

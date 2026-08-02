@@ -5,3 +5,4 @@
 .close_out_backups/
 # packaged skill exports (build artefacts)
 skills/*.zip
+.claude/worktrees/

@@ -60,11 +60,16 @@ growing rather than only cleaning up after it.
    logging the FB back (31 of 32 cases) and the old candidate list only
    offered pre-existing backs. Replay validation over all 336 live
    bets: 61/61 lays link, zero wrong, zero ambiguous.
-   TAIL (now eligible — race day done): the 34-row historical repair,
-   32 unlinked lays + 2 FB bets the S253 reassignment mis-linked
-   (`ops/repair_lay_cycles.py` NOT built yet; design
-   `lay_matching_brief.md` §3; app quiet + backup first). Takes cycle
-   tracking 74.2% → ~99%. Evidence: `bet_integrity_audit_s260.md`.
+   **TAIL COMPLETE S263 (2 Aug 09:52): the 34-row historical repair
+   RAN — operator reviewed the proposal (`lay_repair_proposal_s263.md`),
+   confirmed Sir Myka (verified P&L-indifferent: both FBs at 13.0,
+   both lays 43.10@14.0), repair rehearsed (per-bet P&L byte-identical,
+   466 bets) + pre-live review GO (102/102 ids) + applied in one
+   transaction with backup `bethub.db.pre-layrepair-20260802-095251`
+   (verb `ops/repair_lay_cycles.py`, v3 `b84456d`). RESULT: 0 unpaired
+   lays store-wide, 306 cycles, 34 audit events, money check CYCLE
+   PAIRING WATCH (0). 100% for past bets + 100% future (21/21 since
+   the linker). THE 0t-A ITEM IS CLOSED END-TO-END.**
 3. **0p — INTERNATIONAL PHASE 1 deploy.** BUILT + reviewed 4×, deferred
    to Sunday by operator decision (no deploy gap exists; would put new
    identity code under Saturday's race day). capture `f2fa921` (498
@@ -73,10 +78,19 @@ growing rather than only cleaning up after it.
    open/closed state, the standing invariant, and the P&L relabel
    (see `pl_audit_s260.md` D6: do NOT unify the two P&L figures —
    divergence is $0.00 over 14 days and structurally one term).
-5. **0m — review-list corrector live run. UNBLOCKED (1 Aug):** the
-   census converged with the backlog cleared — the population is the
-   679 in-scope refusals (540 identity-gate, incl. the Wagga pair +
-   139 settled-count audits). Needs its mini-brief before running.
+5. **0m — review-list corrector: MINI-BRIEF DELIVERED S263**
+   (`twin_reviewlist_mini_brief.md`). Headline: 673/679 are
+   ADJACENT-DAY DUPLICATE LABELS (one market stamped on yesterday's
+   AND today's row — pre-DR-036 UTC-date residue); 540 gate-refusals =
+   two different real races under one label; 139 settle-refusals =
+   mostly contaminated rows holding two days' interleaved results
+   (116 over-full); + 6 cross-code (Wagga) + 9 husks. SET IS FROZEN
+   (newest 28 Jul; zero new since DR-036). Fix shape: classify script
+   → operator review list → journaled un-stamp pass (no deletions;
+   identity gate stays sole merge authority); ~1–2 sittings; classes
+   A/B/D/E alone clear ~500–550. Cross-link: the morning sweep's
+   cross-code guard refused 67 suspicious cards on 1 Aug — the same
+   class, now blocked live at write time.
 6. **0v — "Split this credit" + undo for account-anchored credits.**
    **Operator-queued 31 Jul, explicitly NOT urgent.** Books routinely
    issue a bonus as N × $X; the tool can only record one lump, and a
@@ -736,8 +750,17 @@ Everything below is the standing detail, unchanged in content.
    `054c2e5`+`6dfa987`) — DAILY by operator direction. FIRST SATURDAY
    RAN 1 Aug: hourly sweeps fired all morning; informal proof strong —
    14/14 early races carried full-field TAB prices by 07:20 (promo-
-   pilot morning review). The formal §4 acceptance report is STILL
-   OWED — queue for Sunday.** Timer live on the VPS (06:00–17:00 Adelaide
+   pilot morning review). §4 ACCEPTANCE REPORT DELIVERED S263
+   (`morning_sweep_s263_acceptance.md`): **PARTIALLY MET — everything
+   the sweep controls passed** (12/12 runs, 8/8 books, 78,745 morning
+   rows across all 104 AU thoroughbred races, TAB 100/104 median first
+   capture 06:24); the strict per-bucket bar missed only for measured
+   structural reasons (books publishing late = the book not the sweep;
+   the T−75m margin; late Betfair stamps) — the ONE sweep-own cause is
+   TABtouch always swept last losing ~9 races to the 50-min deadline.
+   MICRO-ITEM: rotate book order per run + deadline tune. OPERATOR
+   SIGN-OFF PENDING: accept caveats, or re-measure one more Saturday
+   after the tune.** Timer live on the VPS (06:00–17:00 Adelaide
    hourly, every day; first unattended morning Mon 27 Jul);
    double-smoke-tested; adversarial review done — 5 real findings fixed
    (writer-lock, cache keys, S252 twins, cross-code identity guard,
@@ -859,17 +882,32 @@ Everything below is the standing detail, unchanged in content.
    actual amounts. Brief: `fb_face_single_source_fix_brief.md`.
    Frontend-only, app-down dist swap, never during race hours.
 
-6. **Take-SP (SIGNED OFF S246** — `take_sp_build_brief.md`): unmatched
-   FB-hedge lay remainders convert to BSP instead of lapsing (never
-   worse than lapse on the FB side). Stage 0 = capture-first on the
-   next race day (one tiny real Take-SP lay, operator present, ~$12
-   bounded liability, fixtures from real captures); Stage 1 = build,
-   Take SP selectable, defaults unchanged; Stage 2 = FB-mode default
-   flip per its own gate. Runs AFTER the race-day live-proof of the
-   current stack. D2 (phase-2 flip-sweep/cancel button) open, default
-   park. Aged Care $37.91 = the standing give-back example.
+6. **Take-SP — SHIPPED AS DEFAULT S263 (2 Aug, v3 `8432c36`;
+   operator decision SUPERSEDES the S246 staged Stage 0/1/2 plan,
+   recorded in the client contract).** All five Betfair placement
+   paths default to MARKET_ON_CLOSE for all races; NEW `bsp_market`
+   flag from the catalogue gates the modal (BSP absent/false → option
+   HIDDEN, old behaviour + amber note — never default a money option
+   on missing data); operator overrides untouched; new placements
+   only (resting orders keep their persistence). Red-before ×11;
+   suites 2048/527; dist rebuilt app-closed. Post-impl review in
+   flight (lay-liability-at-SP analysis the focus). Motivating case:
+   the 1 Aug Calmundi $41.10 unmatched lay. REMAINING from the old
+   brief: the phase-2 flip-sweep for already-resting orders (unbuilt,
+   parked); types.ts global regeneration (separate maintenance pass —
+   found ~4,000 lines stale).**
 
 ## Small follow-ons from the S254 reassign build (none blocking)
+
+- INTENTIONAL-UNHEDGED ACKNOWLEDGE — DONE S263 2 Aug (v3 `17dad49`,
+  2036/523/tsc/build, app-closed dist): BetLog "No hedge —
+  intentional…" action writes an append-only annotation; the money
+  check moves acknowledged bets to a quiet "✓ acknowledged intentional
+  (N)" line; both operator-declared 1 Aug bets seeded (El Pensador,
+  Syrian Diamond) — money check clean, ⚑⚑ lines gone. PREMISE FIX
+  found en route: the FB-no-hedge sweep has a 24h window (lines age
+  out silently, they never "flagged forever") — OPERATOR CALL queued:
+  should no-hedge FBs persist until answered, like unpaired lays do?
 
 - Settled-bet DETAIL edits — DONE S256 (both-stake-fields + banked-
   credit fence; used live S258 for the 4.20→4.116 deduction fix).
@@ -911,3 +949,32 @@ fingerprint burn-list persistence across collector restarts
 TAB 404s on races it doesn't serve, misread as blocks — fixed
 capture-side `caffb78` (TabRaceNotFound: pin kept, no hunt, no
 breaker, no cb hit); real burns remain rare).
+
+## S263 OPERATOR DECISIONS (2 Aug, "Fine with your recommendations")
+
+1. CUT LINE: v3-done = this week's plan; 0m + 0v trail after (plans
+   reviewed and ready).
+2. CYCLE ACCOUNTING (shapes the Tue–Wed build): cycles close at bonus
+   expiry with an "expired unused" marker + auto-reopen on late pay;
+   view = BetLog group-by-cycle toggle; the S231 $6–$10 haircut IS
+   codified into the EV display (never realised P&L); the four 2-Aug
+   replacement-credit dates get one audited re-true to 1 Aug (fold
+   into the build).
+3. OS UPDATES: DONE 2 Aug — needrestart list-only + apt timers moved
+   to 04:15/04:45 ACST (VPS overrides in place, verified).
+4. MORNING SWEEP §4: ACCEPTED with the explained caveats — the sweep
+   is signed off; the book-rotation tune stays a micro-item.
+5. GOVERNANCE MIRROR: approved; awaiting the operator's one-click
+   repo creation (murra86/bethub-rebuild, private) — no API token on
+   this machine to create it; push ready.
+6. 4th/5th TEMPLATE: CREATED 2 Aug via the adapter ("Stake back
+   4th/5th → Cash (cap $100, 14+ runners)", refund_positions [4,5],
+   position_min_field {4:14,5:14} — the honesty clause encoded).
+   Promo-pilot: stays as-is (available, not in the routine) — no
+   explicit keep/park recommendation was made or approved.
+7. MONEY-CHECK DIALS: DONE 2 Aug (`23ba696`, suite 2053, red-before
+   ×5): no-hedge flags now persist until a lay joins or an
+   acknowledgement exists (window removed; live run = 0 new flags +
+   acknowledged 2, as predicted post-repair); GOODWILL CREDITS section
+   live — first run surfaced the $10 Sarie goodwill credit expired
+   unredeemed (S262), classification store-verified.
