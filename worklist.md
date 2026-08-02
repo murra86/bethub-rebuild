@@ -1006,3 +1006,13 @@ breaker, no cb hit); real burns remain rare).
    the new Take-SP/MARKET_ON_CLOSE default) by the operator in-tool.
    When it settles: the persisting order is INTENTIONAL, not a defect;
    do not count it against the Take-SP first-live-SP-fill watch item.
+6. 0s VERB HARDENING: DONE S264 (merged to main, suite 2205). All
+   guards per plan+amendments: under-lock re-assert, fb_expiry_days
+   honored, kind gates re-applied on re-point (cash→bonus_winnings on
+   settled_lost now refused), replacement keeps original economic
+   date, insurance gate extracted+shared with the credit-in control,
+   cycle-move marker collision refused. (d) paid-marker filter was
+   already live (S259 `329c42f`) — verified, nothing rebuilt.
+   SHIP NOTE for operator: the verb now REFUSES voided bets on every
+   arm (deliberate plan §2c change) — the refusal message names the
+   undo route to use instead. Cross-kind CLI use is now cleared.
