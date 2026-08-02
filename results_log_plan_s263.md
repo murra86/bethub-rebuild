@@ -440,3 +440,57 @@ Engineering-decided (with rationale, not escalated):
    strip mirrors an existing pattern. (§3)
 8. Dogs/trots stay winner-only (subscription is thoroughbred-only);
    their insurance verdicts remain check-book/manual. (§1.2)
+
+---
+
+## S264 ADVERSARIAL REVIEW — AMENDMENTS (NORMATIVE; the build must honor these)
+
+Review (S264, 2 Aug, read-only against code + live DBs). Coverage
+numbers reproduced TO THE ROW (660-race cohort: 92.6% full order /
+96.8% winner; operator's 202 markets all resolve; 1 Aug: 104 races,
+101 with realised BSP). Settle-assist plumbing claims all verified
+(auto-credit fires inside every settled_won; dead-heat gate is
+`(dead_heat_count or 0) > 0`; settle endpoint 409s non-pending rows;
+place/each-way risk safe by construction — win-market singles only).
+Verdict: AMEND-FIRST, an editing pass, then build starts immediately on
+the preview shape (operator has since CONFIRMED preview — S264
+decision 4).
+
+**A1 (§1.4 + §6.1(a) — the BSP defect is real but misdescribed).**
+CONFIRMED: realised `betfair_snapshots.bsp_price` is never read by any
+results route, and `betfair_historical` is dead since 2026-02-28. WRONG
+as written: nothing serves closing back "as BSP" — the route ships it
+in its own `bf_closing_back` field and the v3 client maps
+`bsp = bf_bsp` falling back to `sp_fixed`; the BetLog strip therefore
+shows the official SP next morning and NOTHING same-day. The defect is
+same-day BSP ABSENCE, not a mislabel. §6.1(a)'s red test is red by
+absence; rewrite its description accordingly. The fix (realised-BSP-
+first + `bsp_source`) is unchanged and right. Optional: when
+`bsp_source` ships, fix `_source_for`'s BETFAIR_WIN inference off
+closing prices.
+
+**A2 (§2 volume).** "≤~30 grouped round-trips" → "≤~50" (measured: 37
+distinct bet races on 1 Aug, 46 on 25 Jul). Still 2–3× better than
+per-bet ~100; conclusion stands.
+
+**A3 (§6.2 — the load-bearing pin is too weak).** Two corrections:
+(a) The pin "upsert only sets result fields when present" does NOT
+prevent WINNER demotion — `upsert_runner` COALESCE is
+new-non-null-WINS. Extend the pin to: **subscription sync must never
+demote an existing WINNER** (if the API numbers the second dead-heater
+≠1, sync_day would flip its WINNER→LOSER, hide the dead-heat, and the
+assist would propose Won-full-bonus — the exact 1b edge). Red-test it.
+(b) Dead-heat detection (`winner_count>1`) is polluted by twin-row
+contamination (53–78 multi-WINNER races/month since March vs a true
+2–4). Failure direction is SAFE (excluded to hand-settle; zero in the
+operator's own 202 markets) but: dual-source the detection
+(`winner_count>1` OR duplicated `finish_position=1`) and word the lane
+flag "conflicting result rows — hand settle", never asserting "dead
+heat".
+
+**A4 (honesty line, LOW).** A market voided AFTER a bet settles stays a
+manual correction (endpoint 409s non-pending; the assist can never
+re-open a settled bet). State it in §4.
+
+**Decision closed:** settle-assist shape = one-tap-with-per-bet-preview,
+operator-CONFIRMED S264 (no longer default-if-unanswered).
