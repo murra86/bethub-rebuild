@@ -104,14 +104,19 @@ original economic dates. 3+ adversarial reviews across the arc.
    refresher lingers 45s and the PROMO-PILOT polls the same live lane,
    first ran on exactly the complaint day; design = priority-on-select
    with zero added TAB volume; ZERO operator decisions) → needs its
-   adversarial review, builds post-deploy. 1a
-   (`results_log_plan_s263.md`) may not have been written (agent
-   killed at close — tail `.../tasks/a3eaba75c73dc2c44.output`;
-   re-run planning if the file is absent).
-   Then adversarial reviews → the ONE possible operator question (1a
-   settle-assist shape ONLY if one-tap-preview can't preserve the
-   soft-books-stay-operator-settled standing rule) → build (0y builds
-   only after the deploy settles).
+   adversarial review, builds post-deploy. 1a plan ALSO LANDED
+   (`results_log_plan_s263.md`): coverage 94% full order / 98% winner
+   on the operator's own bet markets; winner+BSP 2–6 min post-race;
+   full order next morning 05:30; dogs/harness winner-only
+   (subscription is thoroughbred-only). Two defects found en route
+   (results route serves closing back price as "BSP" — realised
+   bsp_price never read; /results/today keys UTC date) = its Phase 0.
+   ONE operator decision, ANSWER PENDING AT CLOSE: settle-assist =
+   one-tap-with-per-bet-preview (RECOMMENDED — preserves the standing
+   soft-books-operator-settled rule) vs full-auto. DEFAULT IF
+   UNANSWERED: build the preview shape (it reverses nothing; full-auto
+   stays stageable later, the 1b part-c pattern). Then: adversarial
+   reviews of BOTH plans → build (0y only after the deploy settles).
 5. **Take-SP follow-ups**: settled-oversize micro-test; eyeball the
    first 1–2 live SP fills next race day.
 6. **Operator's one click**: create private repo
