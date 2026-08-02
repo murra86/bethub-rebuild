@@ -1032,3 +1032,11 @@ breaker, no cb hit); real burns remain rare).
    two-ledger self-check identity holds by construction (live: exactly
    −$0.01, headline $3,865.92, self-check difference 0.00);
    day_0_opening stays excluded.
+11. 0w(c) DONE S264: single map /etc/sim-proxy-sockets.conf (Kate
+   3-1.1 / Sarie 3-1.2 / Mads 3-1.4.1, derived from live devpaths);
+   launcher refuses wrong-socket start pre-route-mutation (plain-
+   language message names the fix); healthcheck v5 asserts running
+   lanes + alerts through the proven email path; validated live-pass +
+   simulated-failure both arms; 3proxy PIDs unchanged throughout.
+   Backups *.bak-20260802-socketpin. 0w ENGINEERING COMPLETE —
+   remaining: (d) operator bookmark only.
