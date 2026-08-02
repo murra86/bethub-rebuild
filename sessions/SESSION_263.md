@@ -87,14 +87,22 @@ original economic dates. 3+ adversarial reviews across the arc.
    only after Gate B holds; THEN delete the
    `BETHUB_RACING_COUNTRIES=AU` line in `BetHub.command`; Gate C with
    one real GB promo bet.
-2. **Agent: cycle accounting phases 1–3** (was building on v3 main;
-   killed at close — check `git -C bethub-v3 log` for its per-phase
-   commits; final report tail at
-   `/private/tmp/claude-501/-Users-tim/3ee65060-eb72-4ce4-8c56-8ab62bab91d2/tasks/a36f5dd3075262a84.output`
-   — tail-read ONLY, it's a huge JSONL). Verify state → resume/finish
-   phases 1–3 per `cycle_accounting_plan_s263.md` + NORMATIVE
-   amendments → adversarial review → phases 4–6 (incl. the 4-date
-   re-true) → post-impl review.
+2. **Cycle accounting phases 1–3: COMPLETE before close** (commits
+   `a34a21b` + `ab05dc4`, pushed; suite 2097). LIVE ACCEPTANCE NUMBER:
+   **306/306 cycles, 466/466 bets, 100.0%, zero defects, zero
+   operator-confirmed lines needed**. Falsifiability replay on the
+   pre-repair backup reproduced the exact 34-row repair table incl.
+   the R1/R2 ordering dependency (90.0% pre-repair, per plan §2 to the
+   digit). D1 backend fence + D4 status-filter shipped (red-before);
+   daily check now prints the CYCLE ACCOUNTING section. NEXT:
+   adversarial review of phases 1–3 → phases 4–6 per plan+amendments.
+   Notes for the next builder: (a) the four 2-Aug credit occurred_at
+   re-trues are Phase 4 scope (confirmed still 06:15-stamped);
+   (b) D1's UI half (LogPastBet conversion input-box removal) belongs
+   to the UI owner — backend fence makes it inert meanwhile; (c) C8
+   future-flag caveat: a quick-lay-door pairing AFTER its back would
+   flag until audited-confirmed (zero exist today; fix = one audited
+   assign, or commission that door to write the audit row).
 3. **Agent: race-day batch 0x+0z** (isolated WORKTREE at
    `~/Desktop/Projects/bethub-rebuild/.claude/worktrees/agent-af8d1019b9e3a43c8`
    — a v3 worktree despite the odd location; also `git -C bethub-v3
