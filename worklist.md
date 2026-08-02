@@ -978,3 +978,26 @@ breaker, no cb hit); real burns remain rare).
    acknowledged 2, as predicted post-repair); GOODWILL CREDITS section
    live — first run surfaced the $10 Sarie goodwill credit expired
    unredeemed (S262), classification store-verified.
+
+## S264 OPERATOR DECISIONS (2 Aug)
+
+1. GOVERNANCE MIRROR: DONE — operator created `murra86/bethub-rebuild`;
+   pushed 2 Aug (history rewritten to untrack the 146MB DR-029 probe
+   file at both historical paths — GitHub 100MB hard limit; file kept
+   on disk, gitignored; SHAs changed, pre-rewrite backup taken).
+2. OVERNIGHT CAPTURE OUTAGES: LOW PRIORITY standing. "Not as concerned
+   for outages at night. I want international racing to bet on as promo
+   exists, but I'm not too concerned if we miss some races in the
+   capture." No night heroics; consider downgrading overnight alert
+   escalation (micro-item, not commissioned).
+3. FLEMINGTON R7 RE-TRUE: YES, fix (stored 7.6 → Betfair true 5.07 avg;
+   settled won lay, zero cash impact, analytics/liability truth only).
+   PLUS: operator commissioned a PERMANENT fix — this class (wrong
+   stored matched price on a settled row) recurs occasionally →
+   self-serve correction verb `ops.correct_matched_price` (house
+   pattern: backup, mutation event, original economic date, reuse
+   0z(d) ledger-truth plumbing post-merge). Flemington R7 = first
+   live use.
+4. SETTLE-ASSIST SHAPE (1a): one-tap-with-per-bet-preview CONFIRMED
+   (operator: "happy with your recommendation"). Full-auto stays
+   stageable later per the 1b part-c pattern.
