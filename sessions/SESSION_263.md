@@ -103,11 +103,24 @@ original economic dates. 3+ adversarial reviews across the arc.
    future-flag caveat: a quick-lay-door pairing AFTER its back would
    flag until audited-confirmed (zero exist today; fix = one audited
    assign, or commission that door to write the audit row).
-3. **Agent: race-day batch 0x+0z** (isolated WORKTREE at
-   `~/Desktop/Projects/bethub-rebuild/.claude/worktrees/agent-af8d1019b9e3a43c8`
-   — a v3 worktree despite the odd location; also `git -C bethub-v3
-   worktree list`; report tail `.../tasks/af8d1019b9e3a43c8.output`). Verify → finish if partial →
-   review → merge → dist at app-closed → post-impl review.
+3. **Race-day batch 0x+0z: COMPLETE before close** — branch
+   **`raceday-0x-0z`** RESCUED into ~/Desktop/Projects/bethub-v3 as a
+   local branch (commits `56fa26b`+`434685f`, base `23ba696`; suites
+   2069/543/tsc in its tree). ALL SIX ITEMS BUILT: 0x change-promo
+   button (same-kind v1, engine untouched, cross-kind refused
+   naming the CLI); 0z(a) requested_price stored+shown for
+   unmatched/failed; 0z(b) change-odds-and-resend via Betfair
+   replaceOrders (fully-unmatched open orders only — FIRST CALLER of
+   the replace path, watch first live use); 0z(c) next-FB auto-select;
+   0z(d) matched-price truth (ledger verify at placement + the
+   settlement backstop re-trues price — a deliberate reversal of the
+   zero-reads rule, ~tens of reads/day; NEW matches only); 0z(e) lay
+   sizing at min(typed, live best) with both prices named. S264:
+   adversarial review → merge onto main (cycle commits landed after
+   the base — expect a small merge; bets.py feed fields the likely
+   touch point) → dist at app-closed → post-impl review.
+   OPERATOR QUESTION carried: hand re-true the settled Flemington R7
+   row (stored 7.6 vs Betfair's true 5.07 average) — yes/no.
 4. **Plans**: 0y LANDED before close —
    `tab_refresh_on_select_plan_s263.md` (headline: staleness = a
    handover queue, not a missing refresh — the previous race's
