@@ -1019,3 +1019,11 @@ breaker, no cb hit); real burns remain rare).
 7. D3 (plan §9.4): GO — operator agreed 2 Aug. book_correction ledger
    adjustments join the headline P&L (split by reason from
    day_0_opening, which stays excluded). Build commissioned S264.
+8. 0w(c) SOCKET PINNING: GO — operator accepted the fail-closed cost
+   ("each router keeps its socket; dead lane after replug = check the
+   socket first"). Build commissioned S264.
+9. R7 RATIFIED: provisional credits close plays (auto-reopen on
+   finalise); Burst Review lane is the accepted backstop for
+   qualifier-lost plays with credit under review.
+10. 0w(d): operator will add the "which account am I" IP bookmark to
+   each AdsPower profile themselves next time at the machine.
