@@ -1103,3 +1103,10 @@ breaker, no cb hit); real burns remain rare).
   (canonical read rules R1–R8 + the qualified per-template/book
   baseline; every rule was learned against live data — the page's
   queries must honor all eight or its numbers will be wrong).
+
+- **Venue-name hygiene (S265 Results-page census):** capture store holds
+  'The' (truncated 'The Gardens' — one Newcastle greyhound meeting split
+  across two rows, races 1-9,11 vs 10,12 on 1 Aug), 'bet365 Hamilton',
+  'Aquis Park Gold Coast'. Display-side folded via the v3 alias map +
+  picker merge; the STORE split is a capture naming defect (0m family)
+  — fold into the 0m sitting or the coverage-key normaliser work.
