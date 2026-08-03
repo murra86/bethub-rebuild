@@ -1094,3 +1094,12 @@ breaker, no cb hit); real burns remain rare).
   "FB conversion —" where 71.1% is derivable from its own cycle.
   Scope: when does realised_conversion_rate populate; likely a
   compute-at-read gap for the paired-lay shape.
+
+## Parked idea (S265, operator-flagged, NOT commissioned)
+
+- **In-tool analytics page** — "at some stage we will likely develop a
+  high level analytics page in the tool so I can review performance."
+  Foundation when it happens: `promo_cycle_analytics_reference_s265.md`
+  (canonical read rules R1–R8 + the qualified per-template/book
+  baseline; every rule was learned against live data — the page's
+  queries must honor all eight or its numbers will be wrong).
