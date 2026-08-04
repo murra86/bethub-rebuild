@@ -205,3 +205,42 @@ Verdict AMEND-FIRST. Blocking: 1–3. All six land here verbatim.
     back carries a Call — NONE≠NULL, no-promo basis stamped), stamp
     honesty. Architecture: the RULE-GATE CASCADE stays (logistic/ML
     rejected — unlearnable at these n, unauditable on hover).
+
+## S265 STATISTICIAN REVIEW — FINAL AMENDMENTS (NORMATIVE; verdict AMEND-FIRST → these make D1 GO)
+
+12. **(Scorecard metric)** Primary per-tier metric = CALIBRATION
+    RESIDUAL (actual win rate minus BSP-implied), not ROI: per-bet ROI
+    sd 1.7–2.2 makes ROI bands unfalsifiable at feasible n (±25–50pts
+    CI); calibration resolves ±6pts at n=200. ROI prints alongside
+    with CI + n, never as the band test. "~" lifts only when the
+    calibration CI excludes the neighbouring tier's point estimate.
+    STRONG/MOD stake separation is UNANSWERABLE on ROI at feasible n —
+    any claim must be on calibration, else tiers collapse to
+    FIRE/LEAVE for stakes. ROI comparisons, if made, within odds bands
+    (MOD 5.45 vs STRONG 4.58 avg odds confound).
+13. **(Ledger economics)** The LEAVE ledger settles at the LOGGED SOFT
+    PRICE + the promo's economics under the live all-in convention
+    (BSP for hedge leg + outcome) — settling at BSP alone strips the
+    subsidy and flatters LEAVE. Flag a CONSIDERED subset (interaction
+    signal) separate from all-shown; imbalance-VETOED bets get their
+    own ledger flag so the veto's coverage cost is measured (a 54/52%
+    signal is wrong near half its firings).
+14. **(Wording + prior)** "LEAVE validated" → "the LEAVE-OVERRIDE RULE
+    is validated (n=24 self-selected, z≈2.9 vs fired book; direction
+    only)". Boundary PLACEMENT is open — answerable only by ledger +
+    0h replay. The mechanism's real support is the S252 613k-point
+    out-of-time drift validation.
+15. **(Bar method)** The bar re-derivation runs on the CORRECTED stamp
+    (amendment 9 first), re-banded history, and the replay's EV
+    distribution — the n=49 +16% band is RETIRED as evidence
+    (naked-ROI CI ±50pts, forked from this record, biased stamp).
+16. **(D1 pre-registration, one page, written before any query)**
+    metric+loss per fit (β: squared log-price error, race-clustered);
+    band boundaries fixed in advance (post-hoc = exploratory only);
+    out-of-time split inside D1 (fit before X, report after-X);
+    bet record = evaluation-only (tune on capture replay + no-bet
+    controls); D3 confirmatory, no mid-window changes; per-kind claims
+    carry multiplicity notes. The D1-memo review checks protocol
+    conformance. Oracle bound restated: ~2–3% of turnover ON THE 59%
+    REPLAYABLE; unreplayable (outages, non-feed books) not established.
+    D3 exit = "MOD calibrated, others accumulating" (STRONG ~7–9wk).
