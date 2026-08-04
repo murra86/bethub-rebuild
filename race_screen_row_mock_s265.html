@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Race screen — portrait row rework mock (S265)</title>
+<style>
+  :root {
+    --paper:#111417; --card:#1a1e23; --card2:#23282e;
+    --ink:#e8e6e1; --sub:#9aa3ad; --faint:#7c8590;
+    --line:#2e343b; --line-soft:#262c33;
+    --navy:#3d6db5; --sel:#27405e; --rose:#d16b80;
+    --profit:#3fa46a; --profit-soft:#1a2b21;
+    --loss:#d95757; --loss-soft:#331d1d;
+    --amber:#d9a13b; --amber-soft:#32290f;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  body { background:#0d1013; margin:0; padding:20px; font:12.5px/1.4 -apple-system,system-ui,sans-serif; color:var(--sub); }
+  .note { max-width:1500px; margin:0 auto 12px; }
+  .note h1 { font-size:15px; color:var(--ink); margin:0 0 4px; }
+  .frame { max-width:1500px; margin:0 auto; border:1px solid var(--line); border-radius:8px; background:var(--card); overflow:hidden; }
+  .head { padding:8px 12px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; font-size:12px; }
+  .head b { color:var(--ink); }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  th { text-align:left; text-transform:uppercase; font-size:9.5px; letter-spacing:.06em; color:var(--faint); padding:6px 8px 4px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  td { padding:0 8px; border-bottom:1px solid var(--line-soft); height:31px; white-space:nowrap; }
+  tr:last-child td { border-bottom:none; }
+  .num { color:var(--faint); font-family:var(--mono); }
+  .runner { color:var(--ink); font-weight:550; max-width:0; width:26%; overflow:hidden; text-overflow:ellipsis; }
+  .marks { font-size:10px; color:var(--navy); background:#1e2836; border-radius:4px; padding:0 5px; margin-left:6px; }
+  .price { font-family:var(--mono); font-variant-numeric:tabular-nums; color:#7da7dd; text-align:right; }
+  .lay { color:var(--rose); }
+  .layBad { background:rgba(217,87,87,0.14); border-radius:4px; }
+  .arrow-d { color:var(--profit); font-size:10px; } .arrow-u { color:var(--loss); font-size:10px; } .arrow-f { color:var(--faint); font-size:10px; }
+  .ev { font-family:var(--mono); text-align:right; }
+  .evg { color:var(--profit); } .eva { color:var(--amber); } .evr { color:var(--loss); } .evm { color:var(--faint); }
+  .pill { display:inline-block; border-radius:999px; font-size:10px; font-weight:650; padding:1px 8px; }
+  .pill.strong { background:var(--profit-soft); color:var(--profit); }
+  .pill.mod { background:var(--amber-soft); color:var(--amber); }
+  .pill.leave { background:var(--card2); color:var(--faint); border:1px solid var(--line); }
+  .stepper { display:inline-flex; align-items:center; gap:4px; }
+  .stepBtn { width:16px; height:16px; border:1px solid var(--line); border-radius:4px; background:var(--card2); color:var(--sub); font-size:9px; display:inline-flex; align-items:center; justify-content:center; }
+  .stepVal { width:56px; text-align:right; font-family:var(--mono); background:#0e1114; border:1px solid var(--line); border-radius:4px; padding:2px 6px; color:var(--ink); }
+  .logBtn { background:var(--navy); color:#fff; border:none; border-radius:5px; font-size:10.5px; font-weight:650; padding:3px 10px; }
+  .zap { border:1px solid var(--rose); color:var(--rose); border-radius:5px; font-size:10px; padding:2px 6px; background:transparent; margin-left:4px; }
+  .hovercard { max-width:360px; margin:14px auto; border:1px solid var(--line); border-radius:8px; background:var(--card2); padding:10px 12px; font-size:12px; }
+  .hovercard h3 { margin:0 0 6px; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--faint); }
+  .hovercard div { display:flex; justify-content:space-between; padding:2px 0; }
+  .hovercard span:last-child { font-family:var(--mono); color:var(--ink); }
+  .tag { display:inline-block; background:var(--amber-soft); color:var(--amber); border-radius:4px; font-size:10px; padding:1px 6px; margin-left:8px; vertical-align:middle; }
+  .cols { display:flex; gap:14px; max-width:1500px; margin:0 auto; }
+</style>
+</head>
+<body>
+
+<div class="note">
+  <h1>Race screen — reworked rows <span class="tag">MOCK</span></h1>
+  <p>Four columns gone (Matched, Raw EV, BF Close, Trend) — their jobs move
+  to hovers, the Call pill, or a tiny arrow. Freed width goes to runner
+  names, the two live prices, Promo EV, and the odds stepper. A 15-runner
+  field fits one portrait screen at this row height. The lay cell tints red
+  when the hedge side is unusable — <b>before</b> you commit the free bet.</p>
+</div>
+
+<div class="frame">
+  <div class="head"><span><b>Quirindi · R1 1450m Mdn</b></span><span class="num">12:19:11 · 0s · market matched $4k · commission 10% · overround 102.3%</span></div>
+  <table>
+    <thead><tr>
+      <th>#</th><th>Runner</th><th style="text-align:right">BF Back</th><th style="text-align:right">BF Lay</th>
+      <th style="text-align:right">Promo EV</th><th>Call</th><th>Soft Odds <span style="color:var(--amber)">stale 12s — 12:18:59</span></th><th>Actions</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="runner">Irish Accolade</td><td class="price">26.0 <span class="arrow-f">·</span></td><td class="price lay">34.0</td><td class="ev evm">~under 0 ⚠</td><td><span class="pill leave">LEAVE</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">21</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">2</td><td class="runner">Luke Skywalker <span class="marks">T</span></td><td class="price">4.60 <span class="arrow-d">▼</span></td><td class="price lay">4.80</td><td class="ev evr">−13.4%</td><td><span class="pill mod">MOD</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">4</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">3</td><td class="runner">Share Our Secret</td><td class="price">3.40 <span class="arrow-d">▼</span></td><td class="price lay">3.50</td><td class="ev eva">+0.3%</td><td><span class="pill mod">MOD</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">3.4</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">4</td><td class="runner">Tarrant County</td><td class="price">9.60 <span class="arrow-u">▲</span></td><td class="price lay">9.80</td><td class="ev evr">−37.0%</td><td><span class="pill leave">LEAVE</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">6</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">5</td><td class="runner">Turpins Torment</td><td class="price">10.5 <span class="arrow-d">▼</span></td><td class="price lay layBad" title="lay side unusable: 14% over back, depth $9 < your stake">12.0 ⚠</td><td class="ev evr">−44.4%</td><td><span class="pill leave">LEAVE</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">6</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">6</td><td class="runner">Zousilence</td><td class="price">18.5 <span class="arrow-d">▼</span></td><td class="price lay">22.0</td><td class="ev evg">~5%+ ⚠</td><td><span class="pill strong">STRONG</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">23</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">7</td><td class="runner">Alberts Pick</td><td class="price">8.20 <span class="arrow-f">·</span></td><td class="price lay">10.0</td><td class="ev evm">~under 0 ⚠</td><td><span class="pill leave">LEAVE</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">5.5</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">8</td><td class="runner">Diablo Dancer</td><td class="price">160 <span class="arrow-f">·</span></td><td class="price lay layBad" title="lay side unusable: 50% over back">240 ⚠</td><td class="ev evm">~under 0 ⚠</td><td><span class="pill leave">LEAVE</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">80</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+      <tr><td class="num">9</td><td class="runner">Stormy Malice</td><td class="price">11.0 <span class="arrow-f">·</span></td><td class="price lay">12.0</td><td class="ev evr">−24.7%</td><td><span class="pill mod">MOD</span></td><td><span class="stepper"><span class="stepBtn">▾</span><span class="stepVal">8.5</span><span class="stepBtn">▴</span></span></td><td><button class="logBtn">LOG</button><button class="zap">⚡</button></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="cols">
+  <div class="hovercard">
+    <h3>Hover — Promo EV cell (Zousilence)</h3>
+    <div><span>Promo EV</span><span>+6.2%</span></div>
+    <div><span>In dollars at your $50</span><span>+$3.10</span></div>
+    <div><span>2nd/3rd trigger chance</span><span>14%</span></div>
+    <div><span>Raw EV (no promo)</span><span>−4.1%</span></div>
+    <div><span>Market thin — band, not a firm number</span><span>⚠</span></div>
+  </div>
+  <div class="hovercard">
+    <h3>Hover — BF Back cell (Luke Skywalker)</h3>
+    <div><span>Trend since open</span><span>4.80 → 4.60 ▼4.2%</span></div>
+    <div><span>Matched on this runner</span><span>$695</span></div>
+    <div><span>Money spike</span><span>—</span></div>
+  </div>
+  <div class="hovercard">
+    <h3>Hover — Call pill (Zousilence)</h3>
+    <div><span>Grade inputs + reasons</span><span>as today</span></div>
+    <div><span>Projected close (was BF Close)</span><span>→ 17.61 ▼</span></div>
+    <div><span style="color:var(--amber)">Pill shown provisionally — the grading audit may shrink it to a dot</span><span></span></div>
+  </div>
+</div>
+
+<div class="note" style="margin-top:12px">
+  <p><b>Questions:</b> (1) Row reads left→right as: identity → live prices →
+  the number → the call → your typing → fire. Right order? (2) Lay-health
+  tint: red-tint + ⚠ enough, or want the reason visible without hover?
+  (3) The trend arrow beside BF Back — keep, or is even that noise?</p>
+</div>
+
+</body>
+</html>
