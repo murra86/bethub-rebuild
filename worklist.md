@@ -70,10 +70,24 @@ growing rather than only cleaning up after it.
    lays store-wide, 306 cycles, 34 audit events, money check CYCLE
    PAIRING WATCH (0). 100% for past bets + 100% future (21/21 since
    the linker). THE 0t-A ITEM IS CLOSED END-TO-END.**
-3. **0p — INTERNATIONAL PHASE 1 deploy.** BUILT + reviewed 4×, deferred
-   to Sunday by operator decision (no deploy gap exists; would put new
-   identity code under Saturday's race day). capture `f2fa921` (498
-   tests) + v3 `ddbcc77`. Then verification day, then the one-row GB flip.
+3. **0p — INTERNATIONAL PHASE 1 deploy. DATA BLOCKER CLEARED S267 —
+   READY.** BUILT + reviewed 4×; capture `f2fa921` (498 tests) + v3
+   `ddbcc77`. The 5 Aug 04:35 attempt FAILED at the rekey preflight: 342
+   non-AU rows carried a Betfair market id, refusing the §3.3
+   disjointness proof. S267 found **all 342 were AUSTRALIAN races with a
+   wrong country stamp** (Bathurst 299 stamped GB, Canterbury 43 stamped
+   US) — the guard was RIGHT; rekeying would have burned `bathurst|gb`
+   and `canterbury|us` into the venue identity key. Corrected at the root
+   (`af18787`): all three country write paths now refuse a non-AU stamp
+   on a row carrying an Australian state code, and `country_stamp_fixes`
+   journals the 583 corrected rows with `--reverse`. **Disjointness count
+   is now ZERO — no guard change needed.** S266's "wait for repair-zero"
+   was unreachable: the 679 remaining twins ARE the refused 0m
+   population and the nightly repair has merged nothing since 31 Jul.
+   Next: confirm disjointness still zero at deploy time → Gate B → drop
+   `BETHUB_RACING_COUNTRIES=AU` → Gate C. STILL OPEN from S266: the
+   deploy loop must refuse to ARM at a time its own guard forbids
+   (249 refusals, zero successes, across 8 loops).
 4. **0t-B — the rest of cycle accounting.** Cycle-as-a-set view,
    open/closed state, the standing invariant, and the P&L relabel
    (see `pl_audit_s260.md` D6: do NOT unify the two P&L figures —
