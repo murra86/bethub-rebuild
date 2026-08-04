@@ -1110,3 +1110,15 @@ breaker, no cb hit); real burns remain rare).
   'Aquis Park Gold Coast'. Display-side folded via the v3 alias map +
   picker merge; the STORE split is a capture naming defect (0m family)
   — fold into the 0m sitting or the coverage-key normaliser work.
+
+## S265 OPERATOR COMMISSION (4 Aug) — THE CALL AS THE SINGLE INDICATOR
+
+Operator: "make the CALL item as reliable a data point as possible to
+advise whether I should execute a trade or not — ideally a single
+indicator that all my decision making is made on." Also: "I will
+respect the call from now on" (post-audit; LEAVE overrides validated
+as -53% ROI on his own record). Program plan:
+`call_reliability_program_plan_s265.md` (A contract / B four inputs /
+D three stages) — adversarial review in flight at write time. This
+SUPERSEDES worklist 0h (R1 grade backtest) — 0h becomes stage D1's
+core. Sequenced after the Phase-1/0y landing settles.
