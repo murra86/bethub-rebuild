@@ -117,3 +117,62 @@ focused sitting; D2 one more; D3 is passive.
 - Place-market capture (input 4) touches the collector — anything
   there rides the standard deploy discipline, and only enters if D1
   proves materiality.
+
+---
+
+## S265 ADVERSARIAL REVIEW — AMENDMENTS (NORMATIVE; D1 must honor these)
+
+Verdict AMEND-FIRST. Blocking: 1–3. All six land here verbatim.
+
+1. **(§B2 rewrite)** The incumbent projection is the S252-corrected
+   shrunken tilt: `mid × (sp_near/mid)^β`, β ≈ 0.10–0.18 (validated
+   out-of-time on 613k decision points, SESSION_252 §4d — the "drop
+   sp_near" reading was RETRACTED there; removing the substitution
+   kills LEAVE, proven on the real fixture). D1 fits β per horizon and
+   adopts it. Depth-imbalance enters first as a VETO/trust input only
+   (direction contradicting the projection → trust cap; signals never
+   raise a tier). A magnitude adjustment ships only if D1 beats the
+   shrunken-tilt incumbent out-of-time; any cap's units defined
+   explicitly. The sp_near substitution is never removed/replaced
+   without fixture proof the documented trap cases still grade LEAVE.
+2. **(D3 rework)** LEAVE counterfactual ledger (display-only): every
+   LEAVE shown at jump logs runner/soft price/projected close and
+   settles against BSP — respected LEAVEs still generate outcome data
+   (compliance would otherwise destroy LEAVE's feedback). Rolling
+   scorecard with per-tier n targets before any "calibrated" claim:
+   MOD ≥200 (~2wk), STRONG ≥100 (~7–9wk at 11–17/wk), LEAVE ≥50 via
+   the ledger; prints n, per promo kind, and coverage share.
+3. **(§B1 rescope)** The execution gate applies ONLY to trades whose
+   EV assumes a hedge leg (free-bet conversions), and its effect is an
+   EV FLOOR, not a tier cap: lay unusable → EV recomputed at
+   unhedged-conversion economics (fbConversionRate floor), tier
+   follows THAT EV — never automatic LEAVE (no-hedge-ack precedent
+   stands). The gate models the ACTUAL execution path — Take-SP
+   MARKET_ON_CLOSE default since S263 (SP-lay liability, not
+   click-time depth alone). For cash promos (never hedged — operator
+   strategy on record), lay spread/depth feeds the TRUST gate only.
+4. **(§B3 honesty tiers)** Every backtest row classified: (a) bet-time
+   truth (stored soft_book_combined_price + nearest snapshot,
+   staleness noted — ~4.5min cadence mid-window, ~20s inside T-3);
+   (b) feed-approximated series (8 captured bookmakers, ~88% of
+   graded bets); (c) assumed-promo control rows (arming never
+   persisted — assumption declared). Non-feed books (Bet365, BetRight,
+   AllBets, CrownBet, UpYaGo) and typed boosted prices excluded from
+   series replay or flagged. Mandatory: twin-row dedupe by market id;
+   scheduled-vs-actual jump caveat on all time buckets. Place-market
+   materiality via place BSP in the Data Portal daily files (jump-time
+   truth — adequate for the materiality question only).
+5. **(§A contract additions)** Reliability includes COVERAGE: D1
+   characterises the 109 ungraded racing-screen cash backs; the
+   scorecard reports the share of fired bets carrying a Call. NONE
+   stamps distinctly from NULL (display-only tweak). The Call's EV
+   basis (qualifying stake = max_stake ?? 100) is stated in the
+   contract; stake-band semantics for STRONG vs MOD deferred until D3
+   proves the separation. The one-global-bar decision (S245) stands
+   unless the operator re-decides; D1 may only report per-kind
+   evidence (LEAVE rate differs: bonus 24% vs insurance 8%).
+6. **(§A flag)** "STRONG = full stake" is a PROPOSAL pending operator
+   lock, not an existing rule; the only operator-owned stake rule is
+   LEAVE-override ≤ half stake (4 Aug). Also noted: the S252 fence on
+   market-edge modelling stays — the imbalance fit exists solely to
+   serve the Call's LEAVE boundary, never an SP model.
