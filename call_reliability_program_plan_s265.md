@@ -176,3 +176,32 @@ Verdict AMEND-FIRST. Blocking: 1–3. All six land here verbatim.
    LEAVE-override ≤ half stake (4 Aug). Also noted: the S252 fence on
    market-edge modelling stays — the imbalance fit exists solely to
    serve the Call's LEAVE boundary, never an SP model.
+
+## S265 ARCHITECTURE INVESTIGATION — FURTHER AMENDMENTS (NORMATIVE)
+
+7. **(§B4 close-out)** Place-market input DROPPED — materiality answered
+   negative (13,568 races: place-BSP trigger beats Harville by ≤0.5pt
+   in the 5–30% band ≈ ≤$0.33/$50 promo). No collector change. The
+   <5% outsider tail (Harville 1.36× overstated) stays excluded by bar.
+8. **(§B5 — bar re-derivation)** D1 re-derives the EXECUTE_BAR level
+   itself: stamped-EV 0–5% cash fires ran +16.0% all-in (n=49) while
+   EV<0 / no-EV fires ran −27%/−31% (n=12/20). Hypothesis: bar near 0
+   for cash-promo qualifiers; per-kind evidence-only; one-global-bar
+   stays operator-owned.
+9. **(§B6 — EV-honesty precedence)** BEFORE threshold tuning: raise
+   DEFAULT_FB_CONVERSION_RATE toward measured 70.2%, and enter
+   position_min_field on Ins $50/$25 FB 2+3 (both move the stamp more
+   than MOD_MARGIN; tuning on the biased stamp bakes bias in).
+10. **(§C — form fence)** Runner form permanently OUT: market
+    calibrated in every testable form subgroup (first starters n=5,477
+    z=−0.95; first-up n=13,956 z=+0.04) AND stored form is post-race-
+    contaminated (77%) — double-counted and unmeasurable. Extends the
+    S252 market-edge fence.
+11. **(§A honesty line)** Scorecard states the value-add bound: a
+    PERFECT jump-time Call ≈ 2–3% of turnover vs the ~21% the promos
+    deliver (oracle replay, 176 bets; 82 of 120 positive-EV losers
+    lost with EV-at-jump still positive — variance, uncatchable). The
+    Call's jobs: boundary discipline (LEAVE), coverage (every fired
+    back carries a Call — NONE≠NULL, no-promo basis stamped), stamp
+    honesty. Architecture: the RULE-GATE CASCADE stays (logistic/ML
+    rejected — unlearnable at these n, unauditable on hover).
