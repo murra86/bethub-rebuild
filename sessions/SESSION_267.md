@@ -178,3 +178,151 @@ thoroughbreds instead of on a proxy.
    cent, strip/Results eyeball, auto-bank first bonus win, Take-SP first
    fill.
 6. **0m** — the 679 refused twins; nothing else will clear them.
+
+---
+
+# S267 AFTERNOON — race-day work (5 Aug)
+
+## 5. Places on the day — SHIPPED AND PROVEN
+
+**Cause found:** finishing positions come from The Racing API on a job
+that ran ONCE A NIGHT (20:00 UTC / 05:30 Adelaide). Betfair gave the
+winner near-live; everything else waited for the overnight sync. That is
+the whole reason the Results page showed places the next morning.
+
+`racing-intraday-results.timer` — 15:00/19:00/22:30 Adelaide, `--days 1`
+(RECENT path only; the heavy backlog trickle stays gated on the argless
+invocation). Three passes not ten: the provider tightened rate limits
+~29 Jun and each pass re-fetches the full card.
+
+**PROVEN LIVE 15:01:** today went from **0 finishing positions** to
+**214, with 44 runners marked PLACED**. Covers thoroughbred meetings only
+(the feed's scope); dogs/harness still wait for the overnight pass.
+
+## 6. Betfair place market — BUILT, NOT DEPLOYED (`s267-place-only`)
+
+`_check_settlement` only ever polled the WIN market, so `PLACED` could
+only come from the subscription. In a Betfair PLACE market the
+place-getters settle as WINNER — same call, market id we already hold.
+No new provider, no scraping.
+
+**Measured settlement lag, live, 4 races:** Bendigo win 2.4 min / place
+2.4; Doomben 3.1 / 5.4; Q1 Lakeside 1.7 / **14.8**. So places land 2–15
+min after the jump — fast enough for insurance triggering, and no
+external site would beat it. **Known limit, documented in code:** the
+read is one-shot, so a race whose place market lags past its win
+settlement gets no places here and falls back to the intraday pass.
+
+## 7. Exacta ordering — BUILT THEN REVERTED (adversarial review)
+
+Operator's idea, and it decodes correctly: an EXACTA runner is named by
+saddlecloth pair ("6 - 3" = 6 first, 3 second). Verified live at Hobart
+against the win and place markets. Betfair AU runs EXACTA (39) and
+QUINELLA (39) but **no trifecta or first-four**; "4 TBP" four-place
+markets exist. Coverage looked like 2nd/3rd on 60%, 4th on 55%.
+
+**KILLED by review, and it was right.** `get_sibling_markets` resolved
+siblings by `event_ids`, but **a Betfair event is a MEETING, not a
+race** — this repo already knows it (`race_matcher.py:396` buckets place
+markets by event, `:530` disambiguates by `start_time`). On a multi-race
+meeting every exacta collapsed onto one dict key, so it could resolve to
+another race's result. The cross-check only validated the WINNER, so
+when two races shared a winning saddlecloth it would write a wrong 2nd —
+and `finish_position` is COALESCE-guarded, so **the error could never be
+corrected**, not even by the overnight feed.
+
+Second blocker: the retry loop leaned on `has_timed_out()`, which
+measures from SCHEDULED START, not from when the wait began — a race
+with a future start time and a closed market would poll indefinitely
+(~1,400 calls). Third: eight of my own tests passed for the wrong reason
+(bare `mock.Mock()` made `win_settled` truthy, so the guarded path never
+ran).
+
+**Do not re-attempt** without: sibling resolution by `market_start_time`
+keyed per market id, a wait-scoped deadline, and jitter on
+`should_check_settlement`.
+
+## 8. Race-screen rework — BUILT (`s267-race-row`, 9 commits, UNMERGED)
+
+The S265 mock's three approved answers had never been built; operator
+noticed nothing was on screen. Four columns removed (Matched, Raw EV,
+BF Close, Trend) with their jobs moved to hovers; lay-health tint;
+trend reduced to one glyph on a ≥2% move. S250's TAB drift-since-open
+PRESERVED on the arrow's hover.
+
+Live-screen fixes after operator screenshots: **column misalignment**
+(headers left behind when cells were removed — Actions rendered under
+BF CLOSE, my error, live mid-race-day); lay tint firing on EVERY row
+(top-of-book depth is not available money — ratio only now); single-line
+rows; number/marker in separate fixed slots so columns align; roomier
+rows; LOG + ⚡ side by side; **Promo EV shows the straight number** with
+the ⚠ retained (relaxes S231's band); **raw EV shown when no promo is
+armed**, header renames; **scratchings sort to the bottom**.
+
+## 9. Betting analysis (operator asked: "am I doing anything wrong?")
+
+**No.** 1–5 Aug, 158 back bets: **38 wins against 37.8 expected** —
+exactly on the prices. Saturday +1.4 sd (lucky), 2–5 Aug −1.8 sd
+(unlucky), combined level. Stake per bet flat, volume DOWN after the bad
+run — no chasing.
+
+Money: Sat **+$1,575.76**, since **−$1,388.31**, five days **+$187.45**.
+
+**Structural cause of the swing:** insurance pays on 2nd/3rd, winnings-
+bonus pays only on a win. 67 insurance bets Saturday → 0 on the 3rd and
+4th. Free bets earned: Sat $1,109 face, since $275/$0/$43/$82. Without
+insurance every loss is a total loss and variance roughly doubles.
+
+**FREE-BET CONVERSION MEASURED FOR THE FIRST TIME: 0.947** across 88
+settled free-bet placements ($3,868 face → $3,662 returned), CI
+[0.40, 1.59]. The engine assumes **0.65**. So every promo EV on screen
+is UNDERSTATED. `realised_conversion_rate` is NULL on every row — the
+tool never records this; it had to be reconstructed.
+
+**TAB 25% winnings bonus:** 57 bets, −$883.61, but the 95% CI on return
+is **[−65%, +5%] of stake** and wins are 1.5 sd light. Verdict: keep
+taking them; the data cannot distinguish a bad promo from a cold run.
+
+## 10. Calibration by racing code — the answer to "should I bet dogs?"
+
+30,000 runners, 3,758 settled races, price inside 5 min of the jump,
+de-vigged, vs actual winners:
+
+| code | runners | predicted | actual | bias |
+|---|---|---|---|---|
+| thoroughbred | 5,021 | 500.0 | 500 | +0.00 pts |
+| **greyhound** | 17,660 | 2,478.0 | 2,478 | **+0.00 pts** |
+| harness | 6,888 | 763.0 | 763 | +0.00 pts |
+
+**Greyhounds are the best-calibrated of the three** (tightest CI, holds
+across every decile). **My earlier advice to cut dogs was WRONG** — it
+rested on a thin-market argument that S253 had already disproved on
+52,101 runners (liquidity interaction −0.001). Harness has one soft
+spot: **44.5% predicted → 32.9% actual on 161 runners** — be wary under
+about $2.50.
+
+## 11. Other findings
+
+- **SP pool: NOT our bug.** Direct probe — Betfair returns
+  `back_stake_taken=[]` while sending valid near/far prices. Four of the
+  five S266 capture fields work (last traded price, adjustment factor,
+  removal date, 10-level depth); the SP pool is simply not served.
+- **Take-SP:** operator confirms it works. **Cannot be corroborated** —
+  the persistence type (MARKET_ON_CLOSE vs limit) is stored NOWHERE.
+  One-column fix, worth doing so the next proof is checkable.
+- **$14.21 exchange recheck:** Betfair flat at $1,697.05, zero exposure,
+  but the tool still had 1 bet pending — reconcile when it clears.
+
+## HANDOFF — S268 (supersedes the earlier list)
+
+1. **04:40 deploy** (armed, 19:10 UTC 5 Aug). Confirm it landed, capture
+   healthy → Gate B → drop `BETHUB_RACING_COUNTRIES=AU` → Gate C.
+2. **Merge/deploy `s267-place-only`** AFTER Phase 1 is verified.
+3. **Merge `s267-race-row`** (9 commits) — operator is running it from a
+   local build, so a rebuild from main would lose it. Ask whether to keep.
+4. **`s267-0m-prep`** — `--reverse` + `--report` built and tested; the
+   evidence run says only **11 of 369** clears rest on the disqualified
+   s3-only signal. Cleanup on a quiet weekday, in batches.
+5. Stage A rebuild; deploy-scheduler fix or retirement.
+6. **Record `realised_conversion_rate`** and the lay persistence type —
+   two small gaps that make live proofs unanswerable after the fact.
