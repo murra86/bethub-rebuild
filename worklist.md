@@ -6,6 +6,47 @@ Updated: S263, 1 Aug 2026 evening — 0u deploy verified, 0t-A marked
 shipped, 0m unblocked; statuses reconciled after the mixed-up S262
 close-out.
 
+## S271 TONIGHT (8 Aug, after racing — operator-agreed)
+
+Both queued deliberately for AFTER the card: each needs a `racing-api`
+restart, and neither is worth a mid-meeting price gap.
+
+1. **Caulfield split-meeting fix — ROOT CAUSE FOUND.** The S270 alias
+   bridge joins fragments with raw string equality on `scheduled_start`
+   (VPS `api/market_resolution.py` ~line 110). The twin rows store the
+   SAME instant in different formats — `2026-08-08T02:20:00+00:00` vs
+   `2026-08-08T02:20:00.000Z` — so the join never matches and the
+   runner-identity admission gate is never reached. **The gate is
+   sound; only the key is too literal.** Fix = normalise both sides to
+   a common instant before comparing, leave the gate untouched. Verify
+   against 8 Aug: Caulfield/Caulfield Heath (9 races, runner overlap
+   10/10, 15/16, 8/8, 12/12, 14/15, 10/10, 15/16, 13/13, 10/12) and
+   Haydock Park/"Haydock Pk (Gbr)" MUST bridge, while the five
+   coincidental same-time pairs MUST NOT: Cunnamulla/Sportsbet
+   Gladstone, Sportsbet Nanango/Louth, Cunnamulla/Muttaburra,
+   Wexford/Taif, Thistledown/Delaware Park. (Damage on 8 Aug was low —
+   all 8 books + live Betfair sat on the real row; the Heath twin was
+   an inert 112-runner shadow with zero snapshots. The exposure is
+   operator misclick: the picker offers both as 9-race meetings.)
+   Mirror the VPS capture repo too — it still has NO git remote, so
+   `b74d99f` and this fix exist only on that box.
+
+2. **Scratching data is 80% unreliable — decide the fix.** On 8 Aug,
+   291 runners were flagged scratched; **232 were still being priced
+   by bookmakers AFTER the flag time.** By `scratch_source`:
+   pointsbet 20/20, unibet 10/10, tabtouch 8/8, neds 6/6 (all 100%
+   suspect), ladbrokes 107/139, tab 27/43, sportsbet 5/13 —
+   **betfair 0/2, the only clean source.** A book returning a NULL
+   price is being read as a scratching. Live case: Kate's Tiara
+   (Casino R2) flagged scratched off a Sportsbet NULL while
+   Ladbrokes/TAB priced her $5.00–5.50 seven minutes out; she ran,
+   with a $50 free bet and a $39.47 lay riding on her. Corroborating
+   signal that a scratch is FALSE: `active_field_size` counts the
+   horse as a runner. Direction to weigh: trust `betfair` outright,
+   demote book-sourced flags to a soft warning, and never let a NULL
+   price alone set `scratched`. **Nothing downstream should treat a
+   book-sourced scratch as authoritative until this is settled.**
+
 ## CURRENT ORDER (S260, 31 Jul — operator re-sequenced)
 
 **Operator bumped the lay-matching fix UP (31 Jul).** It was inside 0t,
