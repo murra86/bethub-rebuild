@@ -71,14 +71,14 @@ improves selection.
 Racing code joined from the capture database (`races.racing_code`) on
 each bet's Betfair market id. Scored per complete cycle.
 
-| Code | Cycles | Cash staked | Net P&L | ROI | Per cycle | FB conv. |
-|---|---|---|---|---|---|---|
-| **Thoroughbred** | 414 | $19,155.50 | **+$3,828.72** | **+20.0%** | +$9.25 | 0.69 |
-| Harness | 10 | $405.00 | +$159.86 | +39.5% | +$15.99 | 0.69 |
-| Greyhound | 40 | $1,257.75 | −$33.29 | −2.6% | −$0.83 | 0.71 |
-| Non-racing (AFL etc.) | 7 | $185.00 | −$74.00 | −40.0% | −$10.57 | — |
-| Betfair-outage bets | 3 | $153.00 | −$153.00 | −100.0% | −$51.00 | — |
-| **All closed cycles** | **474** | **$21,156.25** | **+$3,728.29** | **+17.6%** | **+$7.87** | 0.70 |
+| Code | Cycles | Cash staked | Net P&L | ROI | Per cycle |
+|---|---|---|---|---|---|
+| **Thoroughbred** | 414 | $19,155.50 | **+$3,828.72** | **+20.0%** | +$9.25 |
+| Harness | 10 | $405.00 | +$159.86 | +39.5% | +$15.99 |
+| Greyhound | 40 | $1,257.75 | −$33.29 | −2.6% | −$0.83 |
+| Non-racing (AFL etc.) | 7 | $185.00 | −$74.00 | −40.0% | −$10.57 |
+| Betfair-outage bets | 3 | $153.00 | −$153.00 | −100.0% | −$51.00 |
+| **All closed cycles** | **474** | **$21,156.25** | **+$3,728.29** | **+17.6%** | **+$7.87** |
 
 **Today was 100% thoroughbred** — 144 bets, $6,686.52, +$728.62 at
 10.9%. That is the normal shape of a Saturday.
@@ -94,10 +94,10 @@ break-even. (Note this sits alongside S267's finding that greyhounds are
 the best-*calibrated* code — calibration and profitability are different
 questions, and 40 cycles settles neither.)
 
-**The interesting line is the last column:** free-bet conversion is flat
-across every code — 0.69 thoroughbred, 0.71 greyhound, 0.69 harness.
-Whatever separates the codes, it is not how well free bets cash out. It
-is how often the promo triggers and what the qualifier costs.
+Conversion is deliberately **not** split by code (operator: "I just take
+the 70% wherever I can get it — it may even be on sport"). It lands near
+0.70 everywhere. What separates the codes is how often the promo triggers
+and what the qualifier costs.
 
 ⚠️ The −$153 row is **not a betting result**: those are the three
 6 August bets (Deebo, Bliss Bomb, Street Lyric, $51 each) that jumped
@@ -150,112 +150,110 @@ That is ~4.5% of all free-bet value, lost not to bad selection but to
 lay orders that did not fill. It is the cheapest available improvement
 in the whole operation: 2 of the 14 matched **nothing at all**.
 
+### Do earlier hedges also CONVERT better, not just fill better? YES
+
+Operator question, and the answer is clean.
+
+| Lay placed | n | fully filled | money-wtd conversion |
+|---|---|---|---|
+| **3 min or more before jump** | 54 | 51/54 = 94% | **0.7335** |
+| inside 3 min | 67 | 56/67 = 84% | **0.6744** |
+
+**Early lays convert 0.734, late 0.674 — 6.1c in every free-bet dollar,
+95% CI +2.0 … +10.1c. SIGNIFICANT.** Early clears the 0.70 bar; late
+does not.
+
+**Two separable effects, both real:**
+
+- **Filling** — ~4 of the 6 cents.
+- **Price** — comparing only FULLY-MATCHED lays, early still converts
+  0.740 vs 0.721 (95% CI +0.2 … +3.8c, only just clear of zero). The lay
+  sits **11.9%** above the back price inside 3 min vs **10.2%** earlier:
+  the market tightens into the jump.
+
+So placing earlier is worth **more** than the $171.60 fill-failure figure
+alone implies — it also buys back part of the spread.
+
 ---
 
-## 4. Promo performance — per whole cycle
+## 4. Promo performance — per whole cycle, grouped by mechanism
 
-Judging a promo by the bets tagged with it is misleading: the tag sits
-on the qualifier, while the value arrives as a credit that is spent
-later. Scored per complete cycle (qualifier + hedge + free bet + promo
-cash), single-template cycles only:
+Amounts combined per operator instruction: "bonus winnings up to $100 /
+$50 / $25" is one thing, not three. The mechanic (which positions pay) is
+preserved because it is what drives the edge.
 
-| Template | Cycles | Cash staked | Net P&L | ROI |
-|---|---|---|---|---|
-| Ins $50 FB 2+3 | 299 | $14,570.50 | **+$3,805.61** | **+26.1%** |
-| Bet365 Bonus Winnings (Cash) | 20 | $820.00 | +$270.63 | +33.0% |
-| TAB Bonus Winnings 25% to $100 (FB) | 4 | $160.00 | +$149.11 | +93.2% |
-| Boosted Odds | 13 | $555.00 | +$97.20 | +17.5% |
-| Ins $50 FB 2nd | 13 | $458.00 | +$35.20 | +7.7% |
-| Ins $25 FB 2nd | 21 | $457.75 | −$68.89 | −15.0% |
-| TAB Bonus Winnings 25% to $50 (FB) | 64 | $3,180.00 | **−$670.89** | **−21.1%** |
+| Family | Pays when | Cycles | Cash staked | Net P&L | ROI | Per cycle | 95% CI |
+|---|---|---|---|---|---|---|---|
+| **Insurance — 2nd or 3rd** | 2nd *or* 3rd | 299 | $14,570.50 | **+$3,805.61** | +26.1% | **+$12.73** | **+2.75 … +22.71** |
+| Price boost | enhanced odds on a win | 13 | $555.00 | +$97.20 | +17.5% | +$7.48 | −35.02 … +49.97 |
+| Insurance — 2nd only | 2nd | 35 | $940.75 | +$28.81 | +3.1% | +$0.82 | −14.40 … +16.05 |
+| Bonus winnings | a **win** — % of winnings | 88 | $4,160.00 | −$251.15 | −6.0% | −$2.85 | −19.40 … +13.69 |
 
-Compare the naive per-bet view, which scored *Ins $50 FB 2+3* at only
-+4.18% ROI. Counting the credit it earns takes it to **+26.1%**. Always
-read promos at cycle level.
+**Combining the amounts changed the verdict.** Split by cap, "TAB Bonus
+Winnings 25% to $50" read −21.1% and looked like a clear loser. As a
+family, bonus winnings is −$2.85/cycle with a CI spanning zero —
+**indistinguishable from break-even.** No evidence it loses; none that it
+earns.
 
-**One promo carries the operation.** *Ins $50 FB 2+3* is 299 of 434
-attributable cycles and delivers $3,806 of $3,618 net — more than the
-whole book, because the rest nets negative.
+**Only insurance-2nd-or-3rd clears zero.** It is the only proven number
+in this review.
 
-### Are the two losing promos structurally bad, or unlucky?
+### Rank on mechanics, not results
 
-| Template | n | Avg odds | Expected wins | Actual | Avg EV% at log |
+| Family | Bets | Avg odds | Wins expected | Wins actual | Edge at log |
 |---|---|---|---|---|---|
-| Ins $50 FB 2+3 | 299 | 4.33 | 81.2 | **83** | **11.3%** |
-| TAB Bonus Winnings 25% to $50 | 64 | 4.19 | 17.7 | **14** | 6.0% |
-| Ins $25 FB 2nd | 21 | 4.10 | 6.6 | **4** | 7.3% |
+| Insurance — 2nd or 3rd | 299 | 4.33 | 81.2 | **83** | 11.3% |
+| Bonus winnings (to $50) | 64 | 4.19 | 17.7 | 14 | 6.0% |
+| Insurance — 2nd only ($25) | 21 | 4.10 | 6.6 | 4 | 7.3% |
 
-Both losers were **thin to begin with** (6.0% and 7.3% expected edge
-versus 11.3% for the workhorse) **and** have run behind expectation
-(3.7 and 2.6 wins short). At ~$50 a bet and ~4.2 average odds, being
-3.7 wins light is roughly $590 — most of the $671 shortfall.
+Insurance pays on 2nd/3rd (common); bonus winnings pays only on a **win**
+(uncommon). That is the whole reason for 11.3% vs 6.0% — a fact about the
+mechanics needing no sample size, unlike the realised results above.
 
-**Verdict: do not kill these promos on this evidence.** The sample is
-small and the result is dominated by variance. The real finding is
-structural: an insurance promo pays when the horse runs 2nd or 3rd,
-which is common; a bonus-winnings promo pays only when it **wins**,
-which is not. That is why one shows 11.3% expected edge and the other
-6.0% — and why the thin ones have no cushion when luck turns.
+## 5. EV at log versus real value — the check does not resolve
 
----
+⚠️ **An earlier version of this section reported the indicator "running a
+third hot". That was an analysis error, not a finding.**
 
-## 5. EV at log versus real value
+`promo_ev_at_log` is stamped on **free bets too**, at ~70% — that is the
+engine's estimate of *that free bet's conversion*, not a whole-play edge.
+Summing those with the qualifiers' stamps roughly tripled the apparent
+prediction ($1,980.64 → $5,853.05). The qualifier's stamp already prices
+the credit it expects to earn; adding the free bet's own stamp counts the
+same money twice.
 
-`promo_ev_at_log` is a **percentage of stake**, not dollars
-(`ConfirmCard.tsx` renders it `{x}%`). The engine computes
-`rawEv + pInsured × bonusValue × fbConversion`, all over stake — an
-**unhedged** figure that ignores Betfair commission. Since qualifiers
-are in fact never hedged (only 121 lays against 467 cash backs — laying
-is free-bets-only per S252), that assumption matches practice.
-
-Scored per closed cycle carrying an EV stamp (n=437):
+**Corrected, on the 428 closed cycles carrying a stamped cash qualifier:**
 
 | | |
 |---|---|
-| Predicted | **$5,853.05** (23.1% of stake) |
-| Realised | **$3,638.78** |
-| Gap | **−$2,214.27** — 62.2% of prediction delivered |
-| Cycles meeting or beating their EV | 121 / 437 (27.7%) |
+| Predicted (qualifier stamps only) | **$1,980.64** |
+| Realised (whole cycle + promo cash) | **$3,438.77** |
+| Realised as a share of predicted | **173.6%** |
+| Difference per cycle | **+$3.41** |
+| 95% CI on that difference | **−$4.40 … +$11.21** |
 
-**The indicator is directionally right but materially optimistic.**
+The estimate came in **under** what arrived. But the CI crosses zero:
+**no detectable bias in either direction.** Per-cycle sd is ~$82 against
+a $3.41 effect.
 
-What the realised figure is actually made of — every line measured, not
-attributed:
+### How much data each open question needs
 
-| Component | |
-|---|---|
-| Free bets, gross | +$6,832.00 |
-| Hedges (commission + spread) | −$3,027.10 |
-| Qualifiers in those cycles | −$332.25 |
-| Promo cash banked | +$166.13 |
-| **Realised** | **$3,638.78** |
+| Question | Effect | sd | Cycles needed | Held | Status |
+|---|---|---|---|---|---|
+| Is the EV estimate biased? | $3.41 | $82.38 | 2,242 | 428 | open, far off |
+| Do bonus-winnings promos lose? | −$2.85 | $79.20 | 2,967 | 88 | open, far off |
+| Does insurance 2+3 make money? | +$12.73 | $87.90 | 183 | 299 | **answered: yes** |
 
-Two contributors to the shortfall are measured directly: the qualifiers
-came in at −$332 where fair odds imply about zero, and the unfilled
-hedges cost $172 — together $504 of the $2,214 gap.
+**This table is the honest summary of the whole review.** One question is
+settled; the others need an order of magnitude more data than exists.
+Where a result cannot be measured, rank on mechanics instead.
 
-**The rest points at the insurance triggering less often than the model
-assumes.** Working backwards through the engine's own arithmetic, a
-23.1% predicted edge at the assumed 0.65 conversion implies it expected
-about **35.6% of stake** back as credit face. Actual credit earned was
-**$6,001 on $21,156** of qualifying stake — **28.4%**. That gap is worth
-roughly **$1,000** more.
-
-⚠️ The 35.6% is *inferred, not stored*: it assumes the raw punting edge
-is near zero and the bonus equals the stake. Both hold for the insurance
-promo that dominates the sample, not for every template. Right
-explanation, roughly the right size — not a precise figure.
-
-Note the direction of the remaining error: the EV uses a **0.65**
-conversion assumption while actual conversion is **0.70** — so the
-prediction is *conservative* on that term. The optimism sits entirely in
-how often it thinks the horse will place.
-
-**Do not treat the 23.1% EV number as a forecast of returns.** Realised
-return on turnover is 12.1%. That is still an excellent business; it is
-just about half of what the indicator advertises.
-
----
+**Recalibration is still worth scheduling** — not because the model is
+provably wrong, but because what it models has moved: international
+racing (S268), a shifted promo mix, and a trigger rate now measured at
+28.4% of stake with nothing recent to check it against. Maintenance, not
+a bug fix. (Operator noted the model has not been recalibrated for a
+while; this is the reason to do it.)
 
 ## 6. Cycles
 
@@ -284,7 +282,7 @@ money check; never subtract.**
 
 ---
 
-## 7. Day-by-day (last ten active days)
+## 7. Quiet days — worse, but not because they are quiet
 
 | Date | Bets | Staked | P&L | ROI |
 |---|---|---|---|---|
@@ -299,11 +297,33 @@ money check; never subtract.**
 | 7 Aug | 9 | $253.24 | +$150.42 | +59.4% |
 | **8 Aug** | **144** | **$6,686.52** | **+$728.62** | **+10.9%** |
 
-Daily ROI swings between −73% and +59%. **Volume is what stabilises
-it**: the two 100+ bet days (1 Aug, 8 Aug) both landed near the
-long-run rate, while every wild swing came on a day of fewer than 40
-bets. Small days are noise, not signal — do not read a thin day's ROI
-as information.
+⚠️ **An earlier version said "ignore thin days, they're noise." Too
+glib — operator pushed back ("maybe they're not profitable") and was
+right.** Measured per CYCLE:
+
+| Day type | Cycles | Net P&L | Per cycle | Avg EV at log | Insurance share |
+|---|---|---|---|---|---|
+| Quiet (<40 bets) | 152 | −$563.24 | **−$3.71** | 7.24% | **32%** |
+| Busy (100+ bets) | 316 | +$4,161.21 | **+$13.17** | 10.98% | **90%** |
+| Difference | | | **−$16.87** | | |
+
+95% CI on the gap: **−$30.89 … −$2.85 — SIGNIFICANT.**
+
+**But the mechanism is the last two columns, not luck.** Busy days are
+90% insurance promos; quiet days only 32%, and average EV falls 10.98% →
+7.24%. **A quiet day is a day when the good promos are not on offer, so
+the thin ones get worked.** Volume is a symptom of promo availability,
+not a cause of returns.
+
+Split further, no sub-cell survives: insurance on quiet days is 16
+cycles; bonus winnings on quiet days is −$8.94/cycle with CI −$27.50 …
++$9.63. **The data cannot yet separate "quiet day" from "thin promo"** —
+but the mechanism explains the gap far better than variance does.
+
+**Revised advice:** on a quiet day, check what is actually on offer. If
+it is only bonus-winnings promos, honest expectation is near zero and
+**not betting is a legitimate call**. Still don't read a five-bet day's
+*percentage* as a verdict on the system.
 
 ---
 
@@ -312,30 +332,51 @@ as information.
 Ordered by value against effort. The top two recover money already
 earned; the rest change how the numbers are read.
 
-1. **Place hedges earlier.** Fill rate goes 85% → 96% when the lay is on
-   5+ minutes out; two lays went on *after* the jump. Worth $171.60 so
-   far and recurring. Pure execution.
-2. **Alert on unmatched lays.** Two hedges matched nothing at all and
-   nothing flagged it. An unhedged free bet is a naked position — this
-   is risk, not just value.
-3. **Recalibrate the place-rate in the EV engine.** It implies ~35.6% of
-   stake returns as credit face; actual is 28.4%. Single biggest driver
-   of the EV gap (~$1,000 of $2,214) and a one-number fix.
-4. **Show promo ROI per cycle in the tool.** The per-bet view rates the
-   best promo at +4.2% instead of +26.1%. Anyone reading it draws the
-   wrong conclusion.
-5. **Prefer insurance promos over bonus-winnings promos.** Insurance
-   pays on 2nd/3rd (11.3% edge); bonus-winnings only on a win (6.0%).
-   Not enough evidence to drop the thin ones — enough to rank them.
-6. **Stay on thoroughbreds by default.** 414 of 474 cycles and
-   essentially all profit. No reason to chase greyhounds at −2.6%.
-7. **Discount the EV indicator by roughly a third when planning.**
-   23.1% advertised, 12.1% delivered.
-8. **Harvest more promos; stop trying to pick winners.** Qualifiers net
-   −1.1% over 467 bets. Throughput is the only lever that compounds, at
-   ~$9.25 per thoroughbred cycle.
-9. **Ignore thin days.** Under 40 bets, daily ROI swings −100% to +59%
-   on noise. Reacting to them invites unwarranted changes.
+1. **Place hedges earlier.** Conversion 0.674 → 0.734 at 3+ min out — it
+   fills more AND prices better. Worth 6.1c per free-bet dollar,
+   recurring. Two lays went on *after* the jump.
+2. **Alert on unmatched lays.** Two hedges matched nothing and nothing
+   flagged it. An unhedged free bet is a naked position — risk, not just
+   value.
+3. **Recalibrate the model.** Not because it is provably wrong —
+   corrected, it reads slightly conservative — but because international
+   racing, the promo mix and the 28.4% trigger rate have all moved since
+   it was tuned. Maintenance. **Operator flagged this is overdue.**
+4. **Show promo ROI per cycle, grouped by family, in the tool.** Per-bet
+   rates the best promo at +4.2% instead of +26.1%; per-template makes a
+   break-even family look like a −21% disaster.
+5. **Prefer insurance over bonus-winnings.** 11.3% vs 6.0% edge, from the
+   mechanics. Ranking on *results* would need ~2,970 cycles.
+6. **Stay on thoroughbreds by default.** 414 of 474 cycles, essentially
+   all profit.
+7. **Work more promos per day.** The only lever that compounds and the
+   only proven number here: **+$12.73 per insurance cycle.**
+8. **On a quiet day, check the offers** rather than assuming noise. If
+   only thin promos are up, not betting is legitimate.
 
-**Not on this list any more:** "deploy idle credit faster." There is no
-idle credit — see §6.
+**Not on this list any more:** "deploy idle credit faster" (there is no
+idle credit — §6) and "discount EV by a third" (that was built on the
+free-bet-stamp error — §5).
+
+---
+
+## 9. Corrections log — what this review got wrong
+
+Three, all found by operator challenge. Recorded because the *class* of
+error matters more than the instances.
+
+1. **$523.50 of credit "in hand"** — derived by subtracting free-bet
+   stakes from credit face. Invalid: face ≠ stake funded, and superseded
+   credits still read `finalised`. **Truth: zero in hand.** Ask the tool
+   (`ops.correct_promo_chain credits --pairing`), never subtract.
+2. **"EV runs a third hot"** — free bets carry their own ~70%
+   `promo_ev_at_log` (their conversion estimate) and those were summed
+   with the qualifiers'. **Truth: qualifier-only prediction $1,980.64 vs
+   $3,438.77 realised — conservative, and inside the noise.**
+3. **"Ignore thin days, they're noise"** — too glib. **Truth: quiet days
+   are significantly worse (−$16.87/cycle) and the cause is promo mix,
+   which is actionable.**
+
+Common thread: **three separate populations got conflated with the
+population that actually answers the question.** Define the population
+before computing the statistic.
