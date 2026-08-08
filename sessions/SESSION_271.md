@@ -176,8 +176,14 @@ Note: `--yes` is a **global** flag and must precede the subcommand.
 Produced as two artifacts (analytical + plain-language explainer) and
 `pl_and_promo_review_s271.md`.
 
-**Today +$744.87** (144 settled, 11.14% on turnover). **All time
-+$3,728.27** (711 settled, 12.11%, $30,775.61 turnover).
+**Analysis snapshot (17:00): today +$744.87** on 144 settled; all time
++$3,728.27 on 711. **Final at close: today +$746.00** on **149** settled
+(10.91% on turnover); **all time +$3,729.40** on **716** (12.06%,
+$30,925.61 turnover). Five bets settled after the analysis ran — four
+PointsBet backs 17:20–17:53 and a TAB free bet — plus the pending AFL
+bet. **Nothing pending, no open cycles.** The $1.13 movement changes no
+conclusion, so the review is left on its consistent 17:00 population with
+the final figures noted on it.
 
 **The finding that holds:** cash qualifiers 467 bets / $21,156 staked =
 **−$242.75**; free bets **+$6,832**; hedges **−$3,027**. Qualifiers are
@@ -285,6 +291,8 @@ than exists. **Where a result cannot be measured, rank on mechanics.**
 6. **Deploy-scheduler fix or retirement** — carried from S269, untouched.
 7. **582 mis-attached BSP rows** inside the S267 import — carry into any
    analysis of that data.
-8. Pending: the AFL bet, recorded as **"Sydney vs. Port — Port +48.5"**,
-   not +40.5 as described. Worth an eyeball; it is also the bet whose
-   account moved today.
+8. **The AFL bet SETTLED — lost, −$50.** Recorded as "Sydney vs. Port —
+   Port +48.5", not +40.5 as described in conversation. The line was
+   never confirmed against the ticket, so if +40.5 was right the record
+   is still wrong even though the money landed the same way. Worth
+   settling for the record; it is also the bet whose account moved.
